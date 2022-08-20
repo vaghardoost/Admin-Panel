@@ -15,23 +15,6 @@
     /* font-size: small; */
 }
 
-#site-header {
-    /*height: 45rem;*/
-    /*background-color: #CED4DA;*/
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: 100%;
-    direction: rtl;
-}
-
-.link-nav {
-    color: #343A40;
-}
-
-.link-nav:hover {
-    color: black;
-}
-
 ::-webkit-scrollbar {
     width: 10px;
     background-color: transparent;
@@ -52,7 +35,8 @@
 
 body {
     overflow: overlay;
-    background-color: #F8F9FA;
+    /* background-color: #F8F9FA; */
+    background-image: url('papyrus.webp');
     font: 12pt/2 Yekan, sans-serif;
 }
 
@@ -62,20 +46,19 @@ body {
 }
 
 .dash-card {
-    background-color: #E9ECEF;
+    background-color: rgba(206, 212, 218, 0.5);
     border-radius: 10px;
     width: 100%;
     margin-top: 10px;
     margin-bottom: 10px;
-    padding: 10px;
     transition: 500ms;
-    min-height: 250px;
+    min-height: 150px;
 }
 
-/* .dash-card:hover {
+.dash-card:hover {
     background-color: #CED4DA;
-    font-size: small;
-} */
+    /* font-size: small; */
+}
 
 .dash-card-img {
     width: 150px;
@@ -105,4 +88,14 @@ body {
     min-height: 200px;
 }
 
+.center {
+    margin: auto;
+    width: 100%;
+    padding: 25px;
+    text-align: center;
+}
 
+.pin-bottom{
+    position: absolute;
+    bottom: 0;
+}
