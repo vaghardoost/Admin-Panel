@@ -6,7 +6,6 @@ import Category from "./components/category";
 import Dashboard from "./components/dashboard";
 import SideMenu from "./components/dashboard/sidenav";
 import Login from "./components/login";
-import AddNote from "./components/note-add";
 
 export default class App extends Component {
   
@@ -27,7 +26,7 @@ export default class App extends Component {
               <Route path="category/:id"/>
               <Route path="account"/>
               <Route path="note"/>
-              <Route path="note/add" element={<AddNote/>}/>
+              <Route path="note/add"/>
               <Route path="login/:id"/>
             </Routes>
           </Container>
