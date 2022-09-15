@@ -15,6 +15,12 @@
     /* font-size: small; */
 }
 
+code { 
+    font-family: monospace;
+    font-size: 80%;
+    line-height: 200%;
+}
+
 ::-webkit-scrollbar {
     width: 10px;
     background-color: transparent;
@@ -35,8 +41,7 @@
 
 body {
     overflow: overlay;
-    /* background-color: #F8F9FA; */
-    background-image: url('papyrus.webp');
+    background-color: #CED4DA;
     font: 12pt/2 Yekan, sans-serif;
 }
 
@@ -46,47 +51,14 @@ body {
 }
 
 .dash-card {
-    background-color: rgba(206, 212, 218, 0.5);
     border-radius: 10px;
     width: 100%;
     margin-top: 10px;
     margin-bottom: 10px;
-    transition: 500ms;
     min-height: 150px;
+    cursor: pointer;
 }
 
-.dash-card:hover {
-    background-color: #CED4DA;
-    /* font-size: small; */
-}
-
-.dash-card-img {
-    width: 150px;
-    height: 150px;
-    background-position: center;
-    position: center;
-    border-radius: 10px;
-    margin: 10px;
-}
-
-.head-card {
-    background-color: rgba(206, 212, 218, 0.5);
-    border-radius: 15px;
-    width: 100%;
-    padding: 15px;
-    margin-top: 25%;
-    text-align: center;
-}
-
-.source-card {
-    background-color: #E9ECEF;
-    text-align: center;
-    border-radius: 10px;
-    height: 100%;
-    padding: 20px;
-    transition: 500ms;
-    min-height: 200px;
-}
 
 .center {
     margin: auto;
@@ -95,7 +67,36 @@ body {
     text-align: center;
 }
 
+.around {
+    margin: 10px;
+    padding: 10px;
+}
+
+.selectable-text:hover {
+    cursor: pointer;
+}
+
 .pin-bottom{
     position: absolute;
     bottom: 0;
+}
+
+.bg-light {
+    background-color: #E9ECEF;
+}
+
+.bg-middle {
+    background-color: #ADB5BD;
+}
+
+.bg-dark {
+    background-color: #343A40;
+}
+
+.fg-light {
+    color: #E9ECEF;
+}
+
+.fg-red {
+    color: #e5383b;
 }

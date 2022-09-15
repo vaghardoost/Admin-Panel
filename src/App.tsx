@@ -1,37 +1,68 @@
 import { Component, Fragment, ReactNode } from "react";
-import { Container } from "react-bootstrap";
-import { BrowserRouter, Route, Routes, useLocation } from "react-router-dom";
-import AddCategory from "./components/caregory-add";
-import Category from "./components/category";
+import { connect } from "react-redux";
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
+import { Container, Content, Sidebar } from "rsuite";
+import { dispatch } from "./class/redux/store";
+
+import NotFound from "./components/404";
 import Dashboard from "./components/dashboard";
 import SideMenu from "./components/dashboard/sidenav";
 import Login from "./components/login";
+import { changeStatus, State } from "./components/login/reducer";
+import Notes from "./components/note";
+import AddNote from "./components/note-add";
 
-export default class App extends Component {
-  
+interface Props {
+  login:boolean
+}
+
+class App extends Component<Props>{
+
   public render(): ReactNode {
-    // const session = localStorage.getItem("token");
-    const session = true;
-    return (session)
-    ?(<BrowserRouter>
-        <Fragment>
-          <div style={{ width: 240,float:"right",height:"100%"}}>
-            <SideMenu/>
-          </div>
-          <Container fluid style={{paddingTop:'15px',paddingBottom:'15px'}}>
-            <Routes>
-              <Route path="dashboard" element={<Dashboard/>}/>
-              <Route path="category" element={<Category/>}/>
-              <Route path="category/add" element={<AddCategory/>}/>
-              <Route path="category/:id"/>
-              <Route path="account"/>
-              <Route path="note"/>
-              <Route path="note/add"/>
-              <Route path="login/:id"/>
-            </Routes>
-          </Container>
-        </Fragment>
-      </BrowserRouter>)
-    :(<Login/>)
+    const { login } = this.props;
+    return (
+        <BrowserRouter>
+            <Container>
+                <Routes>
+                  <Route path="*" element={<Sidebar> <SideMenu/> </Sidebar>}/>
+                  <Route path="login" element={<Fragment/>}/>
+                </Routes>
+              <Content>
+                <Routes>
+                  
+                  <Route path="login" element={ (login) ? <Navigate to='/dashboard' /> : <Login/> }/>
+
+                  <Route path="dashboard" element={ (login) ? <Dashboard/> : <Navigate to='/login'/> }/>
+                  <Route path="note/add" element={ (login) ? <AddNote/> : <Navigate to='/login'/> }/>
+                  <Route path="note" element={ (login) ? <Notes/> : <Navigate to='/note'/> } />
+                  <Route path="note/edit/:id" element={ (login) ? <AddNote id="anything"/> : <Navigate to='/login'/> }/>
+                  
+                  <Route path="404" element={ (login) ? <NotFound/> : <Navigate to='/login'/> }/>
+
+                  <Route path="*" element={<Navigate to='404'/>}/>
+
+                </Routes>
+              </Content>
+            </Container>
+        </BrowserRouter>
+    )
   }
 }
+
+const mapStateToProps = (reducer:any):Props=>{
+  const token = sessionStorage.getItem('token');
+  const id = sessionStorage.getItem('id');
+  const result = (token !== null && id !== null);
+
+  const state:State = reducer.loginReducer;
+
+  if(state.status !== "success" && result){
+    dispatch(changeStatus(result));
+  }
+
+  return {
+    login:result
+  }
+}
+
+export default connect(mapStateToProps)(App)
