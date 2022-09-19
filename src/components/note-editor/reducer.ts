@@ -1,9 +1,10 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { ApiResult } from "../../class/model/api";
 import Category from "../../class/model/category";
-import { Note,noteMaker } from "../../class/render";
+import { noteMaker } from "../../class/render";
 import { loadCategory,loadNote as apiLoadNote } from "./api";
 import { buildRaw } from "../../class/render"
+import { Note } from "../../class/model/note";
 
 export interface State {
     note:Note
@@ -30,7 +31,8 @@ const initialState:State = {
         title: "",
         content: [],
         tag: [],
-        category:"root"
+        category:"root",
+        author:'',
     },
     draft:{
         load:{

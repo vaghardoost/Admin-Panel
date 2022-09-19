@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { Button, Panel, Stack, Tree } from "rsuite";
 import { ItemDataType } from "rsuite/esm/@types/common";
 import { State,actions, loadCategoryList } from "./reducer";
-import { dispatch } from "../../class/redux/store"
+import { dispatch } from "../../class/redux"
 import Category from "../../class/model/category";
 
 interface Props{

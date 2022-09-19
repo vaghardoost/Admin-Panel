@@ -1,10 +1,11 @@
 import { Component, ReactNode, createRef, RefObject } from "react";
 import { connect } from "react-redux";
 import { Button, ButtonGroup, Input, Modal, Panel, Stack, Table, TagInput } from "rsuite";
-import { dispatch } from "../../class/redux/store";
-import { Note,buildRaw } from "../../class/render";
+import { dispatch } from "../../class/redux";
+import { buildRaw } from "../../class/render";
 import Editor from "./editor";
 import { State,actions } from "./reducer";
+import { Note } from "../../class/model/note"
 
 interface Props {
     note:Note

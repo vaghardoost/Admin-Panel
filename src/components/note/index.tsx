@@ -1,27 +1,22 @@
 import { Component, ReactNode } from "react"
-import { Button, Container, Content, FlexboxGrid, Footer, Header, Panel, Table,Input } from "rsuite"
-import FlexboxGridItem from "rsuite/esm/FlexboxGrid/FlexboxGridItem"
+import { Container, Content, Footer, Header } from "rsuite"
 import NoteTable from "./table"
-
+import NoteFilter from "./filter"
 export default class Notes extends Component{
     public render(): ReactNode {
         return (
             <Container>
                 <Header>
-                    <Panel className="bg-light around">
-                    <div style={{float:"left"}}>
-                            <Input/>
-                        </div>
-                        <div style={{float:"left"}}>
-                            <Input/>
-                        </div>
-                        
-                    </Panel>
+                    <h4 className='around'>مشاهده ی نوشته ها</h4>
                 </Header>
                 <Content>
-                    <div className="around">
-                        <NoteTable/>
-                    </div>
+                    <Container>
+                        <div className="around">
+                            <NoteFilter/>
+                            <div style={{height:'10px'}}/>
+                            <NoteTable/>
+                        </div>
+                    </Container>
                 </Content>
                 <Footer>
                     

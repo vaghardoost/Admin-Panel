@@ -1,6 +1,6 @@
 import { ApiResult } from "../../class/model/api";
 import Category from "../../class/model/category";
-import { Note } from "../../class/render";
+import { Note } from "../../class/model/note";
 
 export const loadCategory = async ():Promise<ApiResult<Category>>=> {
     await new Promise( resolve => setTimeout(resolve, 1500) )
@@ -108,7 +108,8 @@ export const loadNote = async (id:string):Promise<ApiResult<Note>>=> {
                     ]
                 }
             ],
-            tag:[]
+            tag:[],
+            author:"2567"
         }
     }
 }

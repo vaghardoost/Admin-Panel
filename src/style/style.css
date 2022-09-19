@@ -59,6 +59,15 @@ body {
     cursor: pointer;
 }
 
+.parent {
+    position: relative;
+    overflow: hidden
+}
+  
+.child {
+    float: right;
+    display: block;
+}
 
 .center {
     margin: auto;

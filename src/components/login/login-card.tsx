@@ -1,7 +1,7 @@
 import { Component, createRef, ReactNode, RefObject } from "react";
 import { connect } from "react-redux";
 import { Button, Input, Panel } from "rsuite";
-import { dispatch } from "../../class/redux/store";
+import { dispatch } from "../../class/redux";
 import { State,login, loading } from "./reducer"
 
 interface Props {
@@ -24,7 +24,7 @@ export class LoginCard extends Component<Props>{
                         (this.props.status === 'error')
                             ? <Button onClick={()=>this.login()} color="red" appearance="primary" block>ورود مجدد</Button>
                             : (this.props.status === 'loading')
-                                ? <Button size="sm" loading appearance="primary" block>ورود</Button>
+                                ? <Button loading size="sm" appearance="primary" block>ورود</Button>
                                 : <Button onClick={()=>this.login()} appearance="primary" block>ورود</Button>
                     }
                 </Panel>

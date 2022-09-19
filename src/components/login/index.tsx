@@ -1,7 +1,7 @@
 import { Component, ReactNode } from "react";
 import { FlexboxGrid, Row } from "rsuite";
 import FlexboxGridItem from "rsuite/esm/FlexboxGrid/FlexboxGridItem";
-import { dispatch } from "../../class/redux/store";
+import { dispatch } from "../../class/redux";
 import { changeStatus } from "./reducer";
 import LoginCard from './login-card'
 export default class Login extends Component {

@@ -1,3 +1,5 @@
+import { Paragraph, Word } from "./model/note";
+
 export function noteMaker(raw:string):Paragraph[] {
     const result:Paragraph[] = [];
     const paragraphList = raw.split("\n");
@@ -133,20 +135,3 @@ export function buildRaw(paragraph:Paragraph[]):string {
     return result;
 }
 
-export interface Note {
-    title:string
-    category:string
-    tag:any[]
-    content:Paragraph[]
-}
-
-export interface Paragraph {
-    type:"h1"|"h2"|"h3"|"h4"|"h5"|"h6"|"tip"|"caption"
-    words:Word[]
-}
-
-export interface Word {
-    text:string,
-    bold?:boolean,
-    italic?:boolean,
-}

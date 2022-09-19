@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Button, ButtonGroup, Container, Content, Header } from "rsuite";
-import { dispatch } from "../../../class/redux/store";
+import { dispatch } from "../../../class/redux";
 import { actions, State } from "../reducer";
 import CodeViewComponent from "./code";
 import EditTextComponent from "./editor";

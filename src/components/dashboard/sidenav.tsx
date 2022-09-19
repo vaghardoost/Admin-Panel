@@ -15,22 +15,29 @@ export default class SideMenu extends Component<Properties,State>{
                 </Sidenav.Header>
                 <Sidenav.Body>
                     <Nav>
-                        <Nav.Menu eventKey={'content'} title="مدیریت محتوا">
+                        <Nav.Menu title="مدیریت محتوا">
+
                             <Nav.Item panel style={panelStyle}>نوشته ها</Nav.Item>
                             <Nav.Item> <Link to="/note">مشاهده همه</Link> </Nav.Item>
-                            <Nav.Item>جستجو</Nav.Item>
                             <Nav.Item> <Link to="/note/add">افزودن</Link> </Nav.Item>
-                            
                             <Nav.Item divider />
 
                             <Nav.Item panel style={panelStyle}>دسته بندی ها</Nav.Item>
-                            <Nav.Item>مشاهده همه</Nav.Item>
-                            <Nav.Item>جستجو</Nav.Item>
-                            <Nav.Item>افزودن</Nav.Item>
+                            <Nav.Item>مدیریت دسته بندی ها</Nav.Item>
+                            <Nav.Item divider />
+
+                            <Nav.Item panel style={panelStyle}>مخزن فایل ها</Nav.Item>
+                            <Nav.Item>عکس</Nav.Item>
+                            <Nav.Item>صدا</Nav.Item>
+                            <Nav.Item>ویدئو</Nav.Item>
+                            <Nav.Item>فایل</Nav.Item>
                             <Nav.Item divider />
 
                         </Nav.Menu>
-                        <Nav.Menu eventKey={'account'} title="حساب کاربری">
+
+                        
+
+                        <Nav.Menu title="حساب کاربری">
                             <Nav.Item>تغییر رمز</Nav.Item>
                         </Nav.Menu>
                     </Nav>

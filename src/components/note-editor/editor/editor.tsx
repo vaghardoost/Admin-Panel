@@ -1,7 +1,7 @@
 import React, { Component, ReactNode } from "react";
 import { connect } from "react-redux";
 import { Button, ButtonGroup, ButtonToolbar, Panel, Input } from "rsuite";
-import { dispatch } from "../../../class/redux/store"
+import { dispatch } from "../../../class/redux"
 import { State,actions } from "../reducer";
 
 interface Props {

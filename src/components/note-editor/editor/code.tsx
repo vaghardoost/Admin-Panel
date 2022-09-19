@@ -1,6 +1,6 @@
 import { Component, ReactNode } from "react";
 import { connect } from "react-redux";
-import { Note } from "../../../class/render";
+import { Note } from "../../../class/model/note";
 import { State } from "../reducer";
 
 interface Props {
@@ -11,7 +11,7 @@ class CodeViewComponent extends Component<Props>{
 
     public render(): ReactNode {
         return (
-            <pre dir="ltr">
+            <pre dir="ltr" style={{height:'250px',overflowY: 'scroll'}}>
                 <code>
                     {JSON.stringify(this.props.note,null,5)}
                 </code>
