@@ -23,7 +23,7 @@ export default class SideMenu extends Component<Properties,State>{
                             <Nav.Item divider />
 
                             <Nav.Item panel style={panelStyle}>دسته بندی ها</Nav.Item>
-                            <Nav.Item>مدیریت دسته بندی ها</Nav.Item>
+                            <Nav.Item> <Link to="/category">مدیریت دسته بندی ها</Link> </Nav.Item>
                             <Nav.Item divider />
 
                             <Nav.Item panel style={panelStyle}>مخزن فایل ها</Nav.Item>
