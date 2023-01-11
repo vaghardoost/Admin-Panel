@@ -4,7 +4,7 @@ import loginReducer from "./pages/login/reducer";
 import dashboardReducer from "./pages/dashboard/reducer";
 import addNoteReducer from "./pages/note-editor/reducer";
 import noteReducer from "./pages/note/reducer";
-import categoryReducer from "./pages/category/code/reducer";
+import categoryReducer from "./pages/category/reducer";
 import photoReducer from "./pages/photo/reducer";
 
 const combine = combineReducers({

@@ -3,7 +3,9 @@ import { connect } from "react-redux";
 import { Button, ButtonGroup, Modal, Stack } from "rsuite";
 import { Category } from "../../../model/category";
 import { dispatch } from "../../../redux";
-import { actions, deleteCat, State } from "../code/reducer";
+import { actions } from "../reducer";
+import { deleteCat } from "../reducer/actions";
+import { State } from "../reducer/state";
 
 interface Props {
     show:boolean,
@@ -43,7 +45,7 @@ class DeleteModal extends Component<Props> {
 
     private delete(){
         dispatch(deleteCat(this.props.category!.id!));
-        dispatch(actions.deselect())
+        dispatch(actions.reset())
         dispatch(actions.modalDelete(false))
     }
 }

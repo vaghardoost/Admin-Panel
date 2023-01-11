@@ -55,9 +55,6 @@ const mapStateToProps = (reducer:any):Props =>{
     return {
         filter:state.filter,
         authors:[
-            { label:'فرهنگ وقردوست', value:'5546546' },
-            { label:'رامین ابراهیمی', value:'2654568' },
-            { label:'محمدجواد دونده', value:'1115799' },
         ],
         category:categoryListBuilder(state.categoryList)
     }

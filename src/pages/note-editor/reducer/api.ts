@@ -13,19 +13,17 @@ export const loadCategory = async ():Promise<ApiResult<Category[]>>=> {
     const { success,payload } = data;
     return {
         success:success,
-        data:payload
+        payload:payload
     }
 }
 
-export const loadNote = async (id:string):Promise<ApiResult<Note>>=> {
-    // soon
-    return {
-        success:false,
-    }
+export const loadNote = async (id:string)=> {
+    const { data } = await api.get<ApiResult<Note>>(`/note/${id}`);    
+    return data;
 }
 
 export const saveNote = async (note:Note):Promise<ApiResult<Note>>=>{
-    const token = sessionStorage.getItem('token');
+    const token = sessionStorage.getItem("file-token");
     const { data } = await api.post(
         '/note',
         note,
@@ -33,17 +31,30 @@ export const saveNote = async (note:Note):Promise<ApiResult<Note>>=>{
     )
     return {
         success:data.success,
-        data:data.payload
+        payload:data.payload
     }
 }
 
-export const loadList = async ():Promise<ApiResult<File[]>> => {
+export const loadPhotoList = async ():Promise<ApiResult<File[]>> => {
     const token = sessionStorage.getItem("file-token");
     const { data } = await fileApi.get('/photo/list',
         { headers: {"Authorization" : `Bearer ${token}`} }
     );
     return {
         success:true,
-        data:data.payload
+        payload:data.payload
     }
 }
+
+export const updateNote = async (note: Note):Promise<ApiResult<Note>> => {
+    const token = sessionStorage.getItem("file-token");
+    const { data } = await api.patch(`/note/${note.id}`,
+        note,
+        { headers: {"Authorization" : `Bearer ${token}`} },
+    );
+    return {
+        success:true,
+        payload:data.payload
+    }
+}
+

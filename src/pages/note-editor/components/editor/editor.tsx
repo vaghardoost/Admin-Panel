@@ -35,8 +35,9 @@ class EditTextComponent extends Component<Props>{
                 }}
                 value={this.props.content} 
                 dir="rtl" 
-                as="textarea" 
-                rows={20}/>
+                as="textarea"
+                style={{fontSize:'18px'}}
+                rows={8}/>
             </>
         )
     }

@@ -24,11 +24,11 @@ const slice  = createSlice({
 })
 
 export const loginActionState = (state:State,action:PayloadAction<ApiResult<LoginApiResult>>)=>{
-    const { success,data } = action.payload;    
+    const { success,payload } = action.payload;    
     if(success) {
         state.status = "success";
-        sessionStorage.setItem('token',data!.token);
-        sessionStorage.setItem('file-token',data!.fileToken);
+        sessionStorage.setItem('token',payload!.token);
+        sessionStorage.setItem('file-token',payload!.fileToken);
     } else {
         state.status = "error";
     }

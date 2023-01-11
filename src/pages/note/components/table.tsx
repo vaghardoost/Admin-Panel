@@ -39,7 +39,7 @@ class NoteTable extends Component<Props,{redirect?:string}> {
                                 <Panel header={<Stack><h5>{note.title}</h5></Stack>}>
                                     <div style={{maxHeight:'250px',overflowY: 'scroll'}}>
                                         <h3>{note.title}</h3>
-                                        <h5>{this.getCategoryData(note.category).label}</h5>
+                                        <h5>{this.getCategoryData(note.category!).label}</h5>
                                     </div>
                                     <Stack justifyContent="flex-end">
                                         <ButtonGroup className="around">
@@ -65,9 +65,10 @@ class NoteTable extends Component<Props,{redirect?:string}> {
             }
         }
         return {
-            id:"no category",
-            label:"دسته بندی یافت نمیشود",
-            parent:"",
+            id: "no category",
+            label: "دسته بندی یافت نمیشود",
+            parent: "",
+            description: '',
         }
     }
 }

@@ -2,29 +2,36 @@ import { createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 import File from "../../../model/file";
 import { Note } from "../../../model/note";
 import { patternToObject } from "../../../render";
-import { loadCategory, loadNote as apiLoadNote, saveNote as apiSaveNote,loadList } from "./api";
+import * as api from "./api";
 import { initialState, State } from "./state";
 
-export const loadCategoryList = createAsyncThunk('note-add/catlist',async ()=>{
-  return await loadCategory();
+export const loadCategoryList = createAsyncThunk('note-update/catlist',async ()=>{
+  return await api.loadCategory();
 });
 
-export const loadNote = createAsyncThunk('note-add/load',async(id:string)=>{
-  return await apiLoadNote(id);
+export const loadNote = createAsyncThunk('note-update/load',async(id:string)=>{
+  return await api.loadNote(id);
 });
 
-export const addNote = createAsyncThunk('note-add/add',async(note:Note)=>{
-  return await apiSaveNote(note);
+export const addNote = createAsyncThunk('note-update/add',async(note:Note)=>{
+  return await api.saveNote(note);
 });
 
-export const loadPhoto = createAsyncThunk('note-add/load/photo',async()=>{
-  return await loadList();
+export const update = createAsyncThunk('note-update/update',async(note:Note)=>{
+  return api.updateNote(note);
+})
+
+export const loadPhoto = createAsyncThunk('note-update/load/photo',async()=>{
+  return await api.loadPhotoList();
 });
 
 // -----------------------------------------------------------------------
 
-export const closeAlertModal = (state:State) => {
-  state.picker.alert = initialState.picker.alert
+export const alertModal = (state:State,action:PayloadAction<{open:boolean,title?:string,message?:string}>) => {
+  const {message,open,title} = action.payload;
+  state.picker.alert = (open)
+    ? { message:message!,title:title!,open:open,status:'black'}
+    : initialState.picker.alert 
 }
 
 export const pickerPhotoSelect = (state:State,action:PayloadAction<File>) => {
@@ -94,4 +101,20 @@ export const setNote = (state:State,action:PayloadAction<Note>)=>{
 
 export const setModalPhoto = (state:State,action:PayloadAction<boolean>)=>{
   state.picker.photo.open = action.payload;
+}
+
+export const setEditable = (state:State,action:PayloadAction<string>) => {
+  state.edit = action.payload
+}
+
+export const reset = (state:State) => {
+  state.note = {
+    ...initialState.note,
+  }
+  state.raw = '';
+  delete state.edit;
+}
+
+export const resetCat = (state:State) => {
+  delete state.note.category;
 }

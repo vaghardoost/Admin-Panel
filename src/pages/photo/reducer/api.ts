@@ -12,7 +12,7 @@ export const loadList = async ():Promise<ApiResult<any[]>> => {
   );
   return {
     success:true,
-    data:data.payload
+    payload:data.payload
   }
 }
 

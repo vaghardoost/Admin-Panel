@@ -19,15 +19,14 @@ const slice = createSlice({
   },
 })
 
-
 const removeState = (state:State) => {
   state.modal.delete = false;
 }
 
 const loadPhotoListState = (state:State,action:PayloadAction<ApiResult<any[]>>)=>{
-  const { data } = action.payload;
+  const { payload } = action.payload;
   const list:string[] = [];
-  for (const item of data!) {
+  for (const item of payload!) {
     list.push(item.id);
   }
   state.list = list;

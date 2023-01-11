@@ -4,6 +4,7 @@ import { Note } from "../../../model/note"
 
 export interface State {
   note:Note
+  edit?:string
   draft:{
       save:{
           modal:boolean,
@@ -42,7 +43,6 @@ export const initialState:State = {
       content: [],
       tag: [],
       author:'',
-      category:''
   },
   draft:{
       load:{

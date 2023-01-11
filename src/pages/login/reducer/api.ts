@@ -24,7 +24,7 @@ export async function login(username:string,password:string):Promise<ApiResult<L
     
     return {
         success:success,
-        data: { 
+        payload: { 
             token:(success) ? apiResult.data.payload.token:undefined,
             fileToken:(success) ? fileResult.data.payload.token:undefined,
         }

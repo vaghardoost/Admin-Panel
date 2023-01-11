@@ -1,4 +1,4 @@
 export interface ApiResult<T>{
     success:boolean,
-    data?:T
+    payload?:T
 }

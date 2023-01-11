@@ -1,7 +1,7 @@
 export interface Note {
     id?: string
     title: string
-    category: string
+    category?: string
     tag: any[]
     content?: Paragraph[]
     author: any

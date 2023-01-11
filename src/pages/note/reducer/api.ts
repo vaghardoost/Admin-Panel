@@ -10,7 +10,7 @@ export const getNote = async (id:string):Promise<ApiResult<Note>> => {
     const { data } = await api.get(`/note/${id}`);    
     return {
         success:data.success,
-        data:data.payload
+        payload:data.payload
     };
 }
 
@@ -18,7 +18,7 @@ export async function getNoteList():Promise<ApiResult<Note[]>> {
     const { data } = await api.get("/note");
     return {
         success:data.success,
-        data:data.payload
+        payload:data.payload
     };
 }
 
@@ -26,7 +26,7 @@ export const categoryList = async ():Promise<ApiResult<Category[]>> =>{
     const { data } = await api.get("/category");
     return {
         success:data.success,
-        data:data.payload
+        payload:data.payload
     }
 }
 
@@ -41,6 +41,6 @@ export const removeNote = async (id:string):Promise<ApiResult<any>> => {
     );
     return {
         success:data.success,
-        data:data.payload
+        payload:data.payload
     }
 }

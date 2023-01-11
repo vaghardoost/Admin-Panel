@@ -3,39 +3,71 @@ import { ApiResult } from "../../../model/api";
 import { Category } from "../../../model/category";
 import { Note } from "../../../model/note";
 import { initialState, State } from "./state";
-import { changeContent, changePage, changeTitle, loadCategoryList, loadNote, modalLoad, modalLoadSelect, modalSave, modalSaveStatus, setButtonLoad, setCategorySelected, setNote, setTag, setModalPhoto, loadPhoto, pickerPhotoSelect, pickerPhotoCaption, addNote, closeAlertModal } from "./actions";
+import * as action from "./actions";
 import File from "../../../model/file";
+import { objectToPattern } from "../../../render";
 
 
 const slice = createSlice({
     name: 'note-add',
     initialState: initialState,
     reducers: {
-        changeContent:changeContent,
-        changePage:changePage,
-        changeTitle:changeTitle,
-        setTag:setTag,
-        setButtonLoad:setButtonLoad,
-        setCategorySelected:setCategorySelected,
-        modalSave:modalSave,
-        modalSaveStatus:modalSaveStatus,
-        modalLoad:modalLoad,
-        modalLoadSelect:modalLoadSelect,
-        setNote:setNote,
-        modalphoto:setModalPhoto,
-        pickerPhotoSelect:pickerPhotoSelect,
-        pickerPhotoCaption:pickerPhotoCaption,
-        closeAlertModal:closeAlertModal,
+        changeContent: action.changeContent,
+        changePage: action.changePage,
+        changeTitle: action.changeTitle,
+        setTag: action.setTag,
+        setButtonLoad: action.setButtonLoad,
+        setCategorySelected: action.setCategorySelected,
+        modalSave: action.modalSave,
+        modalSaveStatus: action.modalSaveStatus,
+        modalLoad: action.modalLoad,
+        modalLoadSelect: action.modalLoadSelect,
+        setNote: action.setNote,
+        modalphoto: action.setModalPhoto,
+        pickerPhotoSelect: action.pickerPhotoSelect,
+        pickerPhotoCaption: action.pickerPhotoCaption,
+        alertModal: action.alertModal,
+        setEditable: action.setEditable,
+        reset: action.reset,
+        resetCat:action.resetCat,
     },
     extraReducers(builder) {
-        builder.addCase(loadCategoryList.fulfilled,loadCategoryListState);
-        builder.addCase(loadPhoto.fulfilled,loadPhotoState);
-        builder.addCase(addNote.fulfilled,addNoteState)
+        builder.addCase(action.loadCategoryList.fulfilled,loadCategoryListState);
+        builder.addCase(action.loadPhoto.fulfilled,loadPhotoState);
+        builder.addCase(action.addNote.fulfilled,addNoteState);
+        builder.addCase(action.loadNote.fulfilled,loadNoteState);
+        builder.addCase(action.update.fulfilled,updateNoteState);
     },
 });
 
+const updateNoteState = (state:State,action:PayloadAction<ApiResult<Note>>) => {
+    const { success } = action.payload;
+
+    state.picker.alert = {
+        message: (success) ? 'تغییرات با موفقیت ذخیره شد' : '',
+        open:true,
+        status:'black',
+        title:'ویرایش نوشته',
+    }
+}
+
+const loadNoteState = (state:State,action:PayloadAction<ApiResult<Note>>) => {
+    const { success,payload } = action.payload;
+    if (!success) {
+        state.picker.alert = {
+            message:'نوشته ای با این شناسه یافت نمیشود',
+            open:true,
+            status:'red',
+            title:'بازنویسی نوشته'
+        }
+        return;
+    }
+    state.note = payload!;
+    state.raw = objectToPattern(payload!.content!);
+}
+
 const addNoteState = (state:State,action:PayloadAction<ApiResult<Note>>) => {
-    const { success,data } = action.payload;
+    const { success } = action.payload;
     if (success) {
         state.picker.alert = {
             message:'نوشته با موفقیت در سرور ذخیره شد',
@@ -55,26 +87,24 @@ const addNoteState = (state:State,action:PayloadAction<ApiResult<Note>>) => {
 }
 
 const loadPhotoState = (state:State,action:PayloadAction<ApiResult<File[]>>) => {
-    const { data,success } = action.payload;
+    const { payload,success } = action.payload;
     if(success){
         state.picker.photo = {
             ...state.picker.photo,
-            list:data!,
+            list:payload!,
         }
     }
 }
 
 const loadCategoryListState = (state:State,action:PayloadAction<ApiResult<Category[]>>)=>{
-    const {success,data} = action.payload;
+    const {success,payload} = action.payload;
     if(success) {
         state.category = {
-            list:data!,
+            list:payload!,
             buttonStatus:"normal"
         }
     }
 }
-
-
 
 
 export const {reducer,actions} = slice;

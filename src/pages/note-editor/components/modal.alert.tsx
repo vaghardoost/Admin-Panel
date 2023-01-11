@@ -17,7 +17,7 @@ class ModalAlert extends Component<Props>{
           <h5 color={(this.props.status)}>{this.props.message}</h5>
         </ModalBody>
         <ModalFooter>
-          <Button onClick={()=>dispatch(actions.closeAlertModal())}>بستن</Button>
+          <Button onClick={()=>dispatch(actions.alertModal({open:false}))}>بستن</Button>
         </ModalFooter>
       </Modal>
     )

@@ -14,12 +14,11 @@ interface Props{
     select?:string,
 }
 
-class NoteCategory extends Component<Props>{
-   
+class NoteCategory extends Component<Props>{   
 
     constructor(props:Props){
         super(props);
-        this.getData();
+        dispatch(loadCategoryList());
     }
 
     public render(): ReactNode {
@@ -27,10 +26,10 @@ class NoteCategory extends Component<Props>{
             <Panel className="bg-light" bordered header={
                 <Stack justifyContent="space-between">
                     <h5>انتخاب دسته بندی</h5>
-                    <Button loading = {(this.props.loading)} onClick={()=>this.getData()} appearance="primary" color="blue">بارگذاری مجدد</Button>
+                    <Button onClick={()=>dispatch(actions.resetCat())} appearance="primary" color="blue">بدون دسته بندی</Button>
                 </Stack>
             }>
-                <Tree defaultValue={this.props.select} onSelect={(item)=>this.select(item.value!.toString())} data={this.props.tree} defaultExpandAll virtualized/>
+                <Tree value={this.props.select} onSelect={(item)=>this.select(item.value!.toString())} data={this.props.tree} defaultExpandAll virtualized/>
             </Panel>
         )
     }
@@ -39,10 +38,6 @@ class NoteCategory extends Component<Props>{
         dispatch(actions.setCategorySelected(id));
     }
 
-    private getData(){
-        dispatch(actions.setButtonLoad());
-        dispatch(loadCategoryList());
-    }
 }
 
 function mapStateToProps(reducer:any):Props {

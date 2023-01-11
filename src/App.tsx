@@ -37,7 +37,7 @@ class App extends Component<Props>{
                   <Route path="note/add" element={ (login) ? <AddNote/> : <Navigate to='/login'/> }/>
                   <Route path="note" element={ (login) ? <Notes/> : <Navigate to='/login'/> } />
                   <Route path="category" element={ (login) ? <Category/> : <Navigate to='/login'/> } />
-                  <Route path="note/edit/:id" element={ (login) ? <AddNote id="anything"/> : <Navigate to='/login'/> }/>
+                  <Route path="note/edit/:id" element={ (login) ? <AddNote edit/> : <Navigate to='/login'/> }/>
                   <Route path="file/photo" element={ (login) ? <Photo/> : <Navigate to='/login'/> }/>
 
                   <Route path="404" element={ (login) ? <NotFound/> : <Navigate to='/login'/> }/>
