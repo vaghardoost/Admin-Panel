@@ -5,14 +5,11 @@ import { Note } from "../../../model/note";
 import { initialState, State } from "./state";
 import * as action from "./actions";
 import File from "../../../model/file";
-import { objectToPattern } from "../../../render";
-
 
 const slice = createSlice({
     name: 'note-add',
     initialState: initialState,
     reducers: {
-        changeContent: action.changeContent,
         changePage: action.changePage,
         changeTitle: action.changeTitle,
         setTag: action.setTag,
@@ -23,13 +20,14 @@ const slice = createSlice({
         modalLoad: action.modalLoad,
         modalLoadSelect: action.modalLoadSelect,
         setNote: action.setNote,
-        modalphoto: action.setModalPhoto,
-        pickerPhotoSelect: action.pickerPhotoSelect,
-        pickerPhotoCaption: action.pickerPhotoCaption,
         alertModal: action.alertModal,
         setEditable: action.setEditable,
         reset: action.reset,
         resetCat:action.resetCat,
+        addSection:action.addSection,
+        updateSection:action.updateSection,
+        moveSection:action.moveSection,
+        removeSection:action.removeSection,
     },
     extraReducers(builder) {
         builder.addCase(action.loadCategoryList.fulfilled,loadCategoryListState);
@@ -63,7 +61,6 @@ const loadNoteState = (state:State,action:PayloadAction<ApiResult<Note>>) => {
         return;
     }
     state.note = payload!;
-    state.raw = objectToPattern(payload!.content!);
 }
 
 const addNoteState = (state:State,action:PayloadAction<ApiResult<Note>>) => {
@@ -89,10 +86,7 @@ const addNoteState = (state:State,action:PayloadAction<ApiResult<Note>>) => {
 const loadPhotoState = (state:State,action:PayloadAction<ApiResult<File[]>>) => {
     const { payload,success } = action.payload;
     if(success){
-        state.picker.photo = {
-            ...state.picker.photo,
-            list:payload!,
-        }
+        state.photoList = payload!
     }
 }
 

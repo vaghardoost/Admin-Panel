@@ -4,9 +4,9 @@ import { Button, Modal } from "rsuite";
 import ModalBody from "rsuite/esm/Modal/ModalBody";
 import ModalFooter from "rsuite/esm/Modal/ModalFooter";
 import ModalTitle from "rsuite/esm/Modal/ModalTitle";
-import { dispatch } from "../../../redux";
-import { actions } from "../reducer";
-import { State } from "../reducer/state";
+import { dispatch } from "../../../../redux";
+import { actions } from "../../reducer";
+import { State } from "../../reducer/state";
 
 class ModalAlert extends Component<Props>{
   render(): ReactNode {

@@ -1,7 +1,5 @@
 import { createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
-import File from "../../../model/file";
-import { Note } from "../../../model/note";
-import { patternToObject } from "../../../render";
+import { Caption, Code, Frame, Note, Photo, Title } from "../../../model/note";
 import * as api from "./api";
 import { initialState, State } from "./state";
 
@@ -32,25 +30,6 @@ export const alertModal = (state:State,action:PayloadAction<{open:boolean,title?
   state.picker.alert = (open)
     ? { message:message!,title:title!,open:open,status:'black'}
     : initialState.picker.alert 
-}
-
-export const pickerPhotoSelect = (state:State,action:PayloadAction<File>) => {
-  state.picker.photo = {
-    ...state.picker.photo,
-    select:action.payload
-  }
-}
-
-export const pickerPhotoCaption = (state:State,action:PayloadAction<string>)=>{
-  state.picker.photo = {
-    ...state.picker.photo,
-    caption:action.payload
-  }
-}
-
-export const changeContent = (state:State,action:PayloadAction<string>)=>{
-  state.raw = action.payload;
-  state.note.content = patternToObject(action.payload);
 }
 
 export const changePage = (state:State,action:PayloadAction<'edit'|'code'|'view'>)=>{
@@ -99,10 +78,6 @@ export const setNote = (state:State,action:PayloadAction<Note>)=>{
   state.note = action.payload; 
 }
 
-export const setModalPhoto = (state:State,action:PayloadAction<boolean>)=>{
-  state.picker.photo.open = action.payload;
-}
-
 export const setEditable = (state:State,action:PayloadAction<string>) => {
   state.edit = action.payload
 }
@@ -111,10 +86,34 @@ export const reset = (state:State) => {
   state.note = {
     ...initialState.note,
   }
-  state.raw = '';
   delete state.edit;
 }
 
 export const resetCat = (state:State) => {
   delete state.note.category;
+}
+
+export const addSection = (state:State,action:PayloadAction<Caption|Photo|Frame|Title|Code>) => {
+  state.note.content!.push(action.payload);
+}
+
+export const updateSection = (state:State,action:PayloadAction<{index:number,section:Caption|Photo|Frame|Title|Code}>) => {
+  const {index,section} = action.payload;
+  state.note.content![index] = section;
+}
+
+export const moveSection = (state:State,action:PayloadAction<{index:number,dest:'up'|'down'}>) => {
+  const { dest,index } = action.payload;
+  const { content } = state.note;
+  const i = (dest === 'up') ? -1 : 1;
+  
+  const sabad = content![index + i];
+  content![index + i] = content![index];
+  content![index] = sabad;
+}
+
+export const removeSection = (state:State,action:PayloadAction<{index:number}>) => {
+  const { index } = action.payload;
+  const { content } = state.note;
+  content!.splice(index,1);
 }

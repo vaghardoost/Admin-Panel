@@ -1,27 +1,28 @@
-import { Component, ReactNode } from "react"
-import { Panel, Stack } from "rsuite"
-import { Paragraph } from "../../../model/note"
-import { NoteComponentText } from "./note.text"
+import { generate } from "randomstring"
+import { Photo } from "../../../model/note"
+import NoteRich from "./note.rich"
 
-export class NoteComponentPhoto extends Component<{data:Paragraph}> {
-  
-  public render(): ReactNode {
-    return(<>
-    <Stack justifyContent="center">
-      <Panel bodyFill bordered style={{display: 'inline-block',}}>
-        <img style={{maxHeight:340}} src={this.props.data.url}/>
+export const NoteComponentPhoto = ({photo}:Props) => {
+    return <>
+      <div className="card">
+        <img className="card-img" src={photo.url}/>
         {
-          (this.props.data.text.length > 0)
+          (photo.richtext.length > 0)
           ?
             <div style={{padding:'10px'}}>
-              <NoteComponentText data={this.props.data}/>
+            {
+              photo.richtext.map(rich=>
+                <NoteRich key={generate()} richtext={rich}/>
+              )
+            }
             </div>
           :
             <></>
         }
-      </Panel>
-    </Stack>
-    </>)
-  }
-  
+      </div>
+    </>
+}
+
+interface Props {
+  photo: Photo
 }

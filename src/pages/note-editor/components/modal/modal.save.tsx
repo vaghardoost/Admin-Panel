@@ -1,10 +1,10 @@
 import { Component, ReactNode, RefObject, createRef } from "react";
 import { connect } from "react-redux";
 import { Button, ButtonGroup, Input, Modal } from "rsuite";
-import { Note } from "../../../model/note";
-import { dispatch } from "../../../redux";
-import { actions } from "../reducer";
-import { State } from "../reducer/state";
+import { Note } from "../../../../model/note";
+import { dispatch } from "../../../../redux";
+import { actions } from "../../reducer";
+import { State } from "../../reducer/state";
 
 interface Props {
     modal:boolean

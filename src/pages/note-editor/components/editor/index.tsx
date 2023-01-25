@@ -1,51 +1,48 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
-import { Button, ButtonGroup, Container, Content, Header } from "rsuite";
-import { dispatch } from "../../../../redux";
-import { actions } from "../../reducer";
-import { State } from "../../reducer/state";
-import CodeViewComponent from "./code";
-import EditTextComponent from "./editor";
-import ViewerComponent from "./viewer";
+import { connect } from 'react-redux'
+import { PanelGroup } from 'rsuite';
+import { Note } from '../../../../model/note'
+import { State } from '../../reducer/state'
+import EditorAppend from './editor.append';
+import EditorCaption from './editor.caption';
+import EditorCode from './editor.code';
+import EditorFrame from './editor.frame';
+import EditorPhoto from './editor.photo';
+import EditorTitle from './editor.title';
 
-interface Props{
-    page:'edit'|'code'|'view'
+
+function Editor({data:{content:data}}:Props) {
+    return <>
+      <PanelGroup accordion>
+        {
+          data?.map((section,index)=>{
+            switch (section.type) {
+              case 'caption':
+                return <EditorCaption index={index} key={section.id}/>
+              case 'frame':
+                return <EditorFrame index={index} key={section.id}/>
+              case 'title':
+                return <EditorTitle index={index} key={section.id} />
+              case 'photo':
+                return <EditorPhoto index={index} key={section.id} />
+              case 'code':
+                return <EditorCode index={index} key={section.id} />
+              default:
+                return <h4 className='fg-red around center'>خطای قسمت ناشناخته</h4>
+            }
+          })
+        }
+      </PanelGroup>
+      <EditorAppend/>
+    </>
 }
 
-class EditArea extends Component<Props> {
-    public render(): React.ReactNode {
-        return(
-            <Container>
-                <Header>
-                    <ButtonGroup size="sm" style={{marginBottom:"20px"}}>
-                        <Button appearance={(this.props.page === 'edit')?"primary":"default"} onClick={()=>{this.changePage('edit')}}>ویرایشگر</Button>
-                        <Button appearance={(this.props.page === 'view')?"primary":"default"} onClick={()=>{this.changePage('view')}}>نمایش محتوا</Button>
-                        <Button appearance={(this.props.page === 'code')?"primary":"default"} onClick={()=>{this.changePage('code')}}>قالب json</Button>
-                    </ButtonGroup>
-                </Header>
-                <Content>
-                    {
-                        (this.props.page === 'edit')
-                            ? <EditTextComponent/>
-                            : (this.props.page === 'view')
-                                ? <ViewerComponent/>
-                                : <CodeViewComponent/>
-                    }
-                </Content>
-            </Container>
-        )
-    }
-
-    private changePage(page:'edit'|'code'|'view'){
-        dispatch(actions.changePage(page))
-    }
+interface Props {
+  data:Note
 }
 
-function mapStateToProps(reducer:any):Props {
-    const state:State = reducer.addNoteReducer;
-    return {
-        page:state.page
-    }
+const mapStateToProps = (reducer:any):Props => {
+  const state:State = reducer.addNoteReducer;
+  return { data: state.note }
 }
 
-export default connect(mapStateToProps)(EditArea)
+export default connect(mapStateToProps)(Editor);

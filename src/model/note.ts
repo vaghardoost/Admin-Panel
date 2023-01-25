@@ -1,20 +1,59 @@
-export interface Note {
+export interface Note{
     id?: string
     title: string
     category?: string
     tag: any[]
-    content?: Paragraph[]
+    content?: (Caption|Photo|Frame|Code|Title)[]
     author: any
 }
 
-export interface Paragraph {
-    text: Word[],
-    url?: string,
-    type?: 'photo'|'audio'|'video'|'doc'|'frame'|'title'
+export interface RichText {
+    content: RichSpan[],
+    dir?: 'rtl'|'ltr'
+}
+  
+export interface RichSpan {
+    text: string
+    style?: RichStyle
 }
 
-
-export interface Word {
-    content: string,
-    style?: 'italic'|'bold'|'italicBold'
+interface RichStyle {
+    weight?: RichWeight[]
+    size?: number
+    color?: string
 }
+  
+export type RichWeight = 'BOLD' | 'ITALIC' | 'STRIKETHROUGH' | 'UNDERLINE'
+  
+interface Section {
+    id?: string
+    type: string
+}
+
+export interface Caption extends Section {
+    type: 'caption'
+    richtext: RichText[]
+}
+
+export interface Photo extends Section {
+    type: 'photo'
+    url: string
+    richtext: RichText[]
+}
+
+export interface Frame extends Section {
+    type: 'frame'
+    richtext: RichText[]
+}
+
+export interface Code extends Section {
+    type: 'code'
+    text: string
+}
+
+export interface Title extends Section {
+    type:'title'
+    text: string
+    header: 'h1'|'h2'|'h3'|'h4'|'h5'|'h6'
+}
+

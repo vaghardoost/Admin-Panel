@@ -5,6 +5,7 @@ import { Note } from "../../../model/note"
 export interface State {
   note:Note
   edit?:string
+  photoList:File[]
   draft:{
       save:{
           modal:boolean,
@@ -20,12 +21,6 @@ export interface State {
       buttonStatus:'loading'|'normal'
   }
   picker: {
-    photo: {
-        open:boolean
-        list:File[]
-        select?:File
-        caption:string
-    }
     alert: {
         title:string
         message: string
@@ -33,43 +28,37 @@ export interface State {
         open: boolean
     }
   }
-  raw: string
   page: 'edit'|'code'|'view'
 }
 
 export const initialState:State = {
-  note: {
-      title: "",
-      content: [],
-      tag: [],
-      author:'',
-  },
-  draft:{
-      load:{
-          modal:false
-      },
-      save:{
-          modal:false,
-          status:'normal'
-      }
-  },
-  category: {
-      list:[],
-      buttonStatus:'normal'
-  },
-  picker:{
-    photo:{
-        list:[],
-        open:false,
-        caption:''
+    note: {
+        title: "",
+        content: [],
+        tag: [],
+        author: '',
     },
-    alert:{
-        message:'',
-        open:false,
-        status:'black',
-        title:''
-    }
-  },
-  raw: '',
-  page: 'edit'
+    draft: {
+        load: {
+            modal: false
+        },
+        save: {
+            modal: false,
+            status: 'normal'
+        }
+    },
+    category: {
+        list: [],
+        buttonStatus: 'normal'
+    },
+    picker: {
+        alert: {
+            message: '',
+            open: false,
+            status: 'black',
+            title: ''
+        }
+    },
+    page: 'edit',
+    photoList: []
 }

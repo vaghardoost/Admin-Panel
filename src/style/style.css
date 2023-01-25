@@ -10,9 +10,23 @@
     font-style: normal;
 }
 
-* {
-    font: 12pt/2 Yekan, sans-serif;
-    /* font-size: small; */
+.frame {
+    box-shadow: rgba(0, 0, 0, 0.1) 0 0 10px 1px;
+    border-radius: 5px;
+    border: #343a4003 1px solid;
+    padding: 10px;
+    margin: 10px;
+}
+
+.editor {
+    border-radius: 5px;
+    border: rgba(128, 128, 128, 0.2) 1px solid;
+}
+
+.img {
+    border-radius: 15px;
+    max-width: 100%;
+    max-height: 350px;
 }
 
 code { 
@@ -109,4 +123,15 @@ body {
 
 .fg-red {
     color: #e5383b;
+}
+
+.card {
+    border: rgba(128, 128, 128, 0.2) solid 1px;
+    border-radius: 10px;
+    border-width: 1px;
+}
+  
+.card-img {
+    width: 100%;
+    border-radius: 10px 10px 0 0;
 }

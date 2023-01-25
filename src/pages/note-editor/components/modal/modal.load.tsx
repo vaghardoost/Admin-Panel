@@ -1,11 +1,10 @@
 import { Component, ReactNode } from "react";
 import { connect } from "react-redux";
 import { Button, ButtonGroup, Modal, Table } from "rsuite";
-import { Note } from "../../../model/note";
-import { dispatch } from "../../../redux";
-import { objectToPattern } from "../../../render";
-import { actions } from "../reducer";
-import { State } from "../reducer/state";
+import { Note } from "../../../../model/note";
+import { dispatch } from "../../../../redux";
+import { actions } from "../../reducer";
+import { State } from "../../reducer/state";
 
 interface Props {
     modal:boolean
@@ -78,9 +77,8 @@ class LoadModal extends Component<Props> {
     private loadDraftNote(){
         const data = localStorage.getItem(this.props.selected!)!;
         const note:Note = JSON.parse(data);
-        const raw = objectToPattern(note.content!);
-        dispatch(actions.changeContent(raw));
         dispatch(actions.setNote(note))
+        
         dispatch(actions.modalLoad(false));
     }
 }

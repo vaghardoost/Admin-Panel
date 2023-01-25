@@ -1,13 +1,20 @@
-import { Component, ReactNode } from "react"
-import { Paragraph } from "../../../model/note"
-import { NoteComponentText } from "./note.text"
+import { generate } from "randomstring"
+import { Frame } from "../../../model/note"
+import NoteRich from "./note.rich"
 
-export class NoteComponentFrame extends Component<{data:Paragraph}> {
-  public render(): ReactNode {
-    return(<>
-      <div style={{ backgroundColor:"#aaaaaa",padding:"10px",margin:"10px",borderRadius:"5px" }}>
-        <NoteComponentText data={this.props.data}/>
-      </div>
-    </>)
-  }
+export const NoteComponentFrame = ({frame}:Props) => {
+  return <>
+    <div className="card around">
+      {
+        frame.richtext.map((rich)=>{
+          return <NoteRich key={generate()} richtext={rich}/>
+        })
+      }
+    </div>
+  </>
+} 
+
+
+interface Props {
+  frame:Frame
 }

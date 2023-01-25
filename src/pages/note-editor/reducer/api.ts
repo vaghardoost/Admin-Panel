@@ -22,16 +22,17 @@ export const loadNote = async (id:string)=> {
     return data;
 }
 
-export const saveNote = async (note:Note):Promise<ApiResult<Note>>=>{
+export const saveNote = async (note:Note)=>{
     const token = sessionStorage.getItem("file-token");
-    const { data } = await api.post(
+    const { data } = await api.post<ApiResult<Note>>(
         '/note',
         note,
         { headers: {"Authorization" : `Bearer ${token}`} }
     )
+    
     return {
         success:data.success,
-        payload:data.payload
+        payload:data.payload,
     }
 }
 

@@ -1,16 +1,14 @@
-import { Component, ReactNode } from "react"
-import { Paragraph } from "../../../model/note"
+import { Title } from "../../../model/note"
 
-export class NoteComponentTitle extends Component<{data:Paragraph}> {
-  public render(): ReactNode {
-    return(
-      <h3 style={{marginBottom:'20px',marginTop:'20px'}}>
-          {
-            this.props.data.text.map((word)=>{
-              return word.content + " ";
-            })
-          }
-      </h3>
-    )
-  }
+export const NoteComponentTitle = ({title}:Props) => {
+  const TitleHeader = `${title.header}` as keyof JSX.IntrinsicElements;
+  return <>
+    <TitleHeader style={{marginBottom:'20px',marginTop:'20px'}}>
+        {title.text}
+    </TitleHeader>
+  </>
+}
+
+interface Props {
+  title:Title
 }
