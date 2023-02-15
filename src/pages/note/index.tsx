@@ -6,6 +6,7 @@ import { dispatch } from "../../redux";
 import { categoryListAction, queryAction } from "./reducer/action";
 import ModalNote from "./components/modal.note";
 import ModalRemove from "./components/modal.remove";
+import MessageModal from "./components/modal.message";
 
 export default class Notes extends Component{
     constructor(props:any){
@@ -19,6 +20,7 @@ export default class Notes extends Component{
             <Container>
                 <ModalNote/>
                 <ModalRemove/>
+                <MessageModal/>
                 <Header>
                     <h4 className='around'>مشاهده ی نوشته ها</h4>
                 </Header>

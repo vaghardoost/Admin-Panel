@@ -1,0 +1,14 @@
+.modal-header p{
+  color: red;
+  font-weight: bold;
+}
+
+.modal-body > h6 {
+  margin-bottom: '5px'
+}
+
+.around {
+  padding: 10px;
+}
+
+

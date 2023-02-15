@@ -44,3 +44,14 @@ export const removeNote = async (id:string):Promise<ApiResult<any>> => {
         payload:data.payload
     }
 }
+
+export const refreshServer = async () => {
+    const token = sessionStorage.getItem('token');
+    await api.patch(
+        '/note/refresh',
+        {},
+        {
+            headers: { "Authorization": `Bearer ${token}` },
+        }
+    )
+}

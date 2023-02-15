@@ -6,7 +6,7 @@ import { loadCatList } from "./reducer/actions"
 import ListCategory from "./components/list";
 import SelectedCategory from "./components/select";
 import DeleteModal from "./components/modal.delete";
-import CreateModal from "./components/modal.create";
+import MessageModal from "./components/modal.message";
 
 export default class Category extends Component{
 
@@ -19,7 +19,7 @@ export default class Category extends Component{
         return (
             <>
                 <DeleteModal/>
-                <CreateModal/>
+                <MessageModal/>
                 <Container>
                     <Header>
                         <h4 className="around">مدیریت دسته بندی ها</h4>

@@ -5,7 +5,7 @@ import { ItemDataType } from "rsuite/esm/@types/common";
 import { categoryListBuilder } from "../../../other";
 import { dispatch } from "../../../redux";
 import { actions } from "../reducer";
-import { queryAction } from "../reducer/action";
+import { queryAction, refreshServer } from "../reducer/action";
 import { Filter, State } from "../reducer/state";
 
 interface Props {
@@ -29,8 +29,9 @@ class NoteFilter extends Component<Props> {
                     <Control block value={this.props.filter.tag ?? []} name="tag" placeholder="کلمات کلیدی" accepter={TagInput} style={{margin:'10px'}} trigger={"Enter"} data={[]}/>
                     <Stack justifyContent="flex-end">
                         <ButtonGroup>
-                            <Button appearance="primary" onClick={()=>dispatch(actions.cleanFilter())}>پاک کردن فیلتر ها</Button>
-                            <Button appearance="primary" onClick={()=>{dispatch(queryAction(this.props.filter))}}>اعمال فیلتر ها</Button>
+                            <Button appearance="primary" size="sm"  onClick={()=>dispatch(actions.cleanFilter())}>پاک کردن فیلتر ها</Button>
+                            <Button appearance="primary" size="sm"  onClick={()=>{dispatch(queryAction(this.props.filter))}}>اعمال فیلتر ها</Button>
+                            <Button appearance="primary" size="sm" color="red" onClick={()=>{dispatch(refreshServer())}}>رفع اشکال سرور</Button>
                         </ButtonGroup>
                     </Stack>
                 </Form>

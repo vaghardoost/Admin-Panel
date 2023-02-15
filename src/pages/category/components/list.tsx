@@ -5,55 +5,58 @@ import { Category } from "../../../model/category";
 import { categoryTreeBuilder } from "../../../other";
 import { dispatch } from "../../../redux";
 import { actions } from "../reducer";
+import { refreshServer } from "../reducer/actions";
 import { State } from "../reducer/state";
 
 
-interface Props{
-    list:Category[],
-    select?:Category
+interface Props {
+    list: Category[],
+    select?: Category
 }
 
-class ListCategory extends Component <Props>{
+class ListCategory extends Component<Props>{
     public render(): ReactNode {
-        return (
+        return <>
             <Panel className="bg-light" bordered header={
                 <Stack justifyContent="space-between">
                     <h5>انتخاب دسته بندی</h5>
-                    <h5>{this.props.select?.label}</h5>
-                    <Button size="sm" onClick={()=>{
-                        dispatch(actions.reset())
-                        dispatch(actions.modalCreate(true))
-                    }} appearance="primary" color="blue">افزودن</Button>
+                    <div style={{ textAlign: 'center' }}>
+                        <h5>دسته بندی انتخاب شده</h5>
+                        <p>{this.props.select?.label}</p>
+                    </div>
                 </Stack>
-            }> 
-                <Tree 
-                    onSelect={(data)=>{
-                        if(data.label === "root"){
+            }>
+                <Tree
+                    onSelect={(data) => {
+                        if (data.label === "root") {
                             dispatch(actions.reset());
                             return;
                         }
                         for (const cat of this.props.list) {
-                            if (data.value === cat.id){
+                            if (data.value === cat.id) {
                                 dispatch(actions.select(cat));
                                 break;
                             }
                         }
                     }}
-                    value={this.props.select?.id} 
-                    data={categoryTreeBuilder(this.props.list)} 
+                    value={this.props.select?.id}
+                    data={categoryTreeBuilder(this.props.list)}
                     defaultExpandAll
-                    virtualized/>
+                    virtualized />
             </Panel>
-        )
+            <div className="around">
+                <Button color='red' appearance="primary" onClick={() => dispatch(refreshServer())}>رفع اشکال سرور</Button>
+            </div>
+        </>
     }
 
 }
 
-const mapStateToProps = (reducer:any):Props=> {
-    const state:State = reducer.categoryReducer;
+const mapStateToProps = (reducer: any): Props => {
+    const state: State = reducer.categoryReducer;
     return {
-        list:state.list,
-        select:state.select
+        list: state.list,
+        select: state.select
     }
 }
 

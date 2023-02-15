@@ -1,32 +1,30 @@
 import { Category } from "../../../model/category"
-import File from "../../../model/file"
 
 export interface State {
   list: Category[]
   select?: Category
   modal: {
-      delete: {
-          show: boolean
-      }
-      create: {
-        show: boolean
-        list: File[]
-        update?: boolean
-        selectedFile?: File
-        message?: string
-      }
+    delete: {
+      show: boolean
+    },
+    message: {
+      title: string,
+      content: string,
+      show: boolean,
+    }
   }
 }
 
 export const initialState: State = {
-  list:[],
+  list: [],
   modal: {
-      delete: {
-          show: false,
-      },
-      create: {
-        show: false,
-        list: []
-      }
+    delete: {
+      show: false,
+    },
+    message: {
+      show: false,
+      title: "",
+      content: ""
+    }
   },
 }

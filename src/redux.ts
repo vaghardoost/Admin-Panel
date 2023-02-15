@@ -5,6 +5,7 @@ import dashboardReducer from "./pages/dashboard/reducer";
 import addNoteReducer from "./pages/note-editor/reducer";
 import noteReducer from "./pages/note/reducer";
 import categoryReducer from "./pages/category/reducer";
+import categoryEditorReducer from "./pages/category-editor/reducer"
 import photoReducer from "./pages/photo/reducer";
 
 const combine = combineReducers({
@@ -13,6 +14,7 @@ const combine = combineReducers({
     addNoteReducer,
     noteReducer,
     categoryReducer,
+    categoryEditorReducer,
     photoReducer,
 })
 

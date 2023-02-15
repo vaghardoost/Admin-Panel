@@ -9,6 +9,7 @@ import { useParams } from "react-router-dom";
 import { dispatch } from "../../redux";
 import { actions } from "./reducer";
 import { loadNote, loadPhoto } from "./reducer/actions"
+
 interface Props {
     edit?:boolean
 }

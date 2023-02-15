@@ -2,40 +2,50 @@ import { Category } from "../../../model/category"
 import { Note } from "../../../model/note"
 
 export interface State {
-  note:Note[],
-  filter:Filter
-  authors:{label:string,value:string}[],
-  tag:string[],
-  categoryList:Category[],
-  select:{
-    note?:Note,
-    status:'loading'|'showing'|'close'
+  note: Note[],
+  filter: Filter
+  authors: { label: string, value: string }[],
+  tag: string[],
+  categoryList: Category[],
+  message: {
+    show: boolean
+    title: string
+    content: string
   }
-  remove:{
-    open:boolean
-    id:string
+  select: {
+    note?: Note,
+    status: 'loading' | 'showing' | 'close'
+  }
+  remove: {
+    open: boolean
+    id: string
   }
 }
 
 export interface Filter {
-  id?:string,
-  title?:string,
-  author?:string[],
-  category?:string[],
-  tag?:[]
+  id?: string,
+  title?: string,
+  author?: string[],
+  category?: string[],
+  tag?: []
 }
 
-export const initialState:State = {
-  note:[],
-  filter:{},
-  authors:[],
-  categoryList:[],
-  tag:[],
-  select:{
-    status:'close'
+export const initialState: State = {
+  note: [],
+  filter: {},
+  authors: [],
+  categoryList: [],
+  tag: [],
+  select: {
+    status: 'close'
   },
-  remove:{
-    open:false,
-    id:''
+  remove: {
+    open: false,
+    id: ''
+  },
+  message: {
+    show: false,
+    title: "",
+    content: ""
   }
 }
