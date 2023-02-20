@@ -1,10 +1,10 @@
 import { RefObject,createRef } from "react"
 import { connect } from "react-redux";
 import { Button, ButtonGroup, Input, Panel } from "rsuite";
-import { Code, Note } from "../../../../model/note";
-import { dispatch } from "../../../../redux";
-import { actions } from "../../reducer";
-import { State } from "../../reducer/state";
+import { Code, Note } from "../../../../../../model/note";
+import { dispatch } from "../../../../../../redux";
+import { actions } from "../../../../reducer";
+import { State } from "../../../../reducer/state";
 
 function EditorCode({note:{content},index}:Props) {
   const code:Code = {

@@ -1,13 +1,13 @@
 import { connect } from 'react-redux'
 import { PanelGroup } from 'rsuite';
-import { Note } from '../../../../model/note'
-import { State } from '../../reducer/state'
-import EditorAppend from './editor.append';
-import EditorCaption from './editor.caption';
-import EditorCode from './editor.code';
-import EditorFrame from './editor.frame';
-import EditorPhoto from './editor.photo';
-import EditorTitle from './editor.title';
+import { Note } from '../../../../../model/note'
+import { State } from '../../../reducer/state'
+import EditorAppend from './sections/editor.append';
+import EditorCaption from './sections/editor.caption';
+import EditorCode from './sections/editor.code';
+import EditorFrame from './sections/editor.frame';
+import EditorPhoto from './sections/editor.photo';
+import EditorTitle from './sections/editor.title';
 
 
 function Editor({data:{content:data}}:Props) {

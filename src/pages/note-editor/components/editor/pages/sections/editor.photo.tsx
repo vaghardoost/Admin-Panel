@@ -1,14 +1,14 @@
 import { generate } from "randomstring"
 import { connect } from "react-redux"
 import { Avatar, Button, ButtonGroup, Panel, Stack } from "rsuite"
-import RichTextView from "../../../../components/richtext.editor"
+import RichTextView from "../../../../../../components/richtext.editor"
 
-import { cdn } from "../../../../config"
-import File from "../../../../model/file"
-import { Note, Photo, RichText } from "../../../../model/note"
-import { dispatch } from "../../../../redux"
-import { actions } from "../../reducer"
-import { State } from "../../reducer/state"
+import { cdn } from "../../../../../../config"
+import File from "../../../../../../model/file"
+import { Note, Photo, RichText } from "../../../../../../model/note"
+import { dispatch } from "../../../../../../redux"
+import { actions } from "../../../../reducer"
+import { State } from "../../../../reducer/state"
 
 function EditorPhoto({index,list,note:{content}}:Props) {
   

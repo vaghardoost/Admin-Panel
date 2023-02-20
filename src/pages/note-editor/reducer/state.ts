@@ -1,11 +1,16 @@
 import { Category } from "../../../model/category"
 import File from "../../../model/file"
-import { Note } from "../../../model/note"
+import { Note, SectionType } from "../../../model/note"
 
 export interface State {
   note:Note
   edit?:string
   photoList:File[]
+  quick:{
+    visible:boolean
+    index?:number
+    section?: SectionType
+  }
   draft:{
       save:{
           modal:boolean,
@@ -37,6 +42,9 @@ export const initialState:State = {
         content: [],
         tag: [],
         author: '',
+    },
+    quick:{
+        visible:false
     },
     draft: {
         load: {

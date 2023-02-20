@@ -1,8 +1,8 @@
 import { connect } from "react-redux"
 
 import { Button, ButtonGroup, Panel, Stack } from "rsuite";
-import { dispatch } from "../../../../redux";
-import { actions } from "../../reducer";
+import { dispatch } from "../../../../../../redux";
+import { actions } from "../../../../reducer";
 import { generate } from 'randomstring'
 
 

@@ -1,10 +1,10 @@
 import { connect } from 'react-redux'
-import { State } from '../../reducer/state'
+import { State } from '../../../../reducer/state'
 import { Button, ButtonGroup, Panel } from 'rsuite'
-import RichtextEditor from "../../../../components/richtext.editor"
-import { dispatch } from '../../../../redux';
-import { actions } from '../../reducer';
-import { Caption, Note, RichText } from '../../../../model/note';
+import RichtextEditor from "../../../../../../components/richtext.editor"
+import { dispatch } from '../../../../../../redux';
+import { actions } from '../../../../reducer';
+import { Caption, Note, RichText } from '../../../../../../model/note';
 
 function EditorCaption({index,note:{content}}:Props) {
 

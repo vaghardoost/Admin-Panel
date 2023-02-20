@@ -3,7 +3,7 @@ export interface Note{
     title: string
     category?: string
     tag: any[]
-    content?: (Caption|Photo|Frame|Code|Title)[]
+    content?: SectionType[]
     author: any
 }
 
@@ -29,6 +29,8 @@ interface Section {
     id?: string
     type: string
 }
+
+export type SectionType = Caption | Photo | Frame | Code | Title;
 
 export interface Caption extends Section {
     type: 'caption'

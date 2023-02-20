@@ -28,7 +28,7 @@ class App extends Component<Props>{
             <BrowserRouter>
                 <Container>
                     <Routes>
-                        <Route path="*" element={(login) ? <Sidebar> <SideMenu /> </Sidebar> : <></>} />
+                        <Route path="*" element={(login) ? <Sidebar collapsible> <SideMenu /> </Sidebar> : <></>} />
                     </Routes>
                     <Content>
                         <Routes>

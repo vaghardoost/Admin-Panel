@@ -1,7 +1,7 @@
-import { Container, Content, FlexboxGrid, Header } from "rsuite";
+import { Affix, Container, Content, FlexboxGrid, Header } from "rsuite";
 import FlexboxGridItem from "rsuite/esm/FlexboxGrid/FlexboxGridItem";
 import NoteCategory from "./components/note.category";
-import NoteEditor from "./components/note.editor"
+import NoteEditor from "./components/editor/note.editor"
 import SaveModal from "./components/modal/modal.save";
 import LoadModal from "./components/modal/modal.load";
 import ModalAlert from "./components/modal/modal.alert";
@@ -9,27 +9,29 @@ import { useParams } from "react-router-dom";
 import { dispatch } from "../../redux";
 import { actions } from "./reducer";
 import { loadNote, loadPhoto } from "./reducer/actions"
+import NoteHeader from "./components/note.header";
+import NoteQuick from "./components/editor/note.quick";
 
 interface Props {
-    edit?:boolean
+    edit?: boolean
 }
 
-export default (props:Props) => {
+export default (props: Props) => {
     dispatch(loadPhoto());
     if (props.edit) {
         const { id } = useParams();
         dispatch(actions.setEditable(id!));
-        dispatch(actions.alertModal({open:true,message:'درحال بارگذاری',title:'ویرایش نوشته'}));
-        dispatch(loadNote(id!)).then(()=> {
-            dispatch(actions.alertModal({open:false}));
+        dispatch(actions.alertModal({ open: true, message: 'درحال بارگذاری', title: 'ویرایش نوشته' }));
+        dispatch(loadNote(id!)).then(() => {
+            dispatch(actions.alertModal({ open: false }));
         });
     } else {
         dispatch(actions.reset());
     }
     return <>
-        <SaveModal/>
-        <LoadModal/>
-        <ModalAlert/>
+        <SaveModal />
+        <LoadModal />
+        <ModalAlert />
         <Container>
             <Header>
                 <h4 className='around'>
@@ -42,15 +44,27 @@ export default (props:Props) => {
             </Header>
             <Content>
                 <FlexboxGrid>
-                    <FlexboxGridItem colspan={16}>
+                    <FlexboxGridItem colspan={14}>
                         <div className="around">
-                            <NoteEditor/>
+                            <NoteHeader />
                         </div>
                     </FlexboxGridItem>
-                    <FlexboxGridItem colspan={8}>
+                    <FlexboxGridItem colspan={10}>
                         <div className="around">
-                            <NoteCategory/>
+                            <NoteCategory />
                         </div>
+                    </FlexboxGridItem>
+                    <FlexboxGridItem colspan={14}>
+                        <div className="around">
+                            <NoteEditor />
+                        </div>
+                    </FlexboxGridItem>
+                    <FlexboxGridItem colspan={10}>
+                        <Affix>
+                            <div className="around">
+                                <NoteQuick/>
+                            </div>
+                        </Affix>
                     </FlexboxGridItem>
                 </FlexboxGrid>
             </Content>

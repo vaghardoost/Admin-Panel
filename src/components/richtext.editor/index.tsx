@@ -54,6 +54,7 @@ export default class RichTextView extends Component<Props,State> {
   }
 
   private buildRaw():EditorState {
+    
     const raw:RawDraftContentState = {
       blocks: [],
       entityMap: {}
@@ -71,6 +72,9 @@ export default class RichTextView extends Component<Props,State> {
 
       for (let i = 0; i < content.length; i++) {
         const {text,style} = content[i];
+        if (!style || !text) {
+          continue; 
+        }
         for (const item of style!.weight!) {
           block.inlineStyleRanges.push({
             offset:block.text.length,

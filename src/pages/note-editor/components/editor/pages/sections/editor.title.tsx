@@ -1,9 +1,9 @@
 import { connect } from "react-redux"
 import { Button, ButtonGroup, Input, Panel } from "rsuite"
-import { Note, Title } from "../../../../model/note"
-import { dispatch } from "../../../../redux"
-import { actions } from "../../reducer"
-import { State } from "../../reducer/state"
+import { Note, Title } from "../../../../../../model/note"
+import { dispatch } from "../../../../../../redux"
+import { actions } from "../../../../reducer"
+import { State } from "../../../../reducer/state"
 
 function EditorTitle({note:{content},index}:Props) {
   
