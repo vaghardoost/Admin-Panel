@@ -1,7 +1,8 @@
-export interface Note{
+export interface Note {
     id?: string
     title: string
     category?: string
+    photo?: string
     tag: any[]
     content?: SectionType[]
     author: any
@@ -9,9 +10,9 @@ export interface Note{
 
 export interface RichText {
     content: RichSpan[],
-    dir?: 'rtl'|'ltr'
+    dir?: 'rtl' | 'ltr'
 }
-  
+
 export interface RichSpan {
     text: string
     style?: RichStyle
@@ -22,9 +23,9 @@ interface RichStyle {
     size?: number
     color?: string
 }
-  
+
 export type RichWeight = 'BOLD' | 'ITALIC' | 'STRIKETHROUGH' | 'UNDERLINE'
-  
+
 interface Section {
     id?: string
     type: string
@@ -54,8 +55,8 @@ export interface Code extends Section {
 }
 
 export interface Title extends Section {
-    type:'title'
+    type: 'title'
     text: string
-    header: 'h1'|'h2'|'h3'|'h4'|'h5'|'h6'
+    header: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6'
 }
 

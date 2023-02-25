@@ -15,7 +15,7 @@ export default class SideMenu extends Component<Properties, State>{
                 </Sidenav.Header>
                 <Sidenav.Body>
                     <Nav>
-                        <Nav.Menu open title="مدیریت محتوا">
+                        <Nav.Menu title="مدیریت محتوا">
                             <Nav.Item panel style={panelStyle}>نوشته ها</Nav.Item>
                             <Nav.Item> <Link to="/note">مشاهده نوشته ها</Link> </Nav.Item>
                             <Nav.Item> <Link to="/note/add">افزودن نوشته</Link> </Nav.Item>
@@ -34,7 +34,7 @@ export default class SideMenu extends Component<Properties, State>{
                             <Nav.Item divider />
                         </Nav.Menu>
 
-                        <Nav.Menu open title="حساب کاربری">
+                        <Nav.Menu title="حساب کاربری">
                             <Nav.Item>تغییر رمز</Nav.Item>
                         </Nav.Menu>
                     </Nav>

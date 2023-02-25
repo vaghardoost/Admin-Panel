@@ -28,6 +28,25 @@ export function NoteComponent({ note, itemClick, quickIndex }: Props) {
 
   }
 
+  function getEdit(section:SectionType){
+    const { type } = section;
+    const key: React.Key = generate({ length: 8 });
+    switch (type) {
+      case "caption":
+        return <NoteCaptionView key={key} caption={section as Caption} />
+      case "photo":
+        return <NoteComponentPhoto key={key} photo={section as Photo} />
+      case "frame":
+        return <NoteComponentFrame key={key} frame={section as Frame} />
+      case "title":
+        return <NoteComponentTitle key={key} title={section as Title} />
+      case "code":
+        return <NoteComponentCode key={key} code={section as Code} />
+      default:
+        return <h3 key={key} className='fg-red'>نوع ناشناخته داده</h3>
+    }
+  }
+
   return <>
     {
       note.content!.map((section, index) =>

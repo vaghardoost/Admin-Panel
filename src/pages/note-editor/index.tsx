@@ -1,16 +1,20 @@
 import { Affix, Container, Content, FlexboxGrid, Header } from "rsuite";
 import FlexboxGridItem from "rsuite/esm/FlexboxGrid/FlexboxGridItem";
-import NoteCategory from "./components/note.category";
-import NoteEditor from "./components/editor/note.editor"
-import SaveModal from "./components/modal/modal.save";
-import LoadModal from "./components/modal/modal.load";
-import ModalAlert from "./components/modal/modal.alert";
+
 import { useParams } from "react-router-dom";
 import { dispatch } from "../../redux";
 import { actions } from "./reducer";
-import { loadNote, loadPhoto } from "./reducer/actions"
-import NoteHeader from "./components/note.header";
-import NoteQuick from "./components/editor/note.quick";
+import { loadNote, loadPhoto } from "./reducer/actions";
+
+import SaveModal from "./components/modal/modal.save";
+import LoadModal from "./components/modal/modal.load";
+import ModalAlert from "./components/modal/modal.alert";
+
+import Metadata from "./components/metadata";
+import Category from "./components/category";
+import ContentNote from "./components/content"
+import Catcard from "./components/catcard";
+import ModalPhoto from "./components/modal/modal.photo";
 
 interface Props {
     edit?: boolean
@@ -32,6 +36,7 @@ export default (props: Props) => {
         <SaveModal />
         <LoadModal />
         <ModalAlert />
+        <ModalPhoto />
         <Container>
             <Header>
                 <h4 className='around'>
@@ -44,26 +49,24 @@ export default (props: Props) => {
             </Header>
             <Content>
                 <FlexboxGrid>
-                    <FlexboxGridItem colspan={14}>
+                    <FlexboxGridItem colspan={16}>
                         <div className="around">
-                            <NoteHeader />
+                            <Metadata />
                         </div>
                     </FlexboxGridItem>
-                    <FlexboxGridItem colspan={10}>
+                    <FlexboxGridItem colspan={8}>
                         <div className="around">
-                            <NoteCategory />
+                            <Category />
                         </div>
                     </FlexboxGridItem>
-                    <FlexboxGridItem colspan={14}>
+                    <FlexboxGridItem colspan={16}>
                         <div className="around">
-                            <NoteEditor />
+                            <ContentNote />
                         </div>
                     </FlexboxGridItem>
-                    <FlexboxGridItem colspan={10}>
+                    <FlexboxGridItem colspan={8}>
                         <Affix>
-                            <div className="around">
-                                <NoteQuick/>
-                            </div>
+                            <Catcard/>
                         </Affix>
                     </FlexboxGridItem>
                 </FlexboxGrid>

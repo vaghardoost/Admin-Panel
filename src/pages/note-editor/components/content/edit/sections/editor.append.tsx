@@ -9,66 +9,66 @@ import { generate } from 'randomstring'
 function EditorAppend() {
   return <>
     <Panel bordered>
-      <h4 style={{width:'100%',textAlign:'center'}}>افزودن قسمت</h4>
+      <h4 style={{ width: '100%', textAlign: 'center' }}>افزودن قسمت</h4>
       <Stack justifyContent="center">
         <ButtonGroup>
-          <Button onClick={()=>{
+          <Button onClick={() => {
             dispatch(
               actions.addSection(
-                { 
-                  id:generate({charset:'0123456789abcdef',length:8}),
-                  type:'caption',
-                  richtext:[],
+                {
+                  id: generate({ charset: '0123456789abcdef', length: 8 }),
+                  type: 'caption',
+                  richtext: [],
                 }
               )
             )
           }}>نوشته خام</Button>
 
-          <Button onClick={()=>{
+          <Button onClick={() => {
             dispatch(
               actions.addSection(
                 {
-                  id:generate({charset:'0123456789abcdef',length:8}),
-                  type:'frame',
-                  richtext:[]
+                  id: generate({ charset: '0123456789abcdef', length: 8 }),
+                  type: 'frame',
+                  richtext: []
                 }
               )
             )
           }}>کادر</Button>
-          
-          <Button onClick={()=>{
+
+          <Button onClick={() => {
             dispatch(
               actions.addSection(
                 {
-                  id:generate({charset:'0123456789abcdef',length:8}),
-                  type:'title',
-                  header:'h2',
-                  text:''
+                  id: generate({ charset: '0123456789abcdef', length: 8 }),
+                  type: 'title',
+                  header: 'h2',
+                  text: ''
                 }
               )
             )
           }}>عنوان</Button>
 
-          <Button onClick={()=>{
+          <Button onClick={() => {
             dispatch(
               actions.addSection(
                 {
-                  id:generate({charset:'0123456789abcdef',length:8}),
-                  type:'photo',
-                  richtext:[],
-                  url:''
+                  id: generate({ charset: '0123456789abcdef', length: 8 }),
+                  type: 'photo',
+                  richtext: [],
+                  url: ''
                 }
               )
             )
           }}>تصویر</Button>
-          
-          <Button onClick={()=>{
+
+          <Button onClick={() => {
             dispatch(
               actions.addSection(
                 {
-                  id:generate({charset:'0123456789abcdef',length:8}),
-                  type:'code',
-                  text:''
+                  id: generate({ charset: '0123456789abcdef', length: 8 }),
+                  type: 'code',
+                  text: ''
                 }
               )
             )

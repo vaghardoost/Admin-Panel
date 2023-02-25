@@ -32,7 +32,7 @@ export const alertModal = (state: State, action: PayloadAction<{ open: boolean, 
     : initialState.picker.alert
 }
 
-export const changePage = (state: State, action: PayloadAction<'edit' | 'code' | 'view'>) => {
+export const changePage = (state: State, action: PayloadAction<'edit' | 'view'>) => {
   state.page = action.payload;
 }
 
@@ -110,7 +110,7 @@ export const updateSection = (state: State, action: PayloadAction<{ index: numbe
 export const moveSection = (state: State, action: PayloadAction<{ index: number, dest: 'up' | 'down' }>) => {
   const { dest, index } = action.payload;
   const { content } = state.note;
-  const { index:quickIndex } = state.quick;
+  const { index: quickIndex } = state.quick;
   const i = (dest === 'up') ? -1 : 1;
 
   if (quickIndex) {
@@ -141,4 +141,18 @@ export const resetQuick = (state: State) => {
     section: undefined,
     index: undefined
   }
+}
+
+export const photoPicker = (state: State, action: PayloadAction<boolean>) => {
+  state.picker.photo = {
+    open: action.payload
+  }
+}
+
+export const setNotePhoto = (state: State, action: PayloadAction<string>) => {
+  state.note.photo = action.payload;
+}
+
+export const resetNotePhoto = (state: State) => {
+  delete state.note.photo;
 }

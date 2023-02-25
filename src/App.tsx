@@ -1,7 +1,7 @@
 import { Component, ReactNode } from "react";
 import { connect } from "react-redux";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
-import { Container, Content, Sidebar } from "rsuite";
+import { Affix, Container, Content, Sidebar } from "rsuite";
 import { dispatch } from "./redux";
 
 import NotFound from "./pages/404";
@@ -28,11 +28,10 @@ class App extends Component<Props>{
             <BrowserRouter>
                 <Container>
                     <Routes>
-                        <Route path="*" element={(login) ? <Sidebar collapsible> <SideMenu /> </Sidebar> : <></>} />
+                        <Route path="*" element={(login) ? <Sidebar> <SideMenu /> </Sidebar> : <></>} />
                     </Routes>
                     <Content>
                         <Routes>
-
                             <Route path="login" element={(login) ? <Navigate to='/dashboard' /> : <Login />} />
 
                             <Route path="dashboard" element={(login) ? <Dashboard /> : <Navigate to='/login' />} />
@@ -51,7 +50,6 @@ class App extends Component<Props>{
                             <Route path="404" element={(login) ? <NotFound /> : <Navigate to='/login' />} />
 
                             <Route path="*" element={<Navigate to='404' />} />
-
                         </Routes>
                     </Content>
                 </Container>
