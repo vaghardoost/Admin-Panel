@@ -21,7 +21,7 @@ class NoteHeader extends Component<Props> {
   public render(): ReactNode {
     const { note, edit } = this.props;
     return <>
-      <Panel bordered>
+      <Panel className="bg-light" bordered>
         <ButtonGroup justified style={{ marginBottom: '20px' }}>
           <Button size="sm" onClick={() => dispatch(actions.modalSave(true))} appearance="default">ذخیره پیش نویس</Button>
           <Button size="sm" onClick={() => dispatch(actions.modalLoad(true))} appearance="default">بارگذاری پیش نویس</Button>

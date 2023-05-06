@@ -1,18 +1,19 @@
 import { Component, ReactNode } from "react";
-import { FlexboxGrid } from "rsuite";
-import FlexboxGridItem from "rsuite/esm/FlexboxGrid/FlexboxGridItem";
 import LoginCard from './components/login-card'
+import './stylesheet/module.login.css'
 
 export default class Login extends Component {
     public render(): ReactNode {
-        return (
-            <FlexboxGrid justify="center">
-                <FlexboxGridItem colspan={6}>
-                    <div style={{marginTop:'40%'}}>
-                        <LoginCard/>
+        return <>
+            <div className="container-fluid back">
+                <div className="row">
+                    <div className="col-md-4"></div>
+                    <div className="col-md-4">
+                        <LoginCard />
                     </div>
-                </FlexboxGridItem>
-            </FlexboxGrid>
-        )
+                    <div className="col-md-4"></div>
+                </div>
+            </div>
+        </>
     }
 }

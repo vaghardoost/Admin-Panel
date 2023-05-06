@@ -18,7 +18,7 @@ function EditorTitle({ note: { content }, index }: Props) {
   const length = content!.length - 1;
 
   return <>
-    <Panel bodyFill header={<h4>عنوان</h4>}>
+    <Panel>
       <div className="around editor">
         <ButtonGroup className="around">
           <Button onClick={() => setH('h1')} appearance={(title.header === 'h1') ? 'primary' : 'default'}>h1</Button>
@@ -33,7 +33,7 @@ function EditorTitle({ note: { content }, index }: Props) {
           <TitleHeader>{title.text}</TitleHeader>
         </div>
       </div>
-      
+
       <div className="around">
         <ButtonGroup justified>
           {(index !== 0) ? <Button onClick={() => move('up')}>انتقال به بالا</Button> : <></>}

@@ -5,8 +5,8 @@ import NoteRich from "./note.rich"
 
 export default ({ photo }: Props) => {
   return <>
-    <div style={{ maxWidth: '70%', marginLeft: 'auto', marginRight: 'auto' }} className="card">
-      <img className="card-img" src={photo.url} />
+    <div style={{ maxWidth: '70%', marginLeft: 'auto', marginRight: 'auto' }}>
+      <img style={{ width: '100%' }} src={photo.url} />
       {
         (photo.richtext.length > 0)
           ?

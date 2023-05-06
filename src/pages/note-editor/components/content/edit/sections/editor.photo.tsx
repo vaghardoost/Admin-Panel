@@ -22,35 +22,33 @@ function EditorPhoto({ index, list, note: { content } }: Props) {
   const length = content!.length - 1;
 
   return <>
-    <Panel bodyFill header={<h4>تصویر</h4>}>
-      <div className="around editor">
-        <div className='around'>
-          {
-            list.map((file) => {
-              return <Avatar key={generate()} onClick={() => { selectPhoto(file.id) }} size="sm" circle src={cdn + "/photo/demo/" + file.id} />
-            })
-          }
-        </div>
-
-        <div className='around'>
-          <Stack justifyContent="center">
-            <img className='img' src={photo.url} />
-          </Stack>
-        </div>
-
-        <div className='around'>
-          <RichTextView onChange={(richtext) => onChange(richtext)} richtext={photo.richtext} />
-        </div>
-        <div className="around">
-          <ButtonGroup justified>
-            {(index !== 0) ? <Button onClick={() => move('up')}>انتقال به بالا</Button> : <></>}
-            {(index !== length) ? <Button onClick={() => move('down')}>انتقال به پایین</Button> : <></>}
-            <Button onClick={() => dispatch(actions.resetQuick())}>بستن</Button>
-            <Button onClick={() => remove()}>حذف</Button>
-          </ButtonGroup>
-        </div>
+    <div className="around editor">
+      <div className='around'>
+        {
+          list.map((file) => {
+            return <Avatar key={generate()} onClick={() => { selectPhoto(file.id) }} size="sm" circle src={cdn + "/photo/demo/" + file.id} />
+          })
+        }
       </div>
-    </Panel>
+
+      <div className='around'>
+        <Stack justifyContent="center">
+          <img className='img' src={photo.url} />
+        </Stack>
+      </div>
+
+      <div className='around'>
+        <RichTextView onChange={(richtext) => onChange(richtext)} richtext={photo.richtext} />
+      </div>
+      <div className="around">
+        <ButtonGroup justified>
+          {(index !== 0) ? <Button onClick={() => move('up')}>انتقال به بالا</Button> : <></>}
+          {(index !== length) ? <Button onClick={() => move('down')}>انتقال به پایین</Button> : <></>}
+          <Button onClick={() => remove()}>حذف</Button>
+          <Button onClick={() => dispatch(actions.resetQuick())}>بستن</Button>
+        </ButtonGroup>
+      </div>
+    </div>
   </>
 
   function onChange(richtext: RichText[]) {

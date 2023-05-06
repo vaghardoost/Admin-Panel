@@ -1,0 +1,9 @@
+:root {
+    --color-dark: #343a40;
+    --color-light: rgb(255, 255, 252);
+    --color-medium: #ccc5b9;
+    --color-red: #e5383b;
+    --color-shadow: rgba(52, 58, 64, 0.2);
+    --color-light-shadow: rgba(255, 255, 255, 0.5);
+    --shadow: var(--color-shadow) 0 0 10px 1px;
+}

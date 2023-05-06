@@ -17,10 +17,10 @@ export default class RichTextView extends Component<Props,State> {
     return <>
       <div className="editor">
         <ButtonGroup className='around'>
-          <Button size="sm" onClick={()=>this.style('BOLD')}>برجسته</Button>
-          <Button size="sm" onClick={()=>this.style('ITALIC')}>کج</Button>
-          <Button size="sm" onClick={()=>this.style('UNDERLINE')}>زیر خط</Button>
-          <Button size="sm" onClick={()=>this.style('STRIKETHROUGH')}>وسط خط</Button>
+          <Button appearance="subtle" size="sm" onClick={()=>this.style('BOLD')}>برجسته</Button>
+          <Button appearance="subtle" size="sm" onClick={()=>this.style('ITALIC')}>کج</Button>
+          <Button appearance="subtle" size="sm" onClick={()=>this.style('UNDERLINE')}>زیر خط</Button>
+          <Button appearance="subtle" size="sm" onClick={()=>this.style('STRIKETHROUGH')}>وسط خط</Button>
         </ButtonGroup>
         <div className="around">
           <Editor

@@ -22,7 +22,7 @@ export const loadPhoto = async () => {
 export const updateCategory = async (id: string, data: Category) => {
   const token = sessionStorage.getItem("token");
   const { data: result } = await api.patch<ApiResult<any>>(
-    `/category/${id}`,
+    `/note/category/${id}`,
     data,
     { headers: { "Authorization": `Bearer ${token}` } }
   )
@@ -32,7 +32,7 @@ export const updateCategory = async (id: string, data: Category) => {
 export const addCategory = async (data: Category) => {
   const token = sessionStorage.getItem("token");
   const { data: result } = await api.post<ApiResult<any>>(
-    "/category",
+    "/note/category",
     data,
     { headers: { "Authorization": `Bearer ${token}` } }
   );
@@ -41,6 +41,6 @@ export const addCategory = async (data: Category) => {
 }
 
 export const loadCategory = async (id: string) => {
-  const { data } = await api.get<ApiResult<Category>>(`/category/${id}`);
+  const { data } = await api.get<ApiResult<Category>>(`/note/category/${id}`);
   return data;
 }

@@ -18,7 +18,7 @@ class NoteCategory extends Component<Props>{
 
     public render(): ReactNode {
         return (
-            <Panel style={{ height: '100%' }} bordered header={
+            <Panel className="bg-light" style={{ height: '100%' }} bordered header={
                 <Stack justifyContent="space-between">
                     <h5>انتخاب دسته بندی</h5>
                     <Button onClick={() => dispatch(actions.resetCat())} appearance="primary" color="blue">بدون دسته بندی</Button>

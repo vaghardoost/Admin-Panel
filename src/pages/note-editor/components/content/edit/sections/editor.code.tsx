@@ -17,19 +17,17 @@ function EditorCode({ note: { content }, index }: Props) {
   const ref: RefObject<HTMLTextAreaElement> = createRef();
 
   return <>
-    <Panel bodyFill header={<h4>کد</h4>}>
-      <code className="around">
-        <Input value={code.text} as='textarea' dir='ltr' rows={8} ref={ref} onKeyDown={(e) => { keyDown(e) }} onChange={(text) => change(text)} />
-      </code>
-      <div className="around">
-        <ButtonGroup justified>
-          {(index !== 0) ? <Button onClick={() => move('up')}>انتقال به بالا</Button> : <></>}
-          {(index !== length) ? <Button onClick={() => move('down')}>انتقال به پایین</Button> : <></>}
-          <Button onClick={() => dispatch(actions.resetQuick())}>بستن</Button>
-          <Button onClick={() => remove()}>حذف</Button>
-        </ButtonGroup>
-      </div>
-    </Panel>
+    <code className="around">
+      <Input value={code.text} as='textarea' dir='ltr' rows={8} ref={ref} onKeyDown={(e) => { keyDown(e) }} onChange={(text) => change(text)} />
+    </code>
+    <div className="around">
+      <ButtonGroup justified>
+        {(index !== 0) ? <Button onClick={() => move('up')}>انتقال به بالا</Button> : <></>}
+        {(index !== length) ? <Button onClick={() => move('down')}>انتقال به پایین</Button> : <></>}
+        <Button onClick={() => remove()}>حذف</Button>
+        <Button onClick={() => dispatch(actions.resetQuick())}>بستن</Button>
+      </ButtonGroup>
+    </div>
   </>
 
   function move(dest: 'up' | 'down') {

@@ -15,17 +15,15 @@ function EditorFrame({ index, note: { content } }: Props) {
   }
   const length = content!.length - 1;
   return <>
-    <Panel bodyFill header={<h4>کادر</h4>}>
-      <RichtextEditor onChange={(richtext) => onChange(richtext)} richtext={frame.richtext} />
-      <div className="around">
-        <ButtonGroup justified>
-          {(index !== 0) ? <Button onClick={() => move('up')}>انتقال به بالا</Button> : <></>}
-          {(index !== length) ? <Button onClick={() => move('down')}>انتقال به پایین</Button> : <></>}
-          <Button onClick={() => dispatch(actions.resetQuick())}>بستن</Button>
-          <Button onClick={() => remove()}>حذف</Button>
-        </ButtonGroup>
-      </div>
-    </Panel>
+    <RichtextEditor onChange={(richtext) => onChange(richtext)} richtext={frame.richtext} />
+    <div className="around">
+      <ButtonGroup justified>
+        {(index !== 0) ? <Button onClick={() => move('up')}>انتقال به بالا</Button> : <></>}
+        {(index !== length) ? <Button onClick={() => move('down')}>انتقال به پایین</Button> : <></>}
+        <Button onClick={() => remove()}>حذف</Button>
+        <Button onClick={() => dispatch(actions.resetQuick())}>بستن</Button>
+      </ButtonGroup>
+    </div>
   </>
 
   function move(dest: 'up' | 'down') {

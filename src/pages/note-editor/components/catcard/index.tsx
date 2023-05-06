@@ -45,7 +45,9 @@ function CatCard({ category }: Props) {
         </ButtonGroup>
       </Stack>
     </>
-    : <>NoCategory</>
+    : <div className="card margin around">
+      <h4 style={{ width: '100%', textAlign: 'center' }}>دسته بندی انتخاب نشده</h4>
+    </div>
 }
 
 interface Props {

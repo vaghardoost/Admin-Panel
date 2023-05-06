@@ -23,7 +23,7 @@ export async function getNoteList():Promise<ApiResult<Note[]>> {
 }
 
 export const categoryList = async ():Promise<ApiResult<Category[]>> =>{
-    const { data } = await api.get("/category");
+    const { data } = await api.get("/note/category");
     return {
         success:data.success,
         payload:data.payload

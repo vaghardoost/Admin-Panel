@@ -8,6 +8,7 @@ import { State } from "../../reducer/state";
 
 import View from "./view"
 import Edit from "./edit"
+import EditorAppend from "./edit/sections/editor.append";
 
 interface Props {
     note: Note
@@ -24,28 +25,17 @@ class NoteEditor extends Component<Props>{
         return (
             <Panel className="bg-light" bordered header={
                 <Stack style={this.style} justifyContent="space-between">
-                    <h3>{this.props.note.title}</h3>
-                    <ButtonGroup>
-                        <Button
-                            onClick={() => dispatch(actions.changePage('edit'))}
-                            appearance={(this.props.page === 'edit') ? 'primary' : 'default'}
-                            size="sm">
-                            ویرایشگر
-                        </Button>
-                        <Button
-                            onClick={() => dispatch(actions.changePage('view'))}
-                            appearance={(this.props.page === 'view') ? 'primary' : 'default'}
-                            size="sm">
-                            پیش نمایش
-                        </Button>
-                    </ButtonGroup>
+                    {
+                        (this.props.note.title === '')
+                            ? <p className='fg-red'>عنوان را وارد کنید</p>
+                            : <h3>{this.props.note.title}</h3>
+                    }
                 </Stack>
             }>
                 {
-                    (this.props.page === 'view')
-                        ? <View />
-                        : <Edit />
+                    <View />
                 }
+                <EditorAppend />
             </Panel>
         )
     }

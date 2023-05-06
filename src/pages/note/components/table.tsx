@@ -31,12 +31,12 @@ class NoteTable extends Component<Props, { redirect?: string }> {
                     <h5 className="around">
                         {(this.props.data.length > 0) ? "فهرست نوشته ها" : "هیچ موردی یافت نشد"}
                     </h5>
-                    <Panel bodyFill bordered>
+                    <Panel bodyFill bordered className="bg-light">
                         <PanelGroup accordion>
                             {
                                 this.props.data.map((note: Note): ReactNode => {
                                     return (
-                                        <Panel header={<Stack><h5>{note.title}</h5></Stack>}>
+                                        <Panel className="bg-light" header={<Stack><h5>{note.title}</h5></Stack>}>
                                             <div style={{ maxHeight: '250px', overflowY: 'scroll' }}>
                                                 <h3>{note.title}</h3>
                                                 <h5>{this.getCategoryData(note.category!).label}</h5>

@@ -42,7 +42,7 @@ function EditorAppend() {
                 {
                   id: generate({ charset: '0123456789abcdef', length: 8 }),
                   type: 'title',
-                  header: 'h2',
+                  header: 'h3',
                   text: ''
                 }
               )
@@ -79,4 +79,4 @@ function EditorAppend() {
   </>
 }
 
-export default connect(null)(EditorAppend)
+export default connect()(EditorAppend)

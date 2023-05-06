@@ -98,11 +98,16 @@ export const resetCat = (state: State) => {
   delete state.note.category;
 }
 
-export const addSection = (state: State, action: PayloadAction<Caption | Photo | Frame | Title | Code>) => {
+export const addSection = (state: State, action: PayloadAction<SectionType>) => {
   state.note.content!.push(action.payload);
+  state.quick = {
+    visible: true,
+    index: state.note.content!.length - 1,
+    section: action.payload
+  }
 }
 
-export const updateSection = (state: State, action: PayloadAction<{ index: number, section: Caption | Photo | Frame | Title | Code }>) => {
+export const updateSection = (state: State, action: PayloadAction<{ index: number, section: SectionType }>) => {
   const { index, section } = action.payload;
   state.note.content![index] = section;
 }
@@ -126,6 +131,11 @@ export const removeSection = (state: State, action: PayloadAction<{ index: numbe
   const { index } = action.payload;
   const { content } = state.note;
   content!.splice(index, 1);
+  state.quick = {
+    visible: false,
+    section: undefined,
+    index: undefined
+  }
 }
 
 export const quick = (state: State, action: PayloadAction<{ section: SectionType, index: number }>) => {

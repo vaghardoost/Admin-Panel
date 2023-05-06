@@ -9,7 +9,7 @@ const api = axios.create({ baseURL: server })
 const fileApi = axios.create({ baseURL: cdn })
 
 export const loadCategory = async (): Promise<ApiResult<Category[]>> => {
-    const { data } = await api.get("/category");
+    const { data } = await api.get("/note/category");
     const { success, payload } = data;
     return {
         success: success,

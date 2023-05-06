@@ -5,7 +5,7 @@ import { server } from "../../../config";
 const api = axios.create({ baseURL: server })
 
 export const loadCategory = async (): Promise<ApiResult<Category[]>> => {
-    const { data } = await api.get("/category");
+    const { data } = await api.get("/note/category");
     const { success, payload } = data;
     return {
         success: success,
@@ -17,7 +17,7 @@ export const loadCategory = async (): Promise<ApiResult<Category[]>> => {
 export const deleteCategory = async (id: string) => {
     const token = sessionStorage.getItem("token");
     await api.delete(
-        "/category",
+        "/note/category",
         {
             headers: { "Authorization": `Bearer ${token}` },
             data: { id: id },
@@ -28,7 +28,7 @@ export const deleteCategory = async (id: string) => {
 export const refreshServer = async () => {
     const token = sessionStorage.getItem('token');
     await api.patch(
-        '/category/refresh',
+        '/note/category/refresh',
         {},
         {
             headers: { "Authorization": `Bearer ${token}` },
