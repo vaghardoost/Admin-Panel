@@ -1,28 +1,26 @@
-import { Component, ReactNode } from "react";
-import { FlexboxGrid } from "rsuite";
-import FlexboxGridItem from "rsuite/esm/FlexboxGrid/FlexboxGridItem";
 import ListComponent from "./components/list.photo";
-import ModalDeletePhoto from "./components/modal.delete.photo";
-import ModalSavePhoto from "./components/modal.save.photo";
-import PhotoComponent from "./components/view.photo";
+import UploadComponent from "./components/upload.photo";
 
+export default () => {
+  return (
+    <>
+      <div className="container margin">
+        <div className="row">
+          <div className="col-md-12">
+            آمار و ارقام
+          </div>
+        </div>
+        <div className="row">
+          <div className="col-md-8">
+            <ListComponent />
+          </div>
+          <div className="col-md-4">
+            <UploadComponent/>
+          </div>
+        </div>
 
-export default class Photo extends Component {
-  render(): ReactNode {
-    return (
-      <>
-        <ModalDeletePhoto/>
-        <ModalSavePhoto/>
-        <FlexboxGrid justify="center">
-          <FlexboxGridItem colspan={12}>
-            <ListComponent/>
-          </FlexboxGridItem>
-          <FlexboxGridItem colspan={12}>
-            <PhotoComponent/>
-          </FlexboxGridItem>
-        </FlexboxGrid>
-      </>
-    )
-  }
+      </div>
+    </>
+  )
 }
 

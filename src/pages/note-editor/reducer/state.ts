@@ -1,12 +1,14 @@
 import { Category } from "../../../model/category"
-import File from "../../../model/file"
 import { Note, SectionType } from "../../../model/note"
 
 export interface State {
     note: Note
     edit?: string
-    photoList: File[]
-    quick: {
+    category: {
+        open: boolean
+        list: Category[]
+    }
+    editSection: {
         visible: boolean
         index?: number
         section?: SectionType
@@ -21,22 +23,10 @@ export interface State {
             status?: string
         }
     }
-    category: {
-        list: Category[],
-        buttonStatus: 'loading' | 'normal'
+    photo: {
+        open: boolean
+        list: string[]
     }
-    picker: {
-        alert: {
-            title: string
-            message: string
-            status: 'red' | 'green' | 'black'
-            open: boolean
-        }
-        photo: {
-            open: boolean
-        }
-    }
-    page: 'edit' | 'view'
 }
 
 export const initialState: State = {
@@ -46,7 +36,7 @@ export const initialState: State = {
         tag: [],
         author: '',
     },
-    quick: {
+    editSection: {
         visible: false
     },
     draft: {
@@ -59,20 +49,11 @@ export const initialState: State = {
         }
     },
     category: {
-        list: [],
-        buttonStatus: 'normal'
+        list:[],
+        open:false
     },
-    picker: {
-        alert: {
-            message: '',
-            open: false,
-            status: 'black',
-            title: ''
-        },
-        photo: {
-            open: false
-        }
+    photo: {
+        open: false,
+        list: []
     },
-    page: 'view',
-    photoList: []
 }

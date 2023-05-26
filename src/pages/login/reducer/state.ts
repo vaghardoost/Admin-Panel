@@ -1,7 +1,8 @@
 export interface State {
-  status:'normal'|'error'|'vlidation'|'loading'|'success'
+  status: 'normal' | 'error' | 'loading' | 'success'
+  message?: string
 }
 
-export const initialState:State = {
-  status:'normal'
+export const initialState: State = {
+  status: 'normal'
 }

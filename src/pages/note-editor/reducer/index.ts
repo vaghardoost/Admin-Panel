@@ -4,105 +4,72 @@ import { Category } from "../../../model/category";
 import { Note } from "../../../model/note";
 import { initialState, State } from "./state";
 import * as action from "./actions";
-import File from "../../../model/file";
 
 const slice = createSlice({
-    name: 'note-add',
-    initialState: initialState,
-    reducers: {
-        changePage: action.changePage,
-        changeTitle: action.changeTitle,
-        setTag: action.setTag,
-        setButtonLoad: action.setButtonLoad,
-        setCategorySelected: action.setCategorySelected,
-        modalSave: action.modalSave,
-        modalSaveStatus: action.modalSaveStatus,
-        modalLoad: action.modalLoad,
-        modalLoadSelect: action.modalLoadSelect,
-        setNote: action.setNote,
-        alertModal: action.alertModal,
-        setEditable: action.setEditable,
-        reset: action.reset,
-        resetCat: action.resetCat,
-        addSection: action.addSection,
-        updateSection: action.updateSection,
-        moveSection: action.moveSection,
-        removeSection: action.removeSection,
-        photoPicker:action.photoPicker,
-        setNotePhoto:action.setNotePhoto,
-        resetNotePhoto:action.resetNotePhoto,
-        quick: action.quick,
-        resetQuick: action.resetQuick,
-    },
-    extraReducers(builder) {
-        builder.addCase(action.loadCategoryList.fulfilled, loadCategoryListState);
-        builder.addCase(action.loadPhoto.fulfilled, loadPhotoState);
-        builder.addCase(action.addNote.fulfilled, addNoteState);
-        builder.addCase(action.loadNote.fulfilled, loadNoteState);
-        builder.addCase(action.update.fulfilled, updateNoteState);
-    },
+  name: 'note-add',
+  initialState: initialState,
+  reducers: {
+    changeTitle: action.changeTitle,
+    pushTag: action.pushTag,
+    pullTag: action.pullTag,
+    setCategorySelected: action.setCategorySelected,
+    modalSave: action.modalSave,
+    modalSaveStatus: action.modalSaveStatus,
+    modalLoad: action.modalLoad,
+    modalLoadSelect: action.modalLoadSelect,
+    drawerCategory:action.drawerCategory,
+    drawerPhoto:action.drawerPhoto,
+    setNote: action.setNote,
+    setEditable: action.setEditable,
+    reset: action.reset,
+    resetCategory: action.resetCategory,
+    addSection: action.addSection,
+    updateSection: action.updateSection,
+    moveSection: action.moveSection,
+    removeSection: action.removeSection,
+    setNotePhoto: action.setNotePhoto,
+    resetNotePhoto: action.resetNotePhoto,
+    quick: action.quick,
+    resetQuick: action.resetQuick,
+
+  },
+  extraReducers(builder) {
+    builder.addCase(action.loadCategoryList.fulfilled, loadCategoryListState);
+    builder.addCase(action.loadPhoto.fulfilled, loadPhotoListState);
+    builder.addCase(action.addNote.fulfilled, addNoteState);
+    builder.addCase(action.loadNote.fulfilled, loadNoteState);
+    builder.addCase(action.update.fulfilled, updateNoteState);
+  },
 });
 
 const updateNoteState = (state: State, action: PayloadAction<ApiResult<Note>>) => {
-    const { success } = action.payload;
-
-    state.picker.alert = {
-        message: (success) ? 'تغییرات با موفقیت ذخیره شد' : '',
-        open: true,
-        status: 'black',
-        title: 'ویرایش نوشته',
-    }
+  const { success } = action.payload;
 }
 
 const loadNoteState = (state: State, action: PayloadAction<ApiResult<Note>>) => {
-    const { success, payload } = action.payload;
-    if (!success) {
-        state.picker.alert = {
-            message: 'نوشته ای با این شناسه یافت نمیشود',
-            open: true,
-            status: 'red',
-            title: 'بازنویسی نوشته'
-        }
-        return;
-    }
-    state.note = payload!;
+  const { success, payload } = action.payload;
+  state.note = payload!;
 }
 
 const addNoteState = (state: State, action: PayloadAction<ApiResult<Note>>) => {
-    const { success } = action.payload;
-    if (success) {
-        state.picker.alert = {
-            message: 'نوشته با موفقیت در سرور ذخیره شد',
-            open: true,
-            status: 'black',
-            title: 'انتشار نوشته'
-        }
-        state = initialState;
-    } else {
-        state.picker.alert = {
-            message: 'خطایی رخ داد',
-            open: true,
-            status: 'red',
-            title: 'انتشار نوشته'
-        }
-    }
+  const { success } = action.payload;
 }
 
-const loadPhotoState = (state: State, action: PayloadAction<ApiResult<File[]>>) => {
-    const { payload, success } = action.payload;
-    if (success) {
-        state.photoList = payload!
+const loadPhotoListState = (state: State, action: PayloadAction<ApiResult<any>>) => {
+  const result = [];
+  const { files } = action.payload.payload!;
+  for (const file of files) {
+    if (!file.startsWith('demo')) {
+      result.push(file);
     }
+  }
+  result.reverse();
+  state.photo.list = result;
 }
 
 const loadCategoryListState = (state: State, action: PayloadAction<ApiResult<Category[]>>) => {
-    const { success, payload } = action.payload;
-    if (success) {
-        state.category = {
-            list: payload!,
-            buttonStatus: "normal"
-        }
-    }
+  const { success, payload } = action.payload;
+  state.category.list = payload!;
 }
 
 

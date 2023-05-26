@@ -1,57 +1,95 @@
-import State from "../reducer/state";
-import { Component, ReactNode } from "react"
+import { useEffect, useState } from "react"
 import { connect } from "react-redux"
+import { Button, Image, Popconfirm, Space, Table, message } from "antd";
+import { DeleteOutlined, CopyOutlined, InfoCircleOutlined } from "@ant-design/icons"
+
 import { dispatch } from "../../../redux";
-import { loadPhotoList,downloadPhoto } from "../reducer/actions";
-import { Avatar, AvatarGroup, Button, FlexboxGrid, Panel, Stack } from "rsuite";
+import State from "../reducer/state";
+import { loadPhotoList, removePhoto } from "../reducer/actions";
 import { cdn } from "../../../config";
-import { modalSave } from "../reducer";
-import FlexboxGridItem from "rsuite/esm/FlexboxGrid/FlexboxGridItem";
 
-class ListComponent extends Component<Props> {
-  
-  constructor(props:Props){
-    super(props);
-    dispatch(loadPhotoList());
-  }
+const ListComponent = ({ list }: Props) => {
+  const namespace = sessionStorage.getItem('namespace');
 
-  render(): ReactNode {
-    return(
-      <Panel bordered className="around" header={
-        <Stack justifyContent="space-between">
-          <h5>عکس های ذخیره شده</h5>
-          <Button onClick={()=>{this.openSave()}} appearance="primary">افزودن جدید</Button>
-        </Stack>
-      }>
-          <FlexboxGrid justify="start">
-            {
-              this.props.list.map((value)=>
-                <FlexboxGridItem colspan={4}>
-                    <Avatar src={cdn + "/photo/demo/" + value} size="lg" circle onClick={()=>this.select(value)}/>
-                </FlexboxGridItem>
-              )
-            }
-          </FlexboxGrid>
-      </Panel>
-    )
-  }
+  const [firstTime, setTime] = useState<boolean>(true);
+  const [messageApi, contextHolder] = message.useMessage();
 
-  private select(id:string) {
-    dispatch(downloadPhoto(id))
-  }
+  useEffect(() => {
+    if (firstTime) {
+      dispatch(loadPhotoList());
+      setTime(false);
+    }
+  });
 
-  private openSave(){
-    dispatch(modalSave(true));
-  }
+  return <>
+    {contextHolder}
+    <Table
+      size="small"
+      columns={[
+        { title: 'ردیف', dataIndex: 'no', key: 'no', align: 'center' },
+        { title: 'تصویر', dataIndex: 'image', key: 'image', align: 'center' },
+        { title: 'نام فایل', dataIndex: 'name', key: 'name', align: 'center' },
+        { title: 'عملیات', dataIndex: 'action', key: 'action', align: 'center' },
+      ]}
+      dataSource={
+        list.map((file, index) => {
+          return {
+            key: file,
+            no: index + 1,
+            name: file,
+            action: <Space>
+              <Popconfirm
+                title="حذف فایل"
+                description='آیا این فایل از سرور حذف شود؟'
+                okText="حذف"
+                cancelText="خیر"
+                icon={<InfoCircleOutlined style={{ color: 'red' }} />}
+                onConfirm={async () => {
+                  await dispatch(removePhoto(file));
+                  dispatch(loadPhotoList());
+                }}
+              >
+                <Button type="link">
+                  <DeleteOutlined /> حذف
+                </Button>
+              </Popconfirm>
+
+              <Button
+                type="link"
+                onClick={() => {
+                  const namespace = sessionStorage.getItem('namespace')
+                  navigator.clipboard.writeText(`${cdn}/${namespace}/photo/${file}`);
+                  messageApi.open({
+                    type: 'success',
+                    content: 'آدرس فایل کپی شد'
+                  })
+                }}
+              >
+                <CopyOutlined /> کپی آدرس
+              </Button>
+            </Space>,
+            image: <Image
+              height={40}
+              src={`${cdn}/${namespace}/photo/demo.${file}`}
+              preview={{
+                src: `${cdn}/${namespace}/photo/${file}`,
+                mask: <></>
+              }}
+            />
+          }
+        })
+      }
+    />
+  </>
 }
 
 interface Props {
-  list:string[]
+  list: string[]
 }
 
-const mapStateToProps = (reducer:any):Props=>{
-  const state:State = reducer.photoReducer;
-  return {list:state.list};
+const mapStateToProps = (reducer: any): Props => {
+  const state: State = reducer.photoReducer;
+  return { list: state.list };
 }
 
 export default connect(mapStateToProps)(ListComponent);

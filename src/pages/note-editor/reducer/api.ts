@@ -5,11 +5,12 @@ import { cdn, server } from "../../../config";
 import axios from "axios";
 import File from "../../../model/file";
 
-const api = axios.create({ baseURL: server })
-const fileApi = axios.create({ baseURL: cdn })
+const api = axios.create()
 
-export const loadCategory = async (): Promise<ApiResult<Category[]>> => {
-    const { data } = await api.get("/note/category");
+export const loadCategory = async () => {
+    const namespace = sessionStorage.getItem('namespace');
+    const url = `${server}/category/${namespace}`
+    const { data } = await api.get<ApiResult<Category[]>>(url);
     const { success, payload } = data;
     return {
         success: success,
@@ -36,14 +37,13 @@ export const saveNote = async (note: Note) => {
     }
 }
 
-export const loadPhotoList = async (): Promise<ApiResult<File[]>> => {
-    const token = sessionStorage.getItem("file-token");
-    const { data } = await fileApi.get('/photo/list',
-        { headers: { "Authorization": `Bearer ${token}` } }
-    );
+export const loadPhotoList = async () => {
+    const namespace = sessionStorage.getItem('namespace');
+    const url = `${cdn}/photo/${namespace}`
+    const { data: { success, payload } } = await api.get<ApiResult<any>>(url);
     return {
-        success: true,
-        payload: data.payload
+        success: success,
+        payload: payload
     }
 }
 

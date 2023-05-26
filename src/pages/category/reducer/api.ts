@@ -4,8 +4,10 @@ import axios from "axios";
 import { server } from "../../../config";
 const api = axios.create({ baseURL: server })
 
-export const loadCategory = async (): Promise<ApiResult<Category[]>> => {
-    const { data } = await api.get("/note/category");
+export const loadCategoryList = async () => {
+    const namespace = sessionStorage.getItem('namespace');
+    const url = `${server}/category/${namespace}`
+    const { data } = await api.get<ApiResult<Category[]>>(url);
     const { success, payload } = data;
     return {
         success: success,
@@ -13,6 +15,17 @@ export const loadCategory = async (): Promise<ApiResult<Category[]>> => {
     }
 }
 
+export const loadCategory = async (id: string) => {
+    await new Promise(res => setTimeout(res, 1000));
+    const namespace = sessionStorage.getItem('namespace');
+    const url = `${server}/category/${namespace}/${id}`
+    const { data } = await api.get<ApiResult<Category>>(url);
+    const { success, payload } = data;
+    return {
+        success: success,
+        payload: payload
+    }
+}
 
 export const deleteCategory = async (id: string) => {
     const token = sessionStorage.getItem("token");

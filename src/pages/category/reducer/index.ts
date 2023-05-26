@@ -1,46 +1,40 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { ApiResult } from "../../../model/api";
-import { Category } from "../../../model/category";
-import { deleteCat, loadCatList, refreshServer } from "./actions";
+import { deleteCat, loadCategory, loadCatList } from "./actions";
 import { initialState, State } from "./state";
 
 const slice = createSlice({
   name: 'category',
   initialState: initialState,
   reducers: {
-    select: (state: State, action: PayloadAction<Category>) => {
-      state.select = action.payload;
-    },
-    modalDelete: (state: State, action: PayloadAction<boolean>) => {
-      state.modal.delete.show = action.payload;
-    },
-    modalMessageClose: (state:State) => {
-      state.modal.message.show = false;
-    },
     reset: (state: State) => {
       delete state.select;
     },
+    loading: (state: State, action: PayloadAction<boolean>) => {
+      state.loading = action.payload;
+    }
   },
   extraReducers(builder) {
-    builder.addCase(loadCatList.fulfilled, (state: State, action: PayloadAction<ApiResult<Category[]>>) => {
+    builder.addCase(loadCatList.fulfilled, (state, action) => {
       const { success, payload } = action.payload;
       if (success) {
         state.list = payload!;
       }
     });
-    builder.addCase(deleteCat.fulfilled, (state: State, action: PayloadAction<ApiResult<any>>) => {
+
+    builder.addCase(deleteCat.fulfilled, (state, action) => {
       const { success, payload } = action.payload;
       if (success) {
         state.list = payload!;
       }
     });
-    builder.addCase(refreshServer.fulfilled, (state: State) => {      
-      state.modal.message = {
-        show: true,
-        title: "رفع اشکال سرور",
-        content: "درخواست رفع اشکال سرور انجام شد."
+
+    builder.addCase(loadCategory.fulfilled, (state, action) => {
+      const { success, payload } = action.payload;
+      if (success) {
+        state.select = payload!;
       }
-    });
+      state.loading = false;
+    })
   },
 });
 

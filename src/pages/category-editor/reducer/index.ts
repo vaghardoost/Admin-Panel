@@ -2,8 +2,8 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { initialState, State } from "./state";
 import * as action from "./actions";
 import { ApiResult } from "../../../model/api";
-import File from "../../../model/file";
 import { Category } from "../../../model/category";
+import { cdn } from "../../../config";
 
 const slice = createSlice({
   initialState: initialState,
@@ -24,18 +24,30 @@ const slice = createSlice({
   extraReducers(builder) {
     builder.addCase(action.loadPhoto.fulfilled, loadPhotoState);
     builder.addCase(action.loadCategory.fulfilled, loadCategoryState);
+    builder.addCase(action.loadCategoryList.fulfilled, loadCategoryListState);
     builder.addCase(action.addCategory.fulfilled, addCategoryState);
     builder.addCase(action.editCategory.fulfilled, editCategoryState);
   },
 });
 
-const loadPhotoState = (state: State, action: PayloadAction<ApiResult<File[]>>) => {
-  const { payload } = action.payload;
-  const list: string[] = [];
-  for (const item of payload!) {
-    list.push(item.id);
+const loadCategoryListState = (state: State, action: PayloadAction<ApiResult<Category[]>>) => {
+  const { payload: result } = action;
+  if (result.success) {
+    state.categoryList = result.payload!;
   }
-  state.list = list;
+}
+
+const loadPhotoState = (state: State, action:  PayloadAction<ApiResult<any>>) => {
+  const namespace = sessionStorage.getItem('namespace');
+  const result = [];
+  const { files } = action.payload!.payload;
+  for (const file of files) {
+    if (file.startsWith('demo')) {
+      result.push(`${cdn}/${namespace}/photo/${file}`);
+    }
+  }
+  result.reverse();
+  state.photoList = result;
 }
 
 const loadCategoryState = (state: State, action: PayloadAction<ApiResult<Category>>) => {

@@ -36,8 +36,7 @@ export const setAvatar = (state: State, action: PayloadAction<string>) => {
   }
 }
 
-export const setNoAvatar = (state: State, action: PayloadAction<string>) => {
-  const { category } = state;
+export const setNoAvatar = (state: State) => {
   delete state.category.avatar;
 }
 
@@ -69,6 +68,10 @@ export const setLabel = (state: State, action: PayloadAction<string>) => {
 
 // ------------------------------------------------------------------------------------- 
 
+export const loadCategoryList = createAsyncThunk('category/list', async () => {
+  return api.loadCategoryList();
+})
+
 export const loadPhoto = createAsyncThunk('category-editor/load-photo', async () => {
   return api.loadPhoto();
 });
@@ -84,4 +87,3 @@ export const addCategory = createAsyncThunk('category-editor/add', async (catego
 export const editCategory = createAsyncThunk('category-editor/edit', async (args: { id: string, category: Category }) => {
   return api.updateCategory(args.id, args.category)
 })
-

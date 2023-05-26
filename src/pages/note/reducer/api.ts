@@ -3,45 +3,52 @@ import { Note } from "../../../model/note";
 import axios from "axios";
 import { server } from "../../../config";
 import { Category } from "../../../model/category";
- 
-const api = axios.create({baseURL:server});
+import { data as hardcode } from "./_notes";
 
-export const getNote = async (id:string):Promise<ApiResult<Note>> => {
-    const { data } = await api.get(`/note/${id}`);    
+const api = axios.create({ baseURL: server });
+
+export const getNote = async (id: string) => {
+    const namespace = sessionStorage.getItem("namespace");
+    const url = `${server}/note/${namespace}/${id}`
+    const { data } = await api.get<ApiResult<Note>>(url);
     return {
-        success:data.success,
-        payload:data.payload
+        success: data.success,
+        payload: data.payload
     };
 }
 
-export async function getNoteList():Promise<ApiResult<Note[]>> {
-    const { data } = await api.get("/note");
+export const getNoteList = async () => {
+    // const namespace = sessionStorage.getItem("namespace");
+    // const url = `${server}/note/${namespace}`
+    // const { data } = await api.get<ApiResult<Note[]>>(url);
     return {
-        success:data.success,
-        payload:data.payload
+        success: true,
+        payload: hardcode
     };
 }
 
-export const categoryList = async ():Promise<ApiResult<Category[]>> =>{
-    const { data } = await api.get("/note/category");
+export const categoryList = async () => {
+    const namespace = sessionStorage.getItem("namespace");
+    const url = `${server}/category/${namespace}`
+    const { data } = await api.get<ApiResult<Category[]>>(url);
     return {
-        success:data.success,
-        payload:data.payload
+        success: data.success,
+        payload: data.payload
     }
 }
 
-export const removeNote = async (id:string):Promise<ApiResult<any>> => {
+export const removeNote = async (id: string): Promise<ApiResult<any>> => {
     const token = sessionStorage.getItem('token');
     const { data } = await api.delete(
         '/note/',
-        { 
-            headers: {"Authorization" : `Bearer ${token}`},
-            data:{ id: id },
+        {
+            headers: { "Authorization": `Bearer ${token}` },
+            data: { id: id },
         }
     );
     return {
-        success:data.success,
-        payload:data.payload
+        success: data.success,
+        payload: data.payload
     }
 }
 

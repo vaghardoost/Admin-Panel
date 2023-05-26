@@ -44,11 +44,9 @@
 .card-demo {
     border: rgba(0, 0, 0, 0.1) solid 1px;
     border-radius: 10px;
-    box-shadow: rgba(0, 0, 0, 0.1) 0 0 10px 1px;
     background-color: white;
     position: relative;
 }
-
 
 .card-demo .img {
     display: block;

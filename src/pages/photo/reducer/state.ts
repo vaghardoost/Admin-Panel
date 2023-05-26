@@ -1,5 +1,3 @@
-import { Buffer } from "buffer";
-
 export default interface State {
   list: string[]
   select?: {

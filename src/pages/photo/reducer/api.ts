@@ -1,38 +1,28 @@
 import { ApiResult } from "../../../model/api"
 import axios from "axios";
 import { cdn } from "../../../config";
-import { Buffer } from "buffer";
 
-const api = axios.create({baseURL:cdn})
+const fileApi = axios.create({ baseURL: cdn })
 
-export const loadList = async ():Promise<ApiResult<any[]>> => {
-  const token = sessionStorage.getItem("file-token");
-  const { data } = await api.get('/photo/list',
-    { headers: {"Authorization" : `Bearer ${token}`} }
-  );
+export const loadList = async (): Promise<ApiResult<any>> => {
+  const namespace = sessionStorage.getItem('namespace');
+  const url = `${cdn}/photo/${namespace}`;
+  const { data } = await fileApi.get(url);
   return {
-    success:true,
-    payload:data.payload
+    success: true,
+    payload: data.payload
   }
 }
 
-export const download = async(id:string):Promise<{id:string,content:string}> =>{
-  const url = cdn + "/photo/" + id;
-  const { data } = await api.get(url,{ responseType: 'arraybuffer' });
-  return {
-    id:id,
-    content:Buffer.from(data, 'binary').toString('base64')
-  };
-}
-
-export const remove = async(id:string):Promise<ApiResult<any>> => {
+export const remove = async (id: string): Promise<ApiResult<any>> => {
   const token = sessionStorage.getItem("file-token");
-  const url = cdn + "/photo/" + id;
-  await api.delete( 
+  const namespace = sessionStorage.getItem('namespace');
+  const url = `${cdn}/photo/${namespace}/${id}`;
+  await fileApi.delete(
     url,
-    { headers: {"Authorization" : `Bearer ${token}`} }
+    { headers: { "Authorization": `Bearer ${token}` } }
   )
   return {
-    success:true
+    success: true
   }
 }

@@ -1,8 +1,8 @@
 import { convertFromRaw, Editor, EditorState, RawDraftContentBlock, RawDraftContentState, RichUtils } from "draft-js"
 import { Component, ReactNode } from "react"
-import { Button, ButtonGroup } from "rsuite"
 import { RichText, RichWeight } from "../../model/note"
 import { generate } from 'randomstring'
+import { Button, Space } from "antd";
 
 export default class RichTextView extends Component<Props,State> {
 
@@ -15,13 +15,13 @@ export default class RichTextView extends Component<Props,State> {
 
   public render(): ReactNode {    
     return <>
-      <div className="editor">
-        <ButtonGroup className='around'>
-          <Button appearance="subtle" size="sm" onClick={()=>this.style('BOLD')}>برجسته</Button>
-          <Button appearance="subtle" size="sm" onClick={()=>this.style('ITALIC')}>کج</Button>
-          <Button appearance="subtle" size="sm" onClick={()=>this.style('UNDERLINE')}>زیر خط</Button>
-          <Button appearance="subtle" size="sm" onClick={()=>this.style('STRIKETHROUGH')}>وسط خط</Button>
-        </ButtonGroup>
+      <div className="editor around">
+        <Space.Compact block>
+          <Button block size="small" type="text" onClick={()=>this.style('BOLD')}>برجسته</Button>
+          <Button block size="small" type="text" onClick={()=>this.style('ITALIC')}>کج</Button>
+          <Button block size="small" type="text" onClick={()=>this.style('UNDERLINE')}>زیر خط</Button>
+          <Button block size="small" type="text" onClick={()=>this.style('STRIKETHROUGH')}>وسط خط</Button>
+        </Space.Compact>
         <div className="around">
           <Editor
             editorState = {this.state.editorState}

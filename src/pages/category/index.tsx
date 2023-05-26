@@ -1,45 +1,30 @@
-import { Component, ReactNode } from "react";
-import { Container, Content, FlexboxGrid, Header } from "rsuite";
-import FlexboxGridItem from "rsuite/esm/FlexboxGrid/FlexboxGridItem";
+import { useEffect, useState } from "react";
 import { dispatch } from "../../redux";
-import { loadCatList } from "./reducer/actions"
-import ListCategory from "./components/list";
-import SelectedCategory from "./components/select";
-import DeleteModal from "./components/modal.delete";
-import MessageModal from "./components/modal.message";
+import { loadCatList } from "./reducer/actions";
+import ListCategory from "./components/list"
+import Table from "./components/table";
 
-export default class Category extends Component{
-
-    constructor(props:any){
-        super(props);
-        dispatch(loadCatList());
+export default () => {
+  const [firstTime, setFirstTime] = useState<boolean>(true);
+  useEffect(() => {
+    if (firstTime) {
+      dispatch(loadCatList());
+      setFirstTime(false);
     }
+  })
+  return (
+    <>
+      <div className="container">
+        <div className="row around">
+          <div className="col-md-4">
+            <ListCategory />
+          </div>
+          <div className="col-md-8">
+            <Table />
+          </div>
+        </div>
+      </div>
+    </>
+  )
 
-    public render(): ReactNode {
-        return (
-            <>
-                <DeleteModal/>
-                <MessageModal/>
-                <Container>
-                    <Header>
-                        <h4 className="around">مدیریت دسته بندی ها</h4>
-                    </Header>
-                    <Content>
-                        <FlexboxGrid>
-                            <FlexboxGridItem colspan={16}>
-                                <div className="around">
-                                    <ListCategory/>
-                                </div>
-                            </FlexboxGridItem>
-                            <FlexboxGridItem colspan={8}>
-                                <div className="around">
-                                    <SelectedCategory/>
-                                </div>
-                            </FlexboxGridItem>
-                        </FlexboxGrid>
-                    </Content>
-                </Container>
-            </>
-        )
-    }
 }

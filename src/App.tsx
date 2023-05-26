@@ -1,71 +1,35 @@
-import { Component, ReactNode } from "react";
 import { connect } from "react-redux";
-import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import { dispatch } from "./redux";
 
-import NotFound from "./pages/404";
-import Category from "./pages/category";
-import Dashboard from "./pages/dashboard";
-import Login from "./pages/login";
-import Notes from "./pages/note";
-import AddNote from "./pages/note-editor";
-import Photo from "./pages/photo";
-import CategoryEditor from "./pages/category-editor";
-
-import Sidemenu from "./layout/sidemenu";
-
 import { changeStatus } from "./pages/login/reducer";
+import FreeRoutes from "./routes/free";
+import PrivateLayout from "./layout";
+import { ConfigProvider } from "antd";
+import { BrowserRouter } from "react-router-dom";
 
 interface Props {
-  login: boolean
+  hasToken: boolean
 }
 
-class App extends Component<Props>{
-
-  public render(): ReactNode {
-    const { login } = this.props;
-    return (
+function App({ hasToken }: Props) {
+  return <>
+    <ConfigProvider theme={
+      {
+        token: {
+          fontFamily: 'Dana',
+        },
+        components: {
+          Menu: {
+            colorPrimary: '#2980B9'
+          },
+        }
+      }
+    }>
       <BrowserRouter>
-        <div className="container-fluid">
-          <div className="row">
-            {
-              (!login)
-                ? <Login />
-                : <>
-                  <div className="col-md-2">
-                    <Routes>
-                      <Route path="*" element={(login) ? <Sidemenu /> : <></>} />
-                    </Routes>
-                  </div>
-                  <div className="col-md-10 page-area">
-                    <Routes>
-                      <Route path="login" element={(login) ? <Navigate to='/dashboard' /> : <Login />} />
-
-                      <Route path="dashboard" element={(login) ? <Dashboard /> : <Navigate to='/login' />} />
-
-                      <Route path="note" element={(login) ? <Notes /> : <Navigate to='/login' />} />
-                      <Route path="note/add" element={(login) ? <AddNote /> : <Navigate to='/login' />} />
-                      <Route path="note/edit/:id" element={(login) ? <AddNote edit /> : <Navigate to='/login' />} />
-
-                      <Route path="category" element={(login) ? <Category /> : <Navigate to='/login' />} />
-                      <Route path="category/add" element={(login) ? <CategoryEditor /> : <Navigate to='/login' />} />
-                      <Route path="category/add/:id" element={(login) ? <CategoryEditor /> : <Navigate to='/login' />} />
-                      <Route path="category/edit/:id" element={(login) ? <CategoryEditor edit /> : <Navigate to='/login' />} />
-
-                      <Route path="file/photo" element={(login) ? <Photo /> : <Navigate to='/login' />} />
-
-                      <Route path="404" element={(login) ? <NotFound /> : <Navigate to='/login' />} />
-
-                      <Route path="*" element={<Navigate to='404' />} />
-                    </Routes>
-                  </div>
-                </>
-            }
-          </div>
-        </div>
+        {hasToken ? <PrivateLayout /> : <FreeRoutes />}
       </BrowserRouter>
-    )
-  }
+    </ConfigProvider>
+  </>
 }
 
 const mapStateToProps = (): Props => {
@@ -74,7 +38,7 @@ const mapStateToProps = (): Props => {
   if (result) {
     dispatch(changeStatus(result));
   }
-  return { login: result }
+  return { hasToken: result }
 }
 
 export default connect(mapStateToProps)(App)

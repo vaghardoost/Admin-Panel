@@ -1,5 +1,5 @@
 import { createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
-import { Caption, Code, Frame, Note, Photo, SectionType, Title } from "../../../model/note";
+import { Note, SectionType } from "../../../model/note";
 import * as api from "./api";
 import { initialState, State } from "./state";
 
@@ -25,27 +25,28 @@ export const loadPhoto = createAsyncThunk('note-update/load/photo', async () => 
 
 // -----------------------------------------------------------------------
 
-export const alertModal = (state: State, action: PayloadAction<{ open: boolean, title?: string, message?: string }>) => {
-  const { message, open, title } = action.payload;
-  state.picker.alert = (open)
-    ? { message: message!, title: title!, open: open, status: 'black' }
-    : initialState.picker.alert
+
+export const drawerCategory = (state: State, action: PayloadAction<boolean>) => {
+  state.category.open = action.payload;
 }
 
-export const changePage = (state: State, action: PayloadAction<'edit' | 'view'>) => {
-  state.page = action.payload;
+export const drawerPhoto = (state: State, action: PayloadAction<boolean>) => {
+  state.photo.open = action.payload;
 }
 
 export const changeTitle = (state: State, action: PayloadAction<string>) => {
   state.note.title = action.payload;
 }
 
-export const setTag = (state: State, action: PayloadAction<string[]>) => {
-  state.note.tag = action.payload;
+export const pushTag = (state: State, action: PayloadAction<string>) => {
+  const { tag } = state.note;
+  if (!tag.includes(action.payload)) tag.push(action.payload);
 }
 
-export const setButtonLoad = (state: State) => {
-  state.category.buttonStatus = "loading";
+export const pullTag = (state: State, action: PayloadAction<string>) => {
+  const { tag } = state.note;
+  const index = tag.indexOf(action.payload);
+  if (index > -1) tag.splice(index, 1)
 }
 
 export const setCategorySelected = (state: State, action: PayloadAction<string>) => {
@@ -86,7 +87,7 @@ export const reset = (state: State) => {
   state.note = {
     ...initialState.note,
   }
-  state.quick = {
+  state.editSection = {
     visible: false,
     section: undefined,
     index: undefined
@@ -94,13 +95,13 @@ export const reset = (state: State) => {
   delete state.edit;
 }
 
-export const resetCat = (state: State) => {
+export const resetCategory = (state: State) => {
   delete state.note.category;
 }
 
 export const addSection = (state: State, action: PayloadAction<SectionType>) => {
   state.note.content!.push(action.payload);
-  state.quick = {
+  state.editSection = {
     visible: true,
     index: state.note.content!.length - 1,
     section: action.payload
@@ -115,11 +116,11 @@ export const updateSection = (state: State, action: PayloadAction<{ index: numbe
 export const moveSection = (state: State, action: PayloadAction<{ index: number, dest: 'up' | 'down' }>) => {
   const { dest, index } = action.payload;
   const { content } = state.note;
-  const { index: quickIndex } = state.quick;
+  const { index: quickIndex } = state.editSection;
   const i = (dest === 'up') ? -1 : 1;
 
   if (quickIndex) {
-    state.quick.index! += i;
+    state.editSection.index! += i;
   }
 
   const sabad = content![index + i];
@@ -131,7 +132,7 @@ export const removeSection = (state: State, action: PayloadAction<{ index: numbe
   const { index } = action.payload;
   const { content } = state.note;
   content!.splice(index, 1);
-  state.quick = {
+  state.editSection = {
     visible: false,
     section: undefined,
     index: undefined
@@ -139,23 +140,17 @@ export const removeSection = (state: State, action: PayloadAction<{ index: numbe
 }
 
 export const quick = (state: State, action: PayloadAction<{ section: SectionType, index: number }>) => {
-  state.quick = {
+  state.editSection = {
     ...action.payload,
     visible: true,
   }
 }
 
 export const resetQuick = (state: State) => {
-  state.quick = {
+  state.editSection = {
     visible: false,
     section: undefined,
     index: undefined
-  }
-}
-
-export const photoPicker = (state: State, action: PayloadAction<boolean>) => {
-  state.picker.photo = {
-    open: action.payload
   }
 }
 

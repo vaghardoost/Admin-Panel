@@ -3,9 +3,10 @@ export interface Note {
     title: string
     category?: string
     photo?: string
-    tag: any[]
+    tag: string[]
     content?: SectionType[]
     author: any
+    env?: Environment
 }
 
 export interface RichText {
@@ -26,12 +27,29 @@ interface RichStyle {
 
 export type RichWeight = 'BOLD' | 'ITALIC' | 'STRIKETHROUGH' | 'UNDERLINE'
 
+
 interface Section {
     id?: string
+    link?: string
     type: string
 }
 
-export type SectionType = Caption | Photo | Frame | Code | Title;
+export type SectionType =
+    Caption | Photo | Frame |
+    Code | Title | Gallery | PairGallery |
+    Carousel | AvatarCard;
+
+export interface Environment {
+    background?: string
+    bottomSheet: BottomSheet[]
+}
+
+export interface BottomSheet {
+    title: string
+    content: SectionType[]
+    ok?: string
+    cancel?: string
+}
 
 export interface Caption extends Section {
     type: 'caption'
@@ -60,3 +78,47 @@ export interface Title extends Section {
     header: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6'
 }
 
+export interface Gallery extends Section {
+    type: 'gallery'
+    list: {
+        id?: string
+        link?: string
+        caption?: string
+        photo: string
+    }[]
+}
+
+export interface PairGallery extends Section {
+    type: 'pair-gallery'
+    list: {
+        id?: string
+        link?: string,
+        caption?: string
+        photo: string
+    }[]
+}
+
+export interface Carousel extends Section {
+    type: 'carousel'
+    list: {
+        id?: string
+        link?: string
+        photo: string
+    }[]
+}
+
+export interface CarouselCard extends Section {
+    type: 'carousel-card'
+    list: {
+        photo: string
+        title: string
+        subtitle: string
+    }
+}
+
+export interface AvatarCard extends Section {
+    type: 'avatar-card'
+    title: string
+    subtitle: string
+    avatar: string
+}

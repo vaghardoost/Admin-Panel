@@ -3,7 +3,8 @@ import { Category } from "../../../model/category"
 export interface State {
   ediable?: string
   category: Category
-  list: string[]
+  photoList: string[]
+  categoryList: Category[]
   dialog: {
     title: string
     message: string
@@ -22,5 +23,6 @@ export const initialState: State = {
     message: '',
     open:false,
   },
-  list: []
+  categoryList:[],
+  photoList: []
 }

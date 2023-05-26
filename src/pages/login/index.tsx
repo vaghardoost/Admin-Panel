@@ -1,19 +1,12 @@
 import { Component, ReactNode } from "react";
-import LoginCard from './components/login-card'
-import './stylesheet/module.login.css'
+import LoginCard from './components/login-card';
 
 export default class Login extends Component {
-    public render(): ReactNode {
-        return <>
-            <div className="container-fluid back">
-                <div className="row">
-                    <div className="col-md-4"></div>
-                    <div className="col-md-4">
-                        <LoginCard />
-                    </div>
-                    <div className="col-md-4"></div>
-                </div>
-            </div>
-        </>
-    }
+	public render(): ReactNode {
+		return <>
+			<div style={{ width: '350px', margin: '20vh auto 0 auto' }}>
+				<LoginCard />
+			</div>
+		</>
+	}
 }

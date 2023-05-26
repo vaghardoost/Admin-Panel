@@ -1,26 +1,20 @@
 import { Component, ReactNode } from "react";
 import { connect } from "react-redux";
-import { Button, ButtonGroup, Modal } from "rsuite";
 import { dispatch } from "../../../redux";
 import { actions } from "../reducer";
 import { State } from "../reducer/state";
+import { Button, Modal } from "antd";
 
-class CategoryEditorModal extends Component<Props> {
-  public render(): ReactNode {
-    return <>
-      <Modal open={this.props.open}>
-        <Modal.Header closeButton={false}>
-          <h4>{this.props.title}</h4>
-        </Modal.Header>
-          <p>{this.props.message}</p>
-        <Modal.Body>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button onClick={() => { dispatch(actions.dialogClose()) }}>بستن</Button>
-        </Modal.Footer>
-      </Modal>
-    </>
-  }
+const CategoryEditorModal = ({ message, open, title }: Props) => {
+
+  return <>
+    <Modal
+      open={open}
+      footer={<Button onClick={() => { dispatch(actions.dialogClose()) }}>بستن</Button>}
+      title={title}>
+      <p>{message}</p>
+    </Modal>
+  </>
 }
 
 interface Props {

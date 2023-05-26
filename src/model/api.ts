@@ -1,4 +1,5 @@
-export interface ApiResult<T>{
-    success:boolean,
-    payload?:T
+export interface ApiResult<T> {
+    success: boolean
+    message?: string
+    payload?: T
 }
