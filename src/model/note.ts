@@ -28,58 +28,73 @@ interface RichStyle {
 export type RichWeight = 'BOLD' | 'ITALIC' | 'STRIKETHROUGH' | 'UNDERLINE'
 
 
-interface Section {
+export interface Section {
     id?: string
     link?: string
-    type: string
+    type: SectionName
 }
 
 export type SectionType =
     Caption | Photo | Frame |
     Code | Title | Gallery | PairGallery |
-    Carousel | AvatarCard;
+    Carousel | AvatarCard | CarouselCard;
+
+export enum SectionName {
+    caption = 'caption',
+    photo = 'photo',
+    frame = 'frame',
+    code = 'code',
+    title = 'title',
+    gallery = 'gallery',
+    pairGallery = 'pair-gallery',
+    carousel = 'carousel',
+    avatarCard = 'avatar-card',
+    carouselCard = 'carousel-card',
+}
 
 export interface Environment {
     background?: string
-    bottomSheet: BottomSheet[]
+    bottomSheet: Bottomsheet[]
 }
 
-export interface BottomSheet {
+export interface Bottomsheet {
+    id?: string
     title: string
-    content: SectionType[]
+    content?: SectionType
+    background?: string
     ok?: string
     cancel?: string
 }
 
 export interface Caption extends Section {
-    type: 'caption'
+    type: SectionName.caption
     richtext: RichText[]
 }
 
 export interface Photo extends Section {
-    type: 'photo'
+    type: SectionName.photo
     url: string
     richtext: RichText[]
 }
 
 export interface Frame extends Section {
-    type: 'frame'
+    type: SectionName.frame
     richtext: RichText[]
 }
 
 export interface Code extends Section {
-    type: 'code'
+    type: SectionName.code
     text: string
 }
 
 export interface Title extends Section {
-    type: 'title'
+    type: SectionName.title
     text: string
     header: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6'
 }
 
 export interface Gallery extends Section {
-    type: 'gallery'
+    type: SectionName.gallery
     list: {
         id?: string
         link?: string
@@ -89,7 +104,7 @@ export interface Gallery extends Section {
 }
 
 export interface PairGallery extends Section {
-    type: 'pair-gallery'
+    type: SectionName.pairGallery
     list: {
         id?: string
         link?: string,
@@ -99,7 +114,7 @@ export interface PairGallery extends Section {
 }
 
 export interface Carousel extends Section {
-    type: 'carousel'
+    type: SectionName.carousel
     list: {
         id?: string
         link?: string
@@ -108,16 +123,16 @@ export interface Carousel extends Section {
 }
 
 export interface CarouselCard extends Section {
-    type: 'carousel-card'
+    type: SectionName.carouselCard
     list: {
         photo: string
         title: string
         subtitle: string
-    }
+    }[]
 }
 
 export interface AvatarCard extends Section {
-    type: 'avatar-card'
+    type: SectionName.avatarCard
     title: string
     subtitle: string
     avatar: string

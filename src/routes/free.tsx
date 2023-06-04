@@ -1,4 +1,4 @@
-import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom"
+import { Navigate, Route, Routes } from "react-router-dom"
 import Login from "../pages/login"
 import { Layout } from "antd"
 const { Content } = Layout

@@ -3,7 +3,6 @@ import { Note } from "../../../model/note";
 import axios from "axios";
 import { server } from "../../../config";
 import { Category } from "../../../model/category";
-import { data as hardcode } from "./_notes";
 
 const api = axios.create({ baseURL: server });
 
@@ -18,12 +17,12 @@ export const getNote = async (id: string) => {
 }
 
 export const getNoteList = async () => {
-    // const namespace = sessionStorage.getItem("namespace");
-    // const url = `${server}/note/${namespace}`
-    // const { data } = await api.get<ApiResult<Note[]>>(url);
+    const namespace = sessionStorage.getItem("namespace");
+    const url = `${server}/note/${namespace}`
+    const { data } = await api.get<ApiResult<Note[]>>(url);
     return {
         success: true,
-        payload: hardcode
+        payload: data
     };
 }
 
@@ -39,8 +38,10 @@ export const categoryList = async () => {
 
 export const removeNote = async (id: string): Promise<ApiResult<any>> => {
     const token = sessionStorage.getItem('token');
+    const namespace = sessionStorage.getItem("namespace");
+    const url = `${server}/note/${namespace}`
     const { data } = await api.delete(
-        '/note/',
+        url,
         {
             headers: { "Authorization": `Bearer ${token}` },
             data: { id: id },

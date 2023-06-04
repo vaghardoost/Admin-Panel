@@ -1,5 +1,5 @@
 import { useLocation, useNavigate } from "react-router-dom";
-import { FileImageOutlined, FileOutlined, PlusSquareOutlined, SoundOutlined, UnorderedListOutlined, VideoCameraOutlined } from "@ant-design/icons";
+import { FileImageOutlined, FileOutlined, PlusOutlined, PlusSquareOutlined, SoundOutlined, UnorderedListOutlined, VideoCameraOutlined } from "@ant-design/icons";
 import { Menu } from "antd";
 
 
@@ -45,6 +45,25 @@ export default () => {
               label: 'افزودن دسته بندی',
               icon: <PlusSquareOutlined />,
               onClick: () => navigate('/category/add')
+            },
+          ]
+        },
+        { type: 'divider' },
+        {
+          label: 'اپلیکیشن',
+          key: 'datapack',
+          children: [
+            {
+              label: 'فهرست صفحات',
+              key: 'list',
+              icon: <UnorderedListOutlined />,
+              onClick: () => navigate('datapack')
+            },
+            {
+              label: 'افزودن صفحه',
+              key: '',
+              icon: <PlusOutlined />,
+              onClick: () => navigate('datapack/add')
             },
           ]
         },

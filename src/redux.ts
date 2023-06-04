@@ -6,8 +6,10 @@ import dashboardReducer from "./pages/dashboard/reducer/reducer";
 import addNoteReducer from "./pages/note-editor/reducer";
 import noteReducer from "./pages/note/reducer";
 import categoryReducer from "./pages/category/reducer";
-import categoryEditorReducer from "./pages/category-editor/reducer"
+import categoryEditorReducer from "./pages/category-editor/reducer";
 import photoReducer from "./pages/photo/reducer";
+import datapackReducer from "./pages/datapack/reducer";
+import datapackEditorReducer from "./pages/datapack-editor/reducer";
 
 const combine = combineReducers({
     layoutReducer,
@@ -18,6 +20,8 @@ const combine = combineReducers({
     categoryReducer,
     categoryEditorReducer,
     photoReducer,
+    datapackReducer,
+    datapackEditorReducer
 })
 
 const store = configureStore({

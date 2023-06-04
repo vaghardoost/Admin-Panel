@@ -8,7 +8,7 @@ import CategoryFields from "./components/fields";
 import CategoryDemo from "./components/demo";
 import CategoryEditorModal from "./components/modal";
 
-export default ({ edit }: Props) => {
+export default () => {
   const [firstTime, setFirstTime] = useState<boolean>(true);
   const { id } = useParams();
 
@@ -16,16 +16,16 @@ export default ({ edit }: Props) => {
     if (firstTime) {
       dispatch(loadPhoto());
       dispatch(loadCategoryList());
-      if (edit) {
-        dispatch(actions.setEditable(id!));
+      if (id) {
+        dispatch(actions.setEditable(id));
         dispatch(actions.dialog({ message: 'درحال بارگذاری', title: 'ویرایش دسته بندی' }));
-        dispatch(loadCategory(id!)).then(async () => {
+        dispatch(loadCategory(id)).then(async () => {
           dispatch(actions.dialogClose());
         });
       } else {
         dispatch(actions.reset());
         if (id) {
-          dispatch(actions.setParent(id!));
+          dispatch(actions.setParent(id));
         }
       }
       setFirstTime(false);
@@ -46,8 +46,4 @@ export default ({ edit }: Props) => {
       </div>
     </div>
   </>
-}
-
-interface Props {
-  edit?: boolean
 }

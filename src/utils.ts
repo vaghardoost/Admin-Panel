@@ -1,4 +1,3 @@
-import { ItemDataType } from "rsuite/esm/@types/common";
 import { Category } from "./model/category";
 import { TreeDataNode } from "antd";
 

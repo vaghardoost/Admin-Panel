@@ -3,7 +3,6 @@ import { Category } from "../../../model/category";
 import { Note } from "../../../model/note";
 import { cdn, server } from "../../../config";
 import axios from "axios";
-import File from "../../../model/file";
 
 const api = axios.create()
 
@@ -19,14 +18,20 @@ export const loadCategory = async () => {
 }
 
 export const loadNote = async (id: string) => {
-    const { data } = await api.get<ApiResult<Note>>(`/note/${id}`);
+    const namespace = sessionStorage.getItem('namespace');
+    const url = `${server}/note/${namespace}/${id}`
+    console.log(url);
+    
+    const { data } = await api.get<ApiResult<Note>>(url);
     return data;
 }
 
 export const saveNote = async (note: Note) => {
     const token = sessionStorage.getItem("file-token");
-    const { data } = await api.post<ApiResult<Note>>(
-        '/note',
+    const namespace = sessionStorage.getItem('namespace');
+    const url = `${server}/note/${namespace}`
+    const { data } = await api.put<ApiResult<Note>>(
+        url,
         note,
         { headers: { "Authorization": `Bearer ${token}` } }
     )
@@ -49,11 +54,13 @@ export const loadPhotoList = async () => {
 
 export const updateNote = async (note: Note): Promise<ApiResult<Note>> => {
     const token = sessionStorage.getItem("file-token");
-    const { data, status } = await api.patch(`/note/${note.id}`,
+    const namespace = sessionStorage.getItem('namespace');
+    const url = `${server}/note/${namespace}/${note.id}`
+    const { data } = await api.post<ApiResult<Note>>(
+        url,
         note,
-        { headers: { "Authorization": `Bearer ${token}` } },
-    );
-    console.log(status);
+        { headers: { "Authorization": `Bearer ${token}` } }
+    )
     return {
         success: true,
         payload: data.payload

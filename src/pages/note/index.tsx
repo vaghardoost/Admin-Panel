@@ -16,8 +16,8 @@ export default () => {
 
   return (
     <div className="container">
-      <div className="row around">
-        <div className="col-md-8">
+      <div className="row">
+        <div className="col-md-8" style={{ margin: '10px auto' }}>
           <NoteList />
         </div>
       </div>

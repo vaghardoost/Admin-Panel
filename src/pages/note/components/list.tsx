@@ -2,14 +2,11 @@ import { Avatar, Button, Image, List, Popconfirm, Space, Tag } from "antd"
 import { connect } from "react-redux"
 import { State } from "../reducer/state"
 import { Note } from "../../../model/note"
-import React from "react";
 import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
 import { Category } from "../../../model/category";
-import { cdn } from "../../../config";
 import { useNavigate } from "react-router-dom";
 
 const NoteList = ({ list, category }: Props) => {
-  const namespace = sessionStorage.getItem('namespace');
   const navigate = useNavigate();
   return <>
     <List
@@ -20,7 +17,7 @@ const NoteList = ({ list, category }: Props) => {
           key={note.id!}
           extra={
             note.photo
-              ? <Image src={`${cdn}/${namespace}/photo/demo.${note.photo}`} height={120} />
+              ? <Image src={note.photo} height={120} />
               : <Space align="center" style={{ width: '120px', height: '100px' }}>
                 بدون عکس
               </Space>
