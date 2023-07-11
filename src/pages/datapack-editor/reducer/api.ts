@@ -8,8 +8,9 @@ const api = axios.create();
 export const loadPhotoList = async (): Promise<string[]> => {
   const namespace = sessionStorage.getItem('namespace');
   const url = `${cdn}/photo/${namespace}`
-  const { data: { payload } } = await api.get<ApiResult<any>>(url);
-  return payload.files
+  const { data } = await api.get<ApiResult<any>>(url);
+  console.log(data);
+  return data.payload.files
 }
 
 export const saveDatapack = async (data: any) => {
@@ -40,5 +41,19 @@ export const updateDatapack = async ({ content, env, id }: any) => {
     { headers: { "Authorization": `Bearer ${token}` } }
   )
   return data;
+}
+
+export const setIndexDatapackId = async (id: string) => {
+  const namespace = sessionStorage.getItem('namespace');
+  const token = sessionStorage.getItem('token');
+  const url = `${server}/namespace/${namespace}`;
+  const { data } = await api.post<ApiResult<any>>(
+    url,
+    { datapack: id },
+    { headers: { "Authorization": `Bearer ${token}` } }
+  );
+  console.log(data);
+
+  return { ...data, datapack: id };
 }
 

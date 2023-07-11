@@ -37,49 +37,51 @@ export interface Section {
 export type SectionType =
     Caption | Photo | Frame |
     Code | Title | Gallery | PairGallery |
-    Carousel | AvatarCard | CarouselCard;
+    AvatarCard | CarouselCard | CarouselSm | Namespace
+    // | Carousel
+    ;
 
 export enum SectionName {
     caption = 'caption',
-    photo = 'photo',
     frame = 'frame',
+    photo = 'photo',
     code = 'code',
     title = 'title',
     gallery = 'gallery',
     pairGallery = 'pair-gallery',
-    carousel = 'carousel',
-    avatarCard = 'avatar-card',
     carouselCard = 'carousel-card',
+    avatarCard = 'avatar-card',
+
+    namespace = 'namespace',
+    carouselSm = 'carousel-sm',
+
+    // carousel = 'carousel',
 }
 
 export interface Environment {
-    background?: string
-    bottomSheet: Bottomsheet[]
+    bottomsheet: Bottomsheet[]
 }
 
 export interface Bottomsheet {
     id?: string
     title: string
     content?: SectionType
-    background?: string
-    ok?: string
-    cancel?: string
 }
 
 export interface Caption extends Section {
     type: SectionName.caption
-    richtext: RichText[]
+    content: RichText[]
 }
 
 export interface Photo extends Section {
     type: SectionName.photo
     url: string
-    richtext: RichText[]
+    content?: RichText[]
 }
 
 export interface Frame extends Section {
     type: SectionName.frame
-    richtext: RichText[]
+    content: RichText[]
 }
 
 export interface Code extends Section {
@@ -91,6 +93,7 @@ export interface Title extends Section {
     type: SectionName.title
     text: string
     header: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6'
+    align?: 'start' | 'end' | 'center'
 }
 
 export interface Gallery extends Section {
@@ -113,11 +116,12 @@ export interface PairGallery extends Section {
     }[]
 }
 
-export interface Carousel extends Section {
-    type: SectionName.carousel
+export interface CarouselSm extends Section {
+    type: SectionName.carouselSm
     list: {
         id?: string
         link?: string
+        caption?: string
         photo: string
     }[]
 }
@@ -125,9 +129,11 @@ export interface Carousel extends Section {
 export interface CarouselCard extends Section {
     type: SectionName.carouselCard
     list: {
-        photo: string
-        title: string
-        subtitle: string
+        id: string,
+        link: string,
+        photo: string,
+        title: string,
+        subtitle: string,
     }[]
 }
 
@@ -136,4 +142,9 @@ export interface AvatarCard extends Section {
     title: string
     subtitle: string
     avatar: string
+}
+
+export interface Namespace extends Section {
+    type: SectionName.namespace
+    namespace: string
 }

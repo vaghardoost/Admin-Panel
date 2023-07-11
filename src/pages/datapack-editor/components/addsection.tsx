@@ -1,9 +1,9 @@
-import { Button, Card, ColorPicker, Drawer, Input, Space } from "antd";
+import { Button, Card, Drawer, Input, Space } from "antd";
 import { connect } from "react-redux"
 import { State } from "../reducer/state";
 import { generate } from "randomstring"
 
-import { AvatarCard, Bottomsheet, Caption, Carousel, Code, Frame, PairGallery, Photo, SectionName, Title } from "../../../model/note";
+import { AvatarCard, Bottomsheet, Caption, CarouselCard, CarouselSm, Code, Frame, Gallery, Namespace, PairGallery, Photo, SectionName, Title } from "../../../model/note";
 
 import NoteCaption from "../../../components/editor/components/view/note.caption";
 import NoteTitle from "../../../components/editor/components/view/note.title";
@@ -12,7 +12,10 @@ import NoteCode from "../../../components/editor/components/view/note.code";
 import NotePhoto from "../../../components/editor/components/view/note.photo";
 import NoteAvatarcard from "../../../components/editor/components/view/note.avatarcard";
 import NotePairgallery from "../../../components/editor/components/view/note.pairgallery";
-import NoteCarousel from "../../../components/editor/components/view/note.carousel";
+import NoteCarouselCard from "../../../components/editor/components/view/note.carouselcard";
+import NoteCarouselSm from "../../../components/editor/components/view/note.carouselsm";
+import NoteNamespace from "../../../components/editor/components/view/note.namespace";
+import NoteGallery from "../../../components/editor/components/view/note.gallery";
 
 import { EditorCaption, captionInitState } from "../../../components/editor/components/edit/editor.caption"
 import { EditorTitle, titleInitState } from "../../../components/editor/components/edit/editor.title"
@@ -21,7 +24,10 @@ import { EditorCode, codeInitState } from "../../../components/editor/components
 import { EditorPhoto, photoInitState } from "../../../components/editor/components/edit/editor.photo";
 import { EditorAvatarCard, avatarCardInitState } from "../../../components/editor/components/edit/editor.avatarcard";
 import { EditorPairGallery, pairGalleryInitState } from "../../../components/editor/components/edit/editor.pairgalley";
-import { EditorCarousel, carouselInitState } from "../../../components/editor/components/edit/editor.carousel";
+import { EditorCarouselCard, carouselCardInitState } from "../../../components/editor/components/edit/editor.carouselcard";
+import { EditorCarouselSm, carouselSmInitState } from "../../../components/editor/components/edit/editor.carouselsm";
+import { EditorNamespace, namespaceInitState } from "../../../components/editor/components/edit/editor.namespace";
+import { EditorGallery, galleryInitState } from "../../../components/editor/components/edit/editor.gallery";
 
 import { dispatch } from "../../../redux";
 import { actions } from "../reducer";
@@ -73,10 +79,23 @@ const AddSection = ({ open, type, photos, bottomsheet }: Props) => {
       view = <NotePairgallery pairgallery={state.content as PairGallery ?? bottomsheet?.content as PairGallery ?? pairGalleryInitState} />
       edit = <EditorPairGallery init={bottomsheet?.content as PairGallery} onChange={(s) => setState({ ...state, content: s })} photos={photos} />
       break;
-    case SectionName.carousel:
-      view = <NoteCarousel carousel={state.content as Carousel ?? bottomsheet?.content as Carousel ?? carouselInitState} />
-      edit = <EditorCarousel init={bottomsheet?.content as Carousel} onChange={(s) => setState({ ...state, content: s })} photos={photos} />
+    case SectionName.gallery:
+      view = <NoteGallery gallery={state.content as Gallery ?? bottomsheet?.content as Gallery ?? galleryInitState} />
+      edit = <EditorGallery init={bottomsheet?.content as Gallery} onChange={(s) => setState({ ...state, content: s })} photos={photos} />
       break;
+    case SectionName.carouselCard:
+      view = <NoteCarouselCard carouselCard={state.content as CarouselCard ?? bottomsheet?.content as CarouselCard ?? carouselCardInitState} />
+      edit = <EditorCarouselCard init={bottomsheet?.content as CarouselCard} onChange={(s) => setState({ ...state, content: s })} photos={photos} />
+      break;
+    case SectionName.carouselSm:
+      view = <NoteCarouselSm carouselSm={state.content as CarouselSm ?? bottomsheet?.content as CarouselSm ?? carouselSmInitState} />
+      edit = <EditorCarouselSm init={bottomsheet?.content as CarouselSm} onChange={(s) => setState({ ...state, content: s })} photos={photos} />
+      break;
+    case SectionName.namespace:
+      view = <NoteNamespace namespace={state.content as Namespace ?? bottomsheet?.content as Namespace ?? namespaceInitState} />
+      edit = <EditorNamespace init={bottomsheet?.content as Namespace} onChange={(s) => setState({ ...state, content: s })} />
+      break;
+
   }
 
   return <>
@@ -115,16 +134,8 @@ const AddSection = ({ open, type, photos, bottomsheet }: Props) => {
         <Input onChange={(e) => setState({ ...state, title: e.target.value })} placeholder="عنوان" value={state.title} />
         {edit}
         <Card
-          title={state.title}
-          extra={<>
-            <ColorPicker allowClear onChange={(_c, hex) => setState({ ...state, background: hex })} />
-          </>
-          }>
+          title={state.title}>
           {view}
-          <Space.Compact block>
-            <Input onChange={(e) => setState({ ...state, ok: e.target.value })} value={state.ok} placeholder="متن دکمه تایید" />
-            <Input onChange={(e) => setState({ ...state, cancel: e.target.value })} value={state.cancel} placeholder="متن دکمه بستن" />
-          </Space.Compact>
         </Card>
       </Space>
 

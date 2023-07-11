@@ -8,4 +8,5 @@ export default interface NamespaceModel {
   primaryColor: string
   secoundColor: string
   founder: string
+  datapack?: string
 }

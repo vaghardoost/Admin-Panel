@@ -8,11 +8,11 @@ export default ({ photo }: Props) => {
     <div style={{ maxWidth: '70%', marginLeft: 'auto', marginRight: 'auto' }}>
       <img style={{ width: '100%' }} src={photo.url} />
       {
-        (photo.richtext.length > 0)
+        (photo.content && photo.content.length > 0)
           ?
           <div style={{ padding: '10px' }}>
             {
-              photo.richtext.map(rich =>
+              photo.content.map(rich =>
                 <NoteRich key={generate()} richtext={rich} />
               )
             }

@@ -59,14 +59,21 @@ const PairGalleryComponent = ({ index, content, photos, onChange }: Props) => {
                 ]
                 setState({ ...state, list: list });
                 onChange?.({ ...state, list: list });
+
                 setItem({ photo: '' });
+                setLink("");
+                setType("url");
               }}
               type='ghost'
               icon={<PlusOutlined />}>
               افزودن
             </Button>,
             <Button
-              onClick={() => setItem({ photo: '' })}
+              onClick={() => {
+                setItem({ photo: '' });
+                setLink("");
+                setType("url");
+              }}
               type='ghost'
               icon={<ClearOutlined />}>
               پاک کردن
@@ -81,29 +88,32 @@ const PairGalleryComponent = ({ index, content, photos, onChange }: Props) => {
               }}
               src={item?.photo} />
             <Input onChange={(e) => setItem({ ...item, caption: e.target.value })} value={item?.caption} placeholder="عنوان" />
-            <Space.Compact style={{ margin: '0 auto' }} block dir='ltr'>
+            <Space.Compact style={{ margin: '10px auto' }} block dir='ltr'>
               <Input
                 value={link}
                 onChange={(e) => {
-                  if (e.target.value === '') {
+                  const { value: link } = e.target;
+                  if (link === '') {
                     setLink('');
                     setItem({ ...item, link: undefined });
                     return
                   }
-                  setLink(e.target.value);
-                  setItem({ ...item, link: `${type}=>${e.target.value}` })
+                  setLink(link);
+                  setItem({ ...item, link: (type === "url") ? link : `@${type}/${link}` })
                 }}
                 placeholder='شناسه' />
               <Select
                 defaultValue={type}
+                value={type}
                 onChange={(e) => {
                   setType(e);
-                  setItem({ ...item, link: `${e}=>${link}` });
+                  setItem({ ...item, link: (e === "url") ? link : `@${e}/${link}` });
                 }}
                 options={[
                   { value: 'url', label: 'لینک خارجی' },
                   { value: 'bottomsheet', label: 'منو کشویی' },
                   { value: 'datapack', label: 'صفحه دیگر' },
+                  { value: 'namespace', label: 'فضای دیگر' },
                 ]}
               />
             </Space.Compact>

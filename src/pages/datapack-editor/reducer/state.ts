@@ -23,7 +23,7 @@ export const initialState: State = {
     type: SectionName.caption
   },
   env: {
-    bottomSheet: []
+    bottomsheet: []
   },
   drawerDraft: false
 }

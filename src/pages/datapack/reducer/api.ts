@@ -16,7 +16,6 @@ export async function loadList() {
   } catch {
     sessionStorage.clear();
   }
-
 }
 
 export async function deleteDatapack(id: string) {

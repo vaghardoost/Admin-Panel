@@ -14,35 +14,37 @@ import { ApiResult } from "../../model/api"
 
 export default () => {
 
-  const [isFirstTime, setFirstTime] = useState<boolean>(true);
+  // const [isFirstTime, setFirstTime] = useState<boolean>(true);
   const { id } = useParams();
 
   useEffect(() => {
-    if (isFirstTime) {
-      editorDispatch(editorActions.reset());
-      dispatch(loadPhotoAction()).then((action) => {
-        const payload = action.payload as string[];
-        const result = []
-        for (const file of payload) {
-          if (!file.startsWith('demo')) {
-            result.push(file);
+    // if (isFirstTime) {
+    editorDispatch(editorActions.reset());
+    dispatch(loadPhotoAction()).then((action) => {
+      const payload = action.payload as string[];
+      const result = []
+      for (const file of payload) {
+        if (!file.startsWith('demo')) {
+          result.push(file);
+        }
+      }
+      editorDispatch(editorActions.setPhotoList(result.reverse()));
+
+      dispatch(actions.reset());
+      if (id) {
+        dispatch(actions.setEditable(id));
+        dispatch(actions.setloading());
+        dispatch(loadDatapackAction(id)).then((e) => {
+          const { success, payload: result } = e.payload as ApiResult<Note>;
+          if (success) {
+            editorDispatch(editorActions.setContent(result!.content!))
+            return
           }
-        }
-        editorDispatch(editorActions.setPhotoList(result.reverse()));
-        if (id) {
-          dispatch(actions.setEditable(id));
-          dispatch(actions.setloading());
-          dispatch(loadDatapackAction(id)).then((e) => {
-            const { success, payload: result } = e.payload as ApiResult<Note>;
-            if (success) {
-              editorDispatch(editorActions.setContent(result!.content!))
-              return
-            }
-          });
-        }
-      })
-      setFirstTime(false);
-    }
+        });
+      }
+    })
+    // setFirstTime(false);
+    // }
   })
   return <>
     <Addsection />

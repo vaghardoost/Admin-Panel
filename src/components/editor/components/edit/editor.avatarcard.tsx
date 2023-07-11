@@ -86,23 +86,24 @@ const AvatarCardComponent = ({ index, content, photos, onChange }: Props) => {
           <Input
             value={link}
             onChange={(e) => {
-              if (e.target.value === '') {
+              const { value: link } = e.target;
+              if (link === '') {
                 setLink('');
                 onChange?.({ ...state, link: undefined })
                 setState({ ...state, link: undefined });
                 return
               }
-              setLink(e.target.value);
-              onChange?.({ ...state, link: `${type}=>${e.target.value}` });
-              setState({ ...state, link: `${type}=>${e.target.value}` })
+              setLink(link);
+              onChange?.({ ...state, link: `@${type}/${e.target.value}` });
+              setState({ ...state, link: `@${type}/${e.target.value}` });
             }}
             placeholder='شناسه' />
           <Select
             defaultValue={type}
             onChange={(e) => {
               setType(e);
-              onChange?.({ ...state, link: `${e}=>${link}` });
-              setState({ ...state, link: `${e}=>${link}` });
+              onChange?.({ ...state, link: `@${e}/${link}` });
+              setState({ ...state, link: (e === "url") ? link : `@${e}/${link}` });
             }}
             options={[
               { value: 'url', label: 'لینک خارجی' },

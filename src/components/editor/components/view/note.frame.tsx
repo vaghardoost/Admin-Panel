@@ -5,9 +5,9 @@ export default ({ frame }: Props) => {
   return <>
     <div className="card around">
       {
-        (frame.richtext.length === 0)
+        (frame.content.length === 0)
           ? <p style={{ opacity: '0.3' }}>پاراگراف خالی</p>
-          : frame.richtext.map((rich) => <NoteRich richtext={rich} />)
+          : frame.content.map((rich) => <NoteRich richtext={rich} />)
       }
     </div>
   </>

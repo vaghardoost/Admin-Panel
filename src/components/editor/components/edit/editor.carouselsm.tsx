@@ -1,21 +1,21 @@
-import { ClearOutlined, CloseCircleOutlined, DeleteOutlined, PlusOutlined } from "@ant-design/icons";
-import { Avatar, Button, Card, Drawer, Image, Input, Select, Space, Table, message } from "antd";
-import { connect } from "react-redux";
 import { useState } from "react";
-import { generate } from "randomstring";
+import { connect } from "react-redux";
+import { Avatar, Button, Card, Drawer, Image, Input, Select, Space, Table, message } from "antd";
+import { ClearOutlined, CloseCircleOutlined, PlusOutlined } from "@ant-design/icons";
+import { generate } from "randomstring"
 
 import { getActions } from "./_section.actions";
-import { Carousel, SectionName, SectionType } from "../../../../model/note"
+import { CarouselSm, SectionName, SectionType } from "../../../../model/note"
 import { State } from "../../redux/state";
 import { cdn } from "../../../../config";
 
-const CarouselComponent = ({ index, photos, content, onChange }: Props) => {
-  const namespace = sessionStorage.getItem('namespace')
+const CarouselSmComponent = ({ index, content, photos, onChange }: Props) => {
+  const namespace = sessionStorage.getItem('namespace');
 
-  const [state, setState] = useState<Carousel>(content![index] as Carousel);
+  const [state, setState] = useState<CarouselSm>(content![index] as CarouselSm)
   const [open, setOpen] = useState<boolean>(false);
-  const [item, setItem] = useState<{ photo: string, link?: string, id?: string }>({ photo: '' });
 
+  const [item, setItem] = useState<{ photo: string, link?: string, id?: string, caption?: string }>({ photo: '' });
   const [msg, context] = message.useMessage();
 
   const [type, setType] = useState<string>(state.link?.split('=>')[0] ?? 'url');
@@ -57,16 +57,23 @@ const CarouselComponent = ({ index, photos, content, onChange }: Props) => {
                     id: generate({ length: 8, charset: 'ABCDEF0123456789' }),
                   }
                 ]
-                onChange?.({ ...state, list: list });
                 setState({ ...state, list: list });
+                onChange?.({ ...state, list: list });
+
                 setItem({ photo: '' });
+                setLink("");
+                setType("url");
               }}
               type='ghost'
               icon={<PlusOutlined />}>
               افزودن
             </Button>,
             <Button
-              onClick={() => setItem({ photo: '' })}
+              onClick={() => {
+                setItem({ photo: '' });
+                setLink("");
+                setType("url");
+              }}
               type='ghost'
               icon={<ClearOutlined />}>
               پاک کردن
@@ -80,29 +87,33 @@ const CarouselComponent = ({ index, photos, content, onChange }: Props) => {
                 margin: '10px',
               }}
               src={item?.photo} />
-            <Space.Compact style={{ margin: '0 auto' }} block dir='ltr'>
+            <Input onChange={(e) => setItem({ ...item, caption: e.target.value })} value={item?.caption} placeholder="عنوان" />
+            <Space.Compact style={{ margin: '10px auto' }} block dir='ltr'>
               <Input
                 value={link}
                 onChange={(e) => {
-                  if (e.target.value === '') {
+                  const { value: link } = e.target;
+                  if (link === '') {
                     setLink('');
                     setItem({ ...item, link: undefined });
                     return
                   }
-                  setLink(e.target.value);
-                  setItem({ ...item, link: `${type}=>${e.target.value}` })
+                  setLink(link);
+                  setItem({ ...item, link: (type === "url") ? link : `@${type}/${link}` })
                 }}
                 placeholder='شناسه' />
               <Select
                 defaultValue={type}
+                value={type}
                 onChange={(e) => {
                   setType(e);
-                  setItem({ ...item, link: `${e}=>${link}` });
+                  setItem({ ...item, link: (e === "url") ? link : `@${e}/${link}` });
                 }}
                 options={[
                   { value: 'url', label: 'لینک خارجی' },
                   { value: 'bottomsheet', label: 'منو کشویی' },
                   { value: 'datapack', label: 'صفحه دیگر' },
+                  { value: 'namespace', label: 'فضای دیگر' },
                 ]}
               />
             </Space.Compact>
@@ -113,7 +124,7 @@ const CarouselComponent = ({ index, photos, content, onChange }: Props) => {
         {
           photos.map(file => (
             <Avatar
-              onClick={() => setItem({ ...item, photo: `${cdn}/${namespace}/photo/${file}` })}
+              onClick={() => setItem({ ...item, photo: `${cdn}/${namespace}/photo/demo.${file}` })}
               size={40}
               shape="square"
               key={file}
@@ -124,7 +135,7 @@ const CarouselComponent = ({ index, photos, content, onChange }: Props) => {
     </Drawer >
     <Card
       style={{ backgroundColor: 'whitesmoke' }}
-      title="اسلایدر عکس"
+      title="اسلایدر کوچک"
       extra={getActions(index, content!.length - 1)}>
       <Table
         footer={() => (
@@ -137,8 +148,8 @@ const CarouselComponent = ({ index, photos, content, onChange }: Props) => {
             </Button>
             <Button
               onClick={() => {
-                onChange?.({ ...state, list: [] })
-                setState({ ...state, list: [] })
+                onChange?.({ ...state, list: [] });
+                setState({ ...state, list: [] });
               }}
               disabled={state.list.length === 0}
               icon={<ClearOutlined />}
@@ -153,6 +164,7 @@ const CarouselComponent = ({ index, photos, content, onChange }: Props) => {
         columns={[
           { title: 'شناسه', key: 'id', dataIndex: 'id', align: 'center', fixed: 'left' },
           { title: 'تصویر', key: 'photo', dataIndex: 'photo', align: 'center' },
+          { title: 'عنوان', key: 'title', dataIndex: 'title', align: 'center' },
           { title: 'لینک', key: 'link', dataIndex: 'link', align: 'center' },
           {
             title: 'عملیات',
@@ -173,6 +185,7 @@ const CarouselComponent = ({ index, photos, content, onChange }: Props) => {
               حذف
             </Button>
           },
+
         ]}
         dataSource={
           state.list.map((item, i) => {
@@ -180,6 +193,7 @@ const CarouselComponent = ({ index, photos, content, onChange }: Props) => {
               key: item.id,
               id: item.id,
               photo: <Image height={50} src={item.photo} />,
+              title: item.caption ?? '-',
               link: item.link ?? '-',
             }
           })
@@ -187,7 +201,6 @@ const CarouselComponent = ({ index, photos, content, onChange }: Props) => {
     </Card>
   </>
 }
-
 
 interface Props {
   index: number
@@ -200,23 +213,25 @@ const mapStateToProps = (reducer: any) => {
   const { content, data }: State = reducer;
   return {
     content: content,
-    photos: data.photoList
+    photos: data.photoList,
   };
 }
 
-export default connect(mapStateToProps)(CarouselComponent);
+export default connect(mapStateToProps)(CarouselSmComponent);
 
-export const carouselInitState: Carousel = {
-  type: SectionName.carousel,
+export const carouselSmInitState: CarouselSm = {
+  type: SectionName.carouselSm,
   list: []
 }
 
 interface EditorProps {
   onChange?: (section: SectionType) => void
   photos: string[]
-  init?: Carousel
+  init?: CarouselSm
 }
 
-export function EditorCarousel({ onChange, photos, init }: EditorProps) {
-  return <CarouselComponent onChange={onChange} index={0} content={[init ?? carouselInitState]} photos={photos} />
-} 
+export function EditorCarouselSm({ onChange, photos, init }: EditorProps) {
+  return <CarouselSmComponent onChange={onChange} index={0} content={[init ?? carouselSmInitState]} photos={photos} />
+}
+
+

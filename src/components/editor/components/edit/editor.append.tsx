@@ -12,7 +12,6 @@ export const Append = ({ disabled }: Props) => {
     <div className="around">
       <Space direction="vertical" style={{ width: '100%' }}>
         <Space.Compact block>
-
           <Button
             block
             type="dashed"
@@ -23,7 +22,7 @@ export const Append = ({ disabled }: Props) => {
                   {
                     id: generate({ charset: '0123456789abcdef', length: 8 }),
                     type: SectionName.caption,
-                    richtext: [],
+                    content: [],
                   }
                 )
               )
@@ -39,7 +38,7 @@ export const Append = ({ disabled }: Props) => {
                   {
                     id: generate({ charset: '0123456789abcdef', length: 8 }),
                     type: SectionName.frame,
-                    richtext: []
+                    content: []
                   }
                 )
               )
@@ -78,6 +77,22 @@ export const Append = ({ disabled }: Props) => {
               )
             }}>کد</Button>
 
+          <Button
+            disabled={disabled.includes('namespace')}
+            type="dashed"
+            block
+            onClick={() => {
+              dispatch(
+                actions.addSection(
+                  {
+                    id: generate({ charset: '0123456789abcdef', length: 8 }),
+                    type: SectionName.namespace,
+                    namespace: ''
+                  }
+                )
+              )
+            }}>فضای نام</Button>
+
         </Space.Compact>
         <Space.Compact block>
 
@@ -91,60 +106,12 @@ export const Append = ({ disabled }: Props) => {
                   {
                     id: generate({ charset: '0123456789abcdef', length: 8 }),
                     type: SectionName.photo,
-                    richtext: [],
+                    content: [],
                     url: ''
                   }
                 )
               )
             }}>تصویر</Button>
-
-          <Button
-            disabled={disabled.includes('carousel')}
-            type="dashed"
-            block
-            onClick={() => {
-              dispatch(
-                actions.addSection(
-                  {
-                    id: generate({ charset: '0123456789abcdef', length: 8 }),
-                    type: SectionName.carousel,
-                    list: [],
-                  }
-                )
-              )
-            }}>اسلایدر تصاویر</Button>
-
-          <Button
-            disabled={disabled.includes('gallery')}
-            type="dashed"
-            block
-            onClick={() => {
-              dispatch(
-                actions.addSection(
-                  {
-                    id: generate({ charset: '0123456789abcdef', length: 8 }),
-                    type: SectionName.gallery,
-                    list: [],
-                  }
-                )
-              )
-            }}>گالری تصویر</Button>
-
-          <Button
-            disabled={disabled.includes('pair-gallery')}
-            type="dashed"
-            block
-            onClick={() => {
-              dispatch(
-                actions.addSection(
-                  {
-                    id: generate({ charset: '0123456789abcdef', length: 8 }),
-                    type: SectionName.pairGallery,
-                    list: [],
-                  }
-                )
-              )
-            }}>تصاویر دودویی</Button>
 
           <Button
             disabled={disabled.includes('avatar-card')}
@@ -164,6 +131,69 @@ export const Append = ({ disabled }: Props) => {
               )
             }}>کارت آواتار</Button>
 
+        </Space.Compact>
+        <Space.Compact block>
+
+          <Button
+            disabled={disabled.includes('carousel')}
+            type="dashed"
+            block
+            onClick={() => {
+              dispatch(
+                actions.addSection(
+                  {
+                    id: generate({ charset: '0123456789abcdef', length: 8 }),
+                    type: SectionName.carouselCard,
+                    list: [],
+                  }
+                )
+              )
+            }}>اسلایدر تصاویر</Button>
+          <Button
+            disabled={disabled.includes('gallery')}
+            type="dashed"
+            block
+            onClick={() => {
+              dispatch(
+                actions.addSection(
+                  {
+                    id: generate({ charset: '0123456789abcdef', length: 8 }),
+                    type: SectionName.gallery,
+                    list: [],
+                  }
+                )
+              )
+            }}>گالری تصویر</Button>
+          <Button
+            disabled={disabled.includes('pair-gallery')}
+            type="dashed"
+            block
+            onClick={() => {
+              dispatch(
+                actions.addSection(
+                  {
+                    id: generate({ charset: '0123456789abcdef', length: 8 }),
+                    type: SectionName.pairGallery,
+                    list: [],
+                  }
+                )
+              )
+            }}>تصاویر دودویی</Button>
+          <Button
+            disabled={disabled.includes('carousel-sm')}
+            type="dashed"
+            block
+            onClick={() => {
+              dispatch(
+                actions.addSection(
+                  {
+                    id: generate({ charset: '0123456789abcdef', length: 8 }),
+                    type: SectionName.carouselSm,
+                    list: [],
+                  }
+                )
+              )
+            }}>اسلایدر کوچک</Button>
         </Space.Compact>
         <Space.Compact block>
           <Button disabled type="dashed" block> (بزودی) آهنگ </Button>

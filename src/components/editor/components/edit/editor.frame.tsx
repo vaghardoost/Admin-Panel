@@ -10,7 +10,7 @@ import { useState } from "react";
 const FrameComponent = ({ index, content, onChange }: Props) => {
 
   const [state, setState] = useState<Frame>({
-    richtext: [],
+    content: [],
     ...content![index],
     type: SectionName.frame
   });
@@ -26,36 +26,38 @@ const FrameComponent = ({ index, content, onChange }: Props) => {
       title="فریم">
       <RichtextEditor
         onChange={(richtext) => {
-          setState({ ...state, richtext: richtext });
-          onChange?.({ ...state, richtext: richtext })
+          setState({ ...state, content: richtext });
+          onChange?.({ ...state, content: richtext })
         }}
-        richtext={state.richtext} />
+        richtext={state.content} />
       <Space.Compact style={{ margin: '0 auto' }} block dir='ltr'>
         <Input
           value={link}
           onChange={(e) => {
-            if (e.target.value === '') {
+            const { value: link } = e.target;
+            if (link === '') {
               setLink('');
               onChange?.({ ...state, link: undefined })
               setState({ ...state, link: undefined });
               return
             }
-            setLink(e.target.value);
-            onChange?.({ ...state, link: `${type}=>${e.target.value}` });
-            setState({ ...state, link: `${type}=>${e.target.value}` })
+            setLink(link);
+            onChange?.({ ...state, link: `@${type}/${e.target.value}` });
+            setState({ ...state, link: `@${type}/${e.target.value}` });
           }}
           placeholder='شناسه' />
         <Select
           defaultValue={type}
           onChange={(e) => {
             setType(e);
-            onChange?.({ ...state, link: `${e}=>${link}` });
-            setState({ ...state, link: `${e}=>${link}` });
+            onChange?.({ ...state, link: `@${e}/${link}` });
+            setState({ ...state, link: (e === "url") ? link : `@${e}/${link}` });
           }}
           options={[
             { value: 'url', label: 'لینک خارجی' },
             { value: 'bottomsheet', label: 'منو کشویی' },
             { value: 'datapack', label: 'صفحه دیگر' },
+            { value: 'namespace', label: 'فضای دیگر' },
           ]}
         />
       </Space.Compact>
@@ -81,7 +83,7 @@ export default connect(mapStateToProps)(FrameComponent);
 
 export const frameInitState: Frame = {
   type: SectionName.frame,
-  richtext: []
+  content: []
 }
 
 interface EditorProps {

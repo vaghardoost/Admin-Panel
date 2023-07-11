@@ -8,6 +8,7 @@ import { dispatch } from "../../../redux";
 import { deleteDatapackAction } from "../reducer/actions";
 
 const DatapackList = ({ list, loading }: Props) => {
+  const indexDatapackId = sessionStorage.getItem("index-datapack");
   const navigate = useNavigate();
   return <>
     <Table
@@ -45,8 +46,8 @@ const DatapackList = ({ list, loading }: Props) => {
       dataSource={
         list.map((item, index) => ({
           key: item.id,
-          no: index + 1,
           id: item.id,
+          no: (indexDatapackId === item.id) ? " (شاخص)" : index + 1,
         }))
       }
     />

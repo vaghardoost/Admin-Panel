@@ -41,6 +41,11 @@ const TitleComponent = ({ content, index, onChange }: Props) => {
           <Button block onClick={() => setH('h5')} type={(state.header === 'h5') ? 'primary' : 'default'}>h5</Button>
           <Button block onClick={() => setH('h6')} type={(state.header === 'h6') ? 'primary' : 'default'}>h6</Button>
         </Space.Compact>
+        <Space.Compact block>
+          <Button block type={(state.align && state.align == 'start') ? "primary" : "default"} onClick={() => { setState({ ...state, align: 'start' }); onChange?.({ ...state, align: 'start' }); }}>راست</Button>
+          <Button block type={(state.align && state.align == 'center') ? "primary" : "default"} onClick={() => { setState({ ...state, align: 'center' }); onChange?.({ ...state, align: 'center' }); }}>وسط</Button>
+          <Button block type={(state.align && state.align == 'end') ? "primary" : "default"} onClick={() => { setState({ ...state, align: 'end' }); onChange?.({ ...state, align: 'end' }); }}>چپ</Button>
+        </Space.Compact>
         <Input
           value={state.text}
           onChange={(e) => {
@@ -48,33 +53,35 @@ const TitleComponent = ({ content, index, onChange }: Props) => {
             onChange?.({ ...state, text: e.target.value });
           }}
           placeholder="عنوان" />
-        <TitleHeader>{state.text}</TitleHeader>
+        <TitleHeader align={(state.align == "start") ? "right" : (state.align == "center") ? "center" : "left"}>{state.text}</TitleHeader>
         <Space.Compact style={{ margin: '0 auto' }} block dir='ltr'>
           <Input
             value={link}
             onChange={(e) => {
-              if (e.target.value === '') {
+              const { value: link } = e.target;
+              if (link === '') {
                 setLink('');
                 onChange?.({ ...state, link: undefined })
                 setState({ ...state, link: undefined });
                 return
               }
-              setLink(e.target.value);
-              onChange?.({ ...state, link: `${type}=>${e.target.value}` });
-              setState({ ...state, link: `${type}=>${e.target.value}` })
+              setLink(link);
+              onChange?.({ ...state, link: `@${type}/${e.target.value}` });
+              setState({ ...state, link: `@${type}/${e.target.value}` });
             }}
             placeholder='شناسه' />
           <Select
             defaultValue={type}
             onChange={(e) => {
               setType(e);
-              onChange?.({ ...state, link: `${e}=>${link}` });
-              setState({ ...state, link: `${e}=>${link}` });
+              onChange?.({ ...state, link: `@${e}/${link}` });
+              setState({ ...state, link: (e === "url") ? link : `@${e}/${link}` });
             }}
             options={[
               { value: 'url', label: 'لینک خارجی' },
               { value: 'bottomsheet', label: 'منو کشویی' },
               { value: 'datapack', label: 'صفحه دیگر' },
+              { value: 'namespace', label: 'فضای دیگر' },
             ]}
           />
         </Space.Compact>

@@ -1,12 +1,15 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { initialState } from "./state";
 import { Bottomsheet, Environment, Note, SectionName, SectionType } from "../../../model/note";
-import { loadDatapackAction, loadPhotoAction, saveDatapackAction, updateDatapackAction } from "./actions";
+import { loadDatapackAction, loadPhotoAction, saveDatapackAction, updateDatapackAction, setIndexDatapackId } from "./actions";
 
 const slice = createSlice({
   name: 'datapack',
   initialState: initialState,
   reducers: {
+    reset: (state) => {
+      delete state.id;
+    },
     setEditable: (state, { payload }: PayloadAction<string>) => {
       state.id = payload;
     },
@@ -36,26 +39,20 @@ const slice = createSlice({
       }
     },
     pushBottomsheet: (state, { payload }: PayloadAction<Bottomsheet>) => {
-      state.env.bottomSheet.push(payload)
+      state.env.bottomsheet.push(payload)
     },
     updateBottomsheet: (state, { payload }: PayloadAction<Bottomsheet>) => {
-      state.env.bottomSheet.forEach((item, index) => {
+      state.env.bottomsheet.forEach((item, index) => {
         if (item.id === payload.id) {
-          state.env.bottomSheet[index] = payload
+          state.env.bottomsheet[index] = payload
         }
       })
     },
     deleteBottomsheet: (state, { payload }: PayloadAction<string>) => {
-      state.env.bottomSheet.forEach((item, index) => {
+      state.env.bottomsheet.forEach((item, index) => {
         if (item.id === payload)
-          state.env.bottomSheet.splice(index, 1)
+          state.env.bottomsheet.splice(index, 1)
       })
-    },
-    setBackground: (state, { payload }: PayloadAction<string>) => {
-      state.env.background = payload;
-    },
-    resetBackground: (state) => {
-      delete state.env.background
     },
     drawerDraft: (state, { payload }: PayloadAction<boolean>) => {
       state.drawerDraft = payload;
@@ -102,10 +99,17 @@ const slice = createSlice({
       state.loading = false;
     })
     builder.addCase(updateDatapackAction.fulfilled, (state, { payload }) => {
-      const { success, payload: result } = payload;
+      const { success } = payload;
       if (success) {
         state.loading = false
       }
+    })
+    builder.addCase(setIndexDatapackId.fulfilled, (state, { payload }) => {
+      const { success, datapack } = payload;
+      if (success) {
+        sessionStorage.setItem("index-datapack", datapack);
+      }
+      state.loading = false
     })
   },
 })

@@ -36,28 +36,30 @@ const CodeComponent = ({ content, index, onChange }: Props) => {
         <Input
           value={link}
           onChange={(e) => {
-            if (e.target.value === '') {
-              setLink('');
-              onChange?.({ ...state, link: undefined })
-              setState({ ...state, link: undefined });
-              return
-            }
-            setLink(e.target.value);
-            onChange?.({ ...state, link: `${type}=>${e.target.value}` });
-            setState({ ...state, link: `${type}=>${e.target.value}` })
+            const { value: link } = e.target;
+              if (link === '') {
+                setLink('');
+                onChange?.({ ...state, link: undefined })
+                setState({ ...state, link: undefined });
+                return
+              }
+              setLink(link);
+              onChange?.({ ...state, link: `@${type}/${e.target.value}` });
+              setState({ ...state, link: `@${type}/${e.target.value}` });
           }}
           placeholder='شناسه' />
         <Select
           defaultValue={type}
           onChange={(e) => {
             setType(e);
-            onChange?.({ ...state, link: `${e}=>${link}` });
-            setState({ ...state, link: `${e}=>${link}` });
+            onChange?.({ ...state, link: `@${e}/${link}` });
+            setState({ ...state, link: (e === "url") ? link : `@${e}/${link}` });
           }}
           options={[
             { value: 'url', label: 'لینک خارجی' },
             { value: 'bottomsheet', label: 'منو کشویی' },
             { value: 'datapack', label: 'صفحه دیگر' },
+            { value: 'namespace', label: 'فضای دیگر' },
           ]}
         />
       </Space.Compact>
@@ -98,4 +100,4 @@ interface EditorProps {
 
 export function EditorCode({ onChange, init }: EditorProps) {
   return <CodeComponent onChange={onChange} index={0} content={[init ?? codeInitState]} />
-} 
+}

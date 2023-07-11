@@ -18,3 +18,6 @@ export const updateDatapackAction = createAsyncThunk('datapack-editor/update', a
   return api.updateDatapack(data);
 })
 
+export const setIndexDatapackId = createAsyncThunk('datapack-editor/IndexDatapack', async (id: string) => {
+  return api.setIndexDatapackId(id);
+})

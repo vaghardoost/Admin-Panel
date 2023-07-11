@@ -12,7 +12,7 @@ const PhotoComponent = ({ index, photos, content, onChange }: Props) => {
   const namespace = sessionStorage.getItem('namespace');
 
   const [state, setState] = useState<Photo>({
-    richtext: [],
+    // content: [],
     url: '',
     ...content![index],
     type: SectionName.photo
@@ -57,33 +57,39 @@ const PhotoComponent = ({ index, photos, content, onChange }: Props) => {
       <Space style={{ width: "100%" }} direction="vertical">
         <img src={state.url} style={{ width: '100%' }} />
         <Button block onClick={() => setOpen(true)}>انتخاب تصویر</Button>
-        <RichTextView onChange={(richtext) => onChangeRich(richtext)} richtext={state.richtext} />
+        {
+          state.content
+            ? <RichTextView onChange={(richtext) => onChangeRich(richtext)} richtext={state.content} />
+            : <></>
+        }
         <Space.Compact style={{ margin: '0 auto' }} block dir='ltr'>
           <Input
             value={link}
             onChange={(e) => {
-              if (e.target.value === '') {
+              const { value: link } = e.target;
+              if (link === '') {
                 setLink('');
                 onChange?.({ ...state, link: undefined })
                 setState({ ...state, link: undefined });
                 return
               }
-              setLink(e.target.value);
-              onChange?.({ ...state, link: `${type}=>${e.target.value}` });
-              setState({ ...state, link: `${type}=>${e.target.value}` })
+              setLink(link);
+              onChange?.({ ...state, link: `@${type}/${e.target.value}` });
+              setState({ ...state, link: `@${type}/${e.target.value}` });
             }}
             placeholder='شناسه' />
           <Select
             defaultValue={type}
             onChange={(e) => {
               setType(e);
-              onChange?.({ ...state, link: `${e}=>${link}` });
-              setState({ ...state, link: `${e}=>${link}` });
+              onChange?.({ ...state, link: `@${e}/${link}` });
+              setState({ ...state, link: (e === "url") ? link : `@${e}/${link}` });
             }}
             options={[
               { value: 'url', label: 'لینک خارجی' },
               { value: 'bottomsheet', label: 'منو کشویی' },
               { value: 'datapack', label: 'صفحه دیگر' },
+              { value: 'namespace', label: 'فضای دیگر' },
             ]}
           />
         </Space.Compact>
@@ -93,8 +99,8 @@ const PhotoComponent = ({ index, photos, content, onChange }: Props) => {
   </>
 
   function onChangeRich(richtext: RichText[]) {
-    setState({ ...state, richtext: richtext });
-    onChange?.({ ...state, richtext: richtext });
+    setState({ ...state, content: richtext });
+    onChange?.({ ...state, content: richtext });
   }
 }
 
@@ -117,7 +123,7 @@ export default connect(mapStateToProps)(PhotoComponent);
 
 export const photoInitState: Photo = {
   type: SectionName.photo,
-  richtext: [],
+  content: [],
   url: ""
 }
 

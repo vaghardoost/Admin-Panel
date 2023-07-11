@@ -40,7 +40,9 @@ function Namespace({ list, open, select }: Props) {
             disabled={!select}
             type="primary"
             onClick={() => {
-              sessionStorage.setItem('namespace', select!);
+              const ns = list?.find((value) => value.id == select!);
+              sessionStorage.setItem('namespace', ns!.id);
+              sessionStorage.setItem('index-datapack', ns?.datapack ?? '');
               dispatch(actions.closeModal());
             }}>
             انتخاب
