@@ -9,7 +9,6 @@ export const loadPhotoList = async (): Promise<string[]> => {
   const namespace = sessionStorage.getItem('namespace');
   const url = `${cdn}/photo/${namespace}`
   const { data } = await api.get<ApiResult<any>>(url);
-  console.log(data);
   return data.payload.files
 }
 

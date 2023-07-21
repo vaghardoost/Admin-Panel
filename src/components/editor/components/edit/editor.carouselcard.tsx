@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import { useState } from "react";
 import { generate } from "randomstring";
 
-import { getActions } from "./_section.actions";
+import { getActions, getLinkType } from "./_section.actions";
 import { CarouselCard, SectionName, SectionType } from "../../../../model/note"
 import { State } from "../../redux/state";
 import { cdn } from "../../../../config";
@@ -17,12 +17,12 @@ const CarouselCardComponent = ({ index, photos, content, onChange }: Props) => {
   const [state, setState] = useState<CarouselCard>(content![index] as CarouselCard);
   const [open, setOpen] = useState<boolean>(false);
 
-  const emptyItem = { photo: '', id: '', link: '', subtitle: '', title: '' };
-  const [item, setItem] = useState<{ id: string, link: string, photo: string, title: string, subtitle: string }>(emptyItem);
+  const emptyItem = { photo: '', id: '', subtitle: '', title: '' };
+  const [item, setItem] = useState<{ id: string, link?: string, photo: string, title: string, subtitle: string }>(emptyItem);
   const [msg, context] = message.useMessage();
 
-  const [type, setType] = useState<string>(state.link?.split('=>')[0] ?? 'url');
-  const [link, setLink] = useState<string>(state.link?.split('=>')[1] ?? '');
+  const [link, setLink] = useState<string>(getLinkType(state.link)[1]);
+  const [type, setType] = useState<string>(getLinkType(state.link)[0]);
 
   return <>
     {context}
@@ -99,7 +99,7 @@ const CarouselCardComponent = ({ index, photos, content, onChange }: Props) => {
                   const { value: link } = e.target;
                   if (link === '') {
                     setLink('');
-                    setItem(emptyItem);
+                    setItem({ ...item, link: undefined });
                     return
                   }
                   setLink(link);

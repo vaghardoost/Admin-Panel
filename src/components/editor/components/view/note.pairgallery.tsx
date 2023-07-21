@@ -10,26 +10,28 @@ export default ({ pairgallery }: Props) => {
       justifyContent: 'space-evenly'
     }}>
       {
-        pairgallery.list.map((item) => (
-          <div>
-            <img
-              style={{
-                width: '220px',
-                height: '125px',
-                margin: '10px 0 10px 0',
-                borderRadius: '10px',
-                objectFit: 'cover'
-              }}
-              src={item.photo} />
-            <p
-              style={{
-                width: '100%',
-                textAlign: 'center'
-              }}>
-              {item.caption}
-            </p>
-          </div>
-        ))
+        (pairgallery.list.length > 0)
+          ? pairgallery.list.map((item) => (
+            <div>
+              <img
+                style={{
+                  width: '220px',
+                  height: '125px',
+                  margin: '10px 0 10px 0',
+                  borderRadius: '10px',
+                  objectFit: 'cover'
+                }}
+                src={item.photo} />
+              <p
+                style={{
+                  width: '100%',
+                  textAlign: 'center'
+                }}>
+                {item.caption}
+              </p>
+            </div>
+          ))
+          : <>لیست خالی...</>
       }
     </div>
   </>

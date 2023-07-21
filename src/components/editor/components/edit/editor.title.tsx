@@ -1,7 +1,7 @@
 import { connect } from "react-redux"
 import { Button, Card, Input, Select, Space } from "antd"
 
-import { getActions } from "./_section.actions"
+import { getActions, getLinkType } from "./_section.actions"
 import { SectionName, SectionType, Title } from "../../../../model/note"
 import { State } from "../../redux/state"
 import { useState } from "react"
@@ -16,8 +16,8 @@ const TitleComponent = ({ content, index, onChange }: Props) => {
     type: SectionName.title
   });
 
-  const [type, setType] = useState<string>(state.link?.split('=>')[0] ?? 'url');
-  const [link, setLink] = useState<string>(state.link?.split('=>')[1] ?? '');
+  const [link, setLink] = useState<string>(getLinkType(state.link)[1]);
+  const [type, setType] = useState<string>(getLinkType(state.link)[0]);
 
 
   const TitleHeader = `${state.header}` as keyof JSX.IntrinsicElements;
@@ -42,9 +42,9 @@ const TitleComponent = ({ content, index, onChange }: Props) => {
           <Button block onClick={() => setH('h6')} type={(state.header === 'h6') ? 'primary' : 'default'}>h6</Button>
         </Space.Compact>
         <Space.Compact block>
-          <Button block type={(state.align && state.align == 'start') ? "primary" : "default"} onClick={() => { setState({ ...state, align: 'start' }); onChange?.({ ...state, align: 'start' }); }}>راست</Button>
-          <Button block type={(state.align && state.align == 'center') ? "primary" : "default"} onClick={() => { setState({ ...state, align: 'center' }); onChange?.({ ...state, align: 'center' }); }}>وسط</Button>
-          <Button block type={(state.align && state.align == 'end') ? "primary" : "default"} onClick={() => { setState({ ...state, align: 'end' }); onChange?.({ ...state, align: 'end' }); }}>چپ</Button>
+          <Button block type={(state.align && state.align === 'start') ? "primary" : "default"} onClick={() => { setState({ ...state, align: 'start' }); onChange?.({ ...state, align: 'start' }); }}>راست</Button>
+          <Button block type={(state.align && state.align === 'center') ? "primary" : "default"} onClick={() => { setState({ ...state, align: 'center' }); onChange?.({ ...state, align: 'center' }); }}>وسط</Button>
+          <Button block type={(state.align && state.align === 'end') ? "primary" : "default"} onClick={() => { setState({ ...state, align: 'end' }); onChange?.({ ...state, align: 'end' }); }}>چپ</Button>
         </Space.Compact>
         <Input
           value={state.text}
@@ -53,7 +53,7 @@ const TitleComponent = ({ content, index, onChange }: Props) => {
             onChange?.({ ...state, text: e.target.value });
           }}
           placeholder="عنوان" />
-        <TitleHeader align={(state.align == "start") ? "right" : (state.align == "center") ? "center" : "left"}>{state.text}</TitleHeader>
+        <TitleHeader align={(state.align === "start") ? "right" : (state.align === "center") ? "center" : "left"}>{state.text}</TitleHeader>
         <Space.Compact style={{ margin: '0 auto' }} block dir='ltr'>
           <Input
             value={link}
@@ -66,15 +66,15 @@ const TitleComponent = ({ content, index, onChange }: Props) => {
                 return
               }
               setLink(link);
-              onChange?.({ ...state, link: `@${type}/${e.target.value}` });
-              setState({ ...state, link: `@${type}/${e.target.value}` });
+              onChange?.({ ...state, link: (type === "url") ? link : `@${type}/${link}` });
+              setState({ ...state, link: (type === "url") ? link : `@${type}/${link}` });
             }}
             placeholder='شناسه' />
           <Select
             defaultValue={type}
             onChange={(e) => {
               setType(e);
-              onChange?.({ ...state, link: `@${e}/${link}` });
+              onChange?.({ ...state, link: (e === "url") ? link : `@${e}/${link}` });
               setState({ ...state, link: (e === "url") ? link : `@${e}/${link}` });
             }}
             options={[

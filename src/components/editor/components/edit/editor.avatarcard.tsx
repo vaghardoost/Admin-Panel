@@ -4,7 +4,7 @@ import { Avatar, Button, Card, Drawer, Input, Select, Space } from "antd";
 
 import { State } from "../../redux/state";
 import { AvatarCard, SectionName, SectionType } from "../../../../model/note";
-import { getActions } from "./_section.actions"
+import { getActions, getLinkType } from "./_section.actions"
 import { cdn } from "../../../../config";
 
 const AvatarCardComponent = ({ index, content, photos, onChange }: Props) => {
@@ -19,8 +19,8 @@ const AvatarCardComponent = ({ index, content, photos, onChange }: Props) => {
     type: SectionName.avatarCard,
   })
 
-  const [type, setType] = useState<string>(state.link?.split('=>')[0] ?? 'url');
-  const [link, setLink] = useState<string>(state.link?.split('=>')[1] ?? '');
+  const [link, setLink] = useState<string>(getLinkType(state.link)[1]);
+  const [type, setType] = useState<string>(getLinkType(state.link)[0]);
 
   const changeTitle = (text: string) => {
     setState({ ...state, title: text })
@@ -82,6 +82,7 @@ const AvatarCardComponent = ({ index, content, photos, onChange }: Props) => {
           rows={3}
           allowClear
           placeholder="محتوا" />
+
         <Space.Compact style={{ margin: '0 auto' }} block dir='ltr'>
           <Input
             value={link}
@@ -94,21 +95,22 @@ const AvatarCardComponent = ({ index, content, photos, onChange }: Props) => {
                 return
               }
               setLink(link);
-              onChange?.({ ...state, link: `@${type}/${e.target.value}` });
-              setState({ ...state, link: `@${type}/${e.target.value}` });
+              onChange?.({ ...state, link: (type === "url") ? link : `@${type}/${link}` });
+              setState({ ...state, link: (type === "url") ? link : `@${type}/${link}` });
             }}
             placeholder='شناسه' />
           <Select
             defaultValue={type}
             onChange={(e) => {
               setType(e);
-              onChange?.({ ...state, link: `@${e}/${link}` });
+              onChange?.({ ...state, link: (e === "url") ? link : `@${e}/${link}` });
               setState({ ...state, link: (e === "url") ? link : `@${e}/${link}` });
             }}
             options={[
               { value: 'url', label: 'لینک خارجی' },
               { value: 'bottomsheet', label: 'منو کشویی' },
               { value: 'datapack', label: 'صفحه دیگر' },
+              { value: 'namespace', label: 'فضای دیگر' },
             ]}
           />
         </Space.Compact>

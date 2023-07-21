@@ -2,7 +2,7 @@ import { connect } from "react-redux";
 import { Input, Card, Space, Select } from 'antd';
 
 
-import { getActions } from "./_section.actions";
+import { getActions, getLinkType } from "./_section.actions";
 import { Code, SectionName, SectionType } from "../../../../model/note"
 import { State } from "../../redux/state";
 import { useState } from "react";
@@ -16,9 +16,8 @@ const CodeComponent = ({ content, index, onChange }: Props) => {
     type: SectionName.code,
   })
 
-  const [type, setType] = useState<string>(state.link?.split('=>')[0] ?? 'url');
-  const [link, setLink] = useState<string>(state.link?.split('=>')[1] ?? '');
-
+  const [link, setLink] = useState<string>(getLinkType(state.link)[1]);
+  const [type, setType] = useState<string>(getLinkType(state.link)[0]);
 
   return <>
     <Card
@@ -37,22 +36,22 @@ const CodeComponent = ({ content, index, onChange }: Props) => {
           value={link}
           onChange={(e) => {
             const { value: link } = e.target;
-              if (link === '') {
-                setLink('');
-                onChange?.({ ...state, link: undefined })
-                setState({ ...state, link: undefined });
-                return
-              }
-              setLink(link);
-              onChange?.({ ...state, link: `@${type}/${e.target.value}` });
-              setState({ ...state, link: `@${type}/${e.target.value}` });
+            if (link === '') {
+              setLink('');
+              onChange?.({ ...state, link: undefined })
+              setState({ ...state, link: undefined });
+              return
+            }
+            setLink(link);
+            onChange?.({ ...state, link: (type === "url") ? link : `@${type}/${link}` });
+            setState({ ...state, link: (type === "url") ? link : `@${type}/${link}` });
           }}
           placeholder='شناسه' />
         <Select
           defaultValue={type}
           onChange={(e) => {
             setType(e);
-            onChange?.({ ...state, link: `@${e}/${link}` });
+            onChange?.({ ...state, link: (e === "url") ? link : `@${e}/${link}` });
             setState({ ...state, link: (e === "url") ? link : `@${e}/${link}` });
           }}
           options={[

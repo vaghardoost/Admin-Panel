@@ -3,7 +3,7 @@ import { Avatar, Button, Card, Drawer, Input, Select, Space } from 'antd';
 import { useState } from "react";
 
 import { cdn } from "../../../../config";
-import { getActions } from "./_section.actions";
+import { getActions, getLinkType } from "./_section.actions";
 import { State } from "../../redux/state";
 import { Photo, RichText, SectionName, SectionType } from "../../../../model/note"
 import RichTextView from "../richtext";
@@ -12,14 +12,13 @@ const PhotoComponent = ({ index, photos, content, onChange }: Props) => {
   const namespace = sessionStorage.getItem('namespace');
 
   const [state, setState] = useState<Photo>({
-    // content: [],
     url: '',
     ...content![index],
     type: SectionName.photo
   });
 
-  const [type, setType] = useState<string>(state.link?.split('=>')[0] ?? 'url');
-  const [link, setLink] = useState<string>(state.link?.split('=>')[1] ?? '');
+  const [link, setLink] = useState<string>(getLinkType(state.link)[1]);
+  const [type, setType] = useState<string>(getLinkType(state.link)[0]);
 
   const [open, setOpen] = useState<boolean>(false);
 
@@ -74,15 +73,15 @@ const PhotoComponent = ({ index, photos, content, onChange }: Props) => {
                 return
               }
               setLink(link);
-              onChange?.({ ...state, link: `@${type}/${e.target.value}` });
-              setState({ ...state, link: `@${type}/${e.target.value}` });
+              onChange?.({ ...state, link: (type === "url") ? link : `@${type}/${link}` });
+              setState({ ...state, link: (type === "url") ? link : `@${type}/${link}` });
             }}
             placeholder='شناسه' />
           <Select
             defaultValue={type}
             onChange={(e) => {
               setType(e);
-              onChange?.({ ...state, link: `@${e}/${link}` });
+              onChange?.({ ...state, link: (e === "url") ? link : `@${e}/${link}` });
               setState({ ...state, link: (e === "url") ? link : `@${e}/${link}` });
             }}
             options={[

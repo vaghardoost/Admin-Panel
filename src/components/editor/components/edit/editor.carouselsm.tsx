@@ -4,7 +4,7 @@ import { Avatar, Button, Card, Drawer, Image, Input, Select, Space, Table, messa
 import { ClearOutlined, CloseCircleOutlined, PlusOutlined } from "@ant-design/icons";
 import { generate } from "randomstring"
 
-import { getActions } from "./_section.actions";
+import { getActions, getLinkType } from "./_section.actions";
 import { CarouselSm, SectionName, SectionType } from "../../../../model/note"
 import { State } from "../../redux/state";
 import { cdn } from "../../../../config";
@@ -18,8 +18,8 @@ const CarouselSmComponent = ({ index, content, photos, onChange }: Props) => {
   const [item, setItem] = useState<{ photo: string, link?: string, id?: string, caption?: string }>({ photo: '' });
   const [msg, context] = message.useMessage();
 
-  const [type, setType] = useState<string>(state.link?.split('=>')[0] ?? 'url');
-  const [link, setLink] = useState<string>(state.link?.split('=>')[1] ?? '');
+  const [link, setLink] = useState<string>(getLinkType(state.link)[1]);
+  const [type, setType] = useState<string>(getLinkType(state.link)[0]);
 
   return <>
     {context}

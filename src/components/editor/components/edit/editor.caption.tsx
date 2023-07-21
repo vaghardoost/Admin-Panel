@@ -2,7 +2,7 @@ import { connect } from 'react-redux'
 import { Card, Input, Select, Space } from 'antd';
 
 import RichtextEditor from "../richtext"
-import { getActions } from './_section.actions';
+import { getActions, getLinkType } from './_section.actions';
 import { Caption, SectionType, SectionName } from "../../../../model/note"
 import { State } from '../../redux/state';
 import { useState } from 'react';
@@ -12,8 +12,8 @@ const CaptionComponent = ({ index, content, onChange }: Props) => {
   const [state, setState] = useState<Caption>({ ...content[index] as Caption });
 
 
-  const [type, setType] = useState<string>(state.link?.split('=>')[0] ?? 'url');
-  const [link, setLink] = useState<string>(state.link?.split('=>')[1] ?? '');
+  const [link, setLink] = useState<string>(getLinkType(state.link)[1]);
+  const [type, setType] = useState<string>(getLinkType(state.link)[0]);
 
   return <>
     <Card
@@ -38,15 +38,15 @@ const CaptionComponent = ({ index, content, onChange }: Props) => {
               return
             }
             setLink(link);
-            onChange?.({ ...state, link: `@${type}/${e.target.value}` });
-            setState({ ...state, link: `@${type}/${e.target.value}` });
+            onChange?.({ ...state, link: (type === "url") ? link : `@${type}/${link}` });
+            setState({ ...state, link: (type === "url") ? link : `@${type}/${link}` });
           }}
           placeholder='شناسه' />
         <Select
           defaultValue={type}
           onChange={(e) => {
             setType(e);
-            onChange?.({ ...state, link: `@${e}/${link}` });
+            onChange?.({ ...state, link: (e === "url") ? link : `@${e}/${link}` });
             setState({ ...state, link: (e === "url") ? link : `@${e}/${link}` });
           }}
           options={[

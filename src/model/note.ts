@@ -130,7 +130,7 @@ export interface CarouselCard extends Section {
     type: SectionName.carouselCard
     list: {
         id: string,
-        link: string,
+        link?: string,
         photo: string,
         title: string,
         subtitle: string,

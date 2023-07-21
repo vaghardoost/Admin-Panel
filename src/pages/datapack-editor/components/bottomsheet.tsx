@@ -9,10 +9,6 @@ import { SectionName, Bottomsheet } from "../../../model/note";
 const BottomSheetEditor = ({ bottomsheet }: Props) => {
   return <>
     <Card
-      actions={[
-        <Button size="small" type="ghost" icon={<BgColorsOutlined />}>پس زمینه محیط</Button>,
-        <Button size="small" type="ghost" icon={<SaveOutlined />}>ذخیره صفحه</Button>
-      ]}
       title="مدیریت محیط"
       style={{ marginBottom: '15px' }}>
       <Space direction="vertical" style={{ width: '100%' }}>

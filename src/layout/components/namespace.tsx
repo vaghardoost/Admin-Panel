@@ -44,6 +44,7 @@ function Namespace({ list, open, select }: Props) {
               sessionStorage.setItem('namespace', ns!.id);
               sessionStorage.setItem('index-datapack', ns?.datapack ?? '');
               dispatch(actions.closeModal());
+              window.location.replace('/');
             }}>
             انتخاب
           </Button>

@@ -14,23 +14,25 @@ export default ({ gallery }: Props) => {
       borderRadius: '10px',
     }}>
       {
-        gallery.list.map((item, index) => (
-          (index < 4)
-            ?
-            <div>
-              <Image
-                style={{
-                  width: '50px',
-                  height: '50px',
-                  margin: '5px',
-                  borderRadius: '10px',
-                  objectFit: 'cover'
-                }}
-                src={item.photo} />
-            </div>
-            :
-            <></>
-        ))
+        (gallery.list.length > 0)
+          ? gallery.list.map((item, index) => (
+            (index < 4)
+              ?
+              <div>
+                <Image
+                  style={{
+                    width: '50px',
+                    height: '50px',
+                    margin: '5px',
+                    borderRadius: '10px',
+                    objectFit: 'cover'
+                  }}
+                  src={item.photo} />
+              </div>
+              :
+              <></>
+          ))
+          : <>لیست خالی...</>
       }
     </div>
   </>
