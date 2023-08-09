@@ -30,13 +30,13 @@ export const loadDatapack = async (id: string) => {
   return data
 }
 
-export const updateDatapack = async ({ content, env, id }: any) => {
+export const updateDatapack = async ({ content, env, id, title }: any) => {
   const namespace = sessionStorage.getItem('namespace');
   const token = sessionStorage.getItem('token');
   const url = `${server}/datapack/${namespace}/${id}`
   const { data } = await api.post<ApiResult<Note>>(
     url,
-    { content: content, env: env },
+    { content: content, env: env, title: title },
     { headers: { "Authorization": `Bearer ${token}` } }
   )
   return data;
@@ -51,7 +51,6 @@ export const setIndexDatapackId = async (id: string) => {
     { datapack: id },
     { headers: { "Authorization": `Bearer ${token}` } }
   );
-  console.log(data);
 
   return { ...data, datapack: id };
 }

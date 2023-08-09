@@ -8,7 +8,11 @@ const slice = createSlice({
   initialState: initialState,
   reducers: {
     reset: (state) => {
+      state.env = { bottomsheet: [] };
       delete state.id;
+    },
+    setTitle: (state, { payload }: PayloadAction<string>) => {
+      state.title = payload;
     },
     setEditable: (state, { payload }: PayloadAction<string>) => {
       state.id = payload;
@@ -60,13 +64,14 @@ const slice = createSlice({
     setEnv: (state, { payload }: PayloadAction<Environment>) => {
       state.env = payload;
     },
-    saveDraft: (state) => {
+    saveDraft: (state, { payload }: PayloadAction<string>) => {
       const date = new Date();
       const key = `${date.toLocaleDateString('fa-IR')} - ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`;
       const note: Note = {
         author: '',
         tag: [],
-        title: 'بسته داده اپلیکیشن',
+        id: payload,
+        title: state.title,
         content: state.content,
         env: state.env
       }
@@ -95,6 +100,7 @@ const slice = createSlice({
       if (success) {
         state.env = result!.env!
         state.id = result!.id
+        state.title = result!.title
       }
       state.loading = false;
     })

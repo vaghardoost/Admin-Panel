@@ -3,6 +3,7 @@ import { Navigate, Route, Routes } from "react-router-dom"
 import CategoryEditor from "../pages/category-editor"
 import Category from "../pages/category/index"
 import Dashboard from "../pages/dashboard"
+import Settings from "../pages/settings/index"
 import Notes from "../pages/note"
 import NoteEditor from "../pages/note-editor"
 import Photo from "../pages/photo"
@@ -15,6 +16,8 @@ export default () => {
     <Routes>
       <Route path="/" element={<Dashboard />} />
 
+      <Route path="settings" element={<Settings />} />
+
       <Route path="note" element={<Notes />} />
       <Route path="note/add" element={<NoteEditor />} />
       <Route path="note/edit/:id" element={<NoteEditor />} />
@@ -26,7 +29,7 @@ export default () => {
 
       <Route path="datapack" element={<Datapacks />} />
       <Route path="datapack/add" element={<DatapacksEditor />} />
-      <Route path="datapack/edit/:id" element={<DatapacksEditor/>} />
+      <Route path="datapack/edit/:id" element={<DatapacksEditor />} />
 
       <Route path="file/photo" element={<Photo />} />
 

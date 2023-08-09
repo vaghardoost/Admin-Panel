@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { connect } from "react-redux";
 import { Avatar, Button, Card, Drawer, Image, Input, Select, Space, Table, message } from "antd";
-import { ClearOutlined, CloseCircleOutlined, DeleteOutlined, PlusOutlined } from "@ant-design/icons";
+import { ClearOutlined, CloseCircleOutlined, PlusOutlined } from "@ant-design/icons";
 import { generate } from "randomstring"
 
 import { getActions, getLinkType } from "./_section.actions";
@@ -15,12 +15,12 @@ const GalleryComponent = ({ index, content, photos, onChange }: Props) => {
   const [state, setState] = useState<Gallery>(content![index] as Gallery)
   const [open, setOpen] = useState<boolean>(false);
 
-  const [item, setItem] = useState<{ photo: string, link?: string, id?: string, caption?: string }>({ photo: '' });
+  const [item, setItem] = useState<{ photo: string, link?: string, id?: string, caption?: string, demo?: string }>({ photo: '' });
   const [msg, context] = message.useMessage();
 
   const [link, setLink] = useState<string>(getLinkType(state.link)[1]);
   const [type, setType] = useState<string>(getLinkType(state.link)[0]);
-  
+
   return <>
     {context}
     <Drawer
@@ -124,7 +124,7 @@ const GalleryComponent = ({ index, content, photos, onChange }: Props) => {
         {
           photos.map(file => (
             <Avatar
-              onClick={() => setItem({ ...item, photo: `${cdn}/${namespace}/photo/${file}` })}
+              onClick={() => setItem({ ...item, photo: `${cdn}/${namespace}/photo/${file}`, demo: `${cdn}/${namespace}/photo/demo.${file}` })}
               size={40}
               shape="square"
               key={file}

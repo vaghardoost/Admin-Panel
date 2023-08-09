@@ -1,4 +1,11 @@
-# Note Manage Panel
-#### a web panel written with react js manage content of <a href="https://github.com/vaghardoost/note-api-gateway"> backend cms </a>
-work in progress (Wip) :)
+# Admin Panel For FCMS
 
+this is an admin panel for fcms gui manager
+
+Stacks
+
+-   **React**: use react library and typescript for higher extensibility and readability
+-   **Redux**: state management for data contolling for a page
+-   **antd**: one of are most complete ui component library for react!
+
+there is a `config.ts` file it can set server and cdn address

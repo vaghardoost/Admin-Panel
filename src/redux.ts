@@ -10,6 +10,7 @@ import categoryEditorReducer from "./pages/category-editor/reducer";
 import photoReducer from "./pages/photo/reducer";
 import datapackReducer from "./pages/datapack/reducer";
 import datapackEditorReducer from "./pages/datapack-editor/reducer";
+import settingReducer from "./pages/settings/reducer";
 
 const combine = combineReducers({
     layoutReducer,
@@ -21,7 +22,8 @@ const combine = combineReducers({
     categoryEditorReducer,
     photoReducer,
     datapackReducer,
-    datapackEditorReducer
+    datapackEditorReducer,
+    settingReducer,
 })
 
 const store = configureStore({

@@ -26,6 +26,7 @@ export const loginActionState = (state: State, action: PayloadAction<ApiResult<L
         state.status = "success";
         sessionStorage.setItem('token', payload!.token);
         sessionStorage.setItem('file-token', payload!.fileToken);
+        sessionStorage.setItem('role', payload!.role);
     } else {
         state.status = "error";
         state.message = action.payload.message;

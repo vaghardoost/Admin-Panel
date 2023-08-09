@@ -11,14 +11,13 @@ import Metadata from "./components/metadata"
 import { useParams } from "react-router-dom"
 import { Note } from "../../model/note"
 import { ApiResult } from "../../model/api"
+import { Input } from "antd"
 
 export default () => {
 
-  // const [isFirstTime, setFirstTime] = useState<boolean>(true);
   const { id } = useParams();
 
   useEffect(() => {
-    // if (isFirstTime) {
     editorDispatch(editorActions.reset());
     dispatch(loadPhotoAction()).then((action) => {
       const payload = action.payload as string[];

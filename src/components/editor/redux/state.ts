@@ -1,6 +1,7 @@
 import { Environment, SectionType } from "../../../model/note"
 
 export interface State {
+  title: string
   content: SectionType[]
   env?: Environment
   editSectionId?: string
@@ -15,5 +16,6 @@ export const initialState: State = {
   data: {
     photoList: []
   },
-  disableSection: []
+  disableSection: [],
+  title: ""
 }

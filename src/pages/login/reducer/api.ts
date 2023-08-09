@@ -11,6 +11,7 @@ const fileApi = axios.create({ baseURL: cdn })
 export interface LoginApiResult {
     fileToken: string
     token: string
+    role: "Admin" | "Author" | "Operator" | "Manager"
 }
 
 export async function login(username: string, password: string): Promise<ApiResult<LoginApiResult>> {
@@ -31,6 +32,7 @@ export async function login(username: string, password: string): Promise<ApiResu
             payload: {
                 token: apiResult.data.payload.token,
                 fileToken: fileResult.data.payload.token,
+                role: token.role
             }
         }
     }

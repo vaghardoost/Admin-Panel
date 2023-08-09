@@ -19,6 +19,11 @@ export default () => {
           onClick: () => navigate('/')
         },
         {
+          key: '/settings',
+          label: 'فضای نام',
+          onClick: () => navigate('/settings')
+        },
+        {
           label: 'بلاگ',
           key: 'blog',
           children: [

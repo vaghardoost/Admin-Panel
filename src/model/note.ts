@@ -81,6 +81,8 @@ export interface Photo extends Section {
 
 export interface Frame extends Section {
     type: SectionName.frame
+    title?: string
+    status?: "warning" | "tip" | "danger" | "info" | "question" | "success"
     content: RichText[]
 }
 
@@ -102,6 +104,7 @@ export interface Gallery extends Section {
         id?: string
         link?: string
         caption?: string
+        demo?: string
         photo: string
     }[]
 }

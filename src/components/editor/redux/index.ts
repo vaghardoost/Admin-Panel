@@ -48,7 +48,6 @@ const slice = createSlice({
     reset: (state) => {
       state.content = [];
       state.disableSection = [];
-      delete state.env;
       delete state.editSectionId;
     },
   }

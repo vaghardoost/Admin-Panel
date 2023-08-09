@@ -18,12 +18,42 @@ const FrameComponent = ({ index, content, onChange }: Props) => {
   const [link, setLink] = useState<string>(getLinkType(state.link)[1]);
   const [type, setType] = useState<string>(getLinkType(state.link)[0]);
 
+  // console.log();
+  // state.status = 'danger'
 
   return <>
     <Card
       style={{ backgroundColor: 'whitesmoke' }}
       extra={getActions(index, content!.length - 1)}
       title="فریم">
+      <Space.Compact block>
+        <Input
+          placeholder="عنوان"
+          defaultValue={state.title ?? ""}
+          value={state.title ?? ""}
+          onChange={({ target: { value: text } }) => {
+            setState({ ...state, title: (text === "") ? undefined : text });
+            onChange?.({ ...state, title: (text === "") ? undefined : text });
+          }}
+        />
+        <Select
+          defaultValue={undefined}
+          value={state.status ?? null}
+          onChange={(e) => {
+            setState({ ...state, status: (e === null) ? undefined : e });
+            onChange?.({ ...state, status: (e === null) ? undefined : e });
+          }}
+          options={[
+            { value: null, label: 'بدون آیکون' },
+            { value: 'danger', label: 'خطر' },
+            { value: 'question', label: 'سوال' },
+            { value: 'warning', label: 'هشدار' },
+            { value: 'success', label: 'موفق' },
+            { value: 'info', label: 'اطلاعات' },
+            { value: 'tip', label: 'نکته' },
+          ]}
+        />
+      </Space.Compact>
       <RichtextEditor
         onChange={(richtext) => {
           setState({ ...state, content: richtext });

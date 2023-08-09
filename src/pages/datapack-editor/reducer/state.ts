@@ -6,6 +6,7 @@ export interface State {
   content: SectionType[]
   env: Environment
   photo: string[]
+  title: string
   drawerDraft: boolean
   drawerBottomsheet: {
     open: boolean
@@ -18,6 +19,7 @@ export const initialState: State = {
   content: [],
   photo: [],
   loading: false,
+  title: '',
   drawerBottomsheet: {
     open: false,
     type: SectionName.caption

@@ -1,5 +1,6 @@
 import { Category } from "./model/category";
 import { TreeDataNode } from "antd";
+import { SectionName, SectionType } from "./model/note";
 
 interface SelectDataNode {
   label: string

@@ -27,7 +27,7 @@ export default ({ gallery }: Props) => {
                     borderRadius: '10px',
                     objectFit: 'cover'
                   }}
-                  src={item.photo} />
+                  src={item.demo ?? item.photo} />
               </div>
               :
               <></>

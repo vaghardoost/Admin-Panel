@@ -17,7 +17,20 @@ const DatapackList = ({ list, loading }: Props) => {
       size="small"
       columns={[
         { title: 'ردیف', key: 'no', align: 'center', dataIndex: 'no' },
-        { title: 'شناسه', key: 'id', align: 'center', dataIndex: 'id' },
+        {
+          title: 'شناسه',
+          key: 'id',
+          align: 'center',
+          dataIndex: 'id',
+          sorter: { compare: (a, b) => a.title.localeCompare(b.title) }
+        },
+        {
+          title: 'عنوان',
+          key: 'title',
+          align: 'center',
+          dataIndex: 'title',
+          sorter: { compare: (a, b) => a.title.localeCompare(b.title) }
+        },
         {
           title: 'عملیات',
           key: 'action',
@@ -47,6 +60,7 @@ const DatapackList = ({ list, loading }: Props) => {
         list.map((item, index) => ({
           key: item.id,
           id: item.id,
+          title: item.title,
           no: (indexDatapackId === item.id) ? " (شاخص)" : index + 1,
         }))
       }

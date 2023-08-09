@@ -15,6 +15,8 @@ interface Props {
 
 function Namespace({ list, open, select }: Props) {
   const [firstTime, setFirstTime] = useState<boolean>(true)
+  const exists = sessionStorage.getItem('namespace') != null;
+
   useEffect(() => {
     if (firstTime) {
       if (!sessionStorage.getItem('namespace')) {
@@ -28,7 +30,8 @@ function Namespace({ list, open, select }: Props) {
 
   return <>
     <Drawer
-      closable={false}
+      closable={exists}
+      onClose={() => dispatch(actions.closeModal())}
       placement="bottom"
       title="انتخاب فضای نام"
       width={1000}

@@ -30,9 +30,11 @@ import NoteEditorGallery from "../edit/editor.gallery";
 
 import { actions, dispatch } from "../../redux";
 import { State } from "../../redux/state";
+import { generate } from "randomstring";
 
 const View = ({ content, editSectionId, change }: Props) => {
   change(content);
+
   function getView(section: SectionType) {
     switch (section.type) {
       case "caption":
@@ -87,19 +89,22 @@ const View = ({ content, editSectionId, change }: Props) => {
   return <>
     <Space style={{ width: '100%', cursor: 'pointer' }} direction="vertical">
       {
-        content!.map((section, index) => <div
-          key={section.id}
-          onDoubleClick={() => {
-            if (editSectionId !== section.id)
-              dispatch(actions.seteditSectionId(section.id!))
-          }}
-          className="section-container">
-          {
-            (editSectionId === section.id)
-              ? getEdit(section, index)
-              : getView(section)
-          }
-        </div>)
+        content!.map((section, index) => {
+          return <div
+            key={section.id}
+            onDoubleClick={() => {
+              if (editSectionId !== section.id)
+                dispatch(actions.seteditSectionId(section.id!))
+            }}
+            className="section-container">
+            {
+              (editSectionId === section.id)
+                ? getEdit(section, index)
+                : getView(section)
+            }
+          </div>
+        }
+        )
       }
     </Space>
   </>
