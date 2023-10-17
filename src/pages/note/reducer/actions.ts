@@ -14,7 +14,8 @@ export const categoryList = createAsyncThunk('notes/category',async()=>{
 })
 
 export const removeNoteAction = createAsyncThunk('notes/remove',async(id:string)=>{
-  return await api.removeNote(id);
+  await api.removeNote(id);
+  return await api.getNoteList();
 })
 
 export const refreshServer = createAsyncThunk('notes/refresh', async () => api.refreshServer())

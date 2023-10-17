@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { initialState } from "./state";
-import { getNoteList, categoryList } from "./actions"
+import { getNoteList, categoryList, removeNoteAction } from "./actions"
 
 const slice = createSlice({
     name: 'notes',
@@ -9,10 +9,13 @@ const slice = createSlice({
     extraReducers(builder) {
         builder.addCase(getNoteList.fulfilled, (state, { payload }) => {
             state.note = payload.payload.payload!;
-        })
+        });
         builder.addCase(categoryList.fulfilled, (state, payload) => {
             state.category = payload.payload.payload!;
-        })
+        });
+        builder.addCase(removeNoteAction.fulfilled, (state, { payload }) => {
+            state.note = payload.payload.payload!;
+        });
     },
 })
 

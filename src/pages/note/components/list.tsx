@@ -5,6 +5,8 @@ import { Note } from "../../../model/note"
 import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
 import { Category } from "../../../model/category";
 import { useNavigate } from "react-router-dom";
+import { removeNoteAction } from "../reducer/actions";
+import { dispatch } from "../../../redux";
 
 const NoteList = ({ list, category }: Props) => {
   const navigate = useNavigate();
@@ -23,20 +25,20 @@ const NoteList = ({ list, category }: Props) => {
               </Space>
           }
           actions={[
-            <Popconfirm
-              title={'حذف نوشته'}
-              description={'آیا این نوشته از سیستم حذف شود؟'}
-              okText={'حذف'}
-              cancelText={'خیر'}
-              onConfirm={() => { }}
-            >
-              <Button type="text"><DeleteOutlined /> حذف</Button>
-            </Popconfirm>,
-            <Button type="text" onClick={() => navigate(`/note/edit/${note.id}`)}>
-              <EditOutlined /> ویرایش
-            </Button>
-          ]}
-        >
+            <Space>
+              <Popconfirm
+                title={'حذف نوشته'}
+                description={'آیا این نوشته از سیستم حذف شود؟'}
+                okText={'حذف'}
+                cancelText={'خیر'}
+                onConfirm={() => { dispatch(removeNoteAction(note.id!)) }}>
+                <Button type="primary" danger>حذف</Button>
+              </Popconfirm>
+              <Button type="primary" onClick={() => navigate(`/note/edit/${note.id}`)}>
+                ویرایش
+              </Button>
+            </Space>
+          ]}>
           <List.Item.Meta
             avatar={
               <Avatar

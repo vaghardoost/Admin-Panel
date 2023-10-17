@@ -16,7 +16,7 @@ const CategoryDemo = ({ category, editable }: Props) => {
     height: '120px',
     borderRadius: '10px 10px 0 0',
     boxShadow: 'rgba(0, 0, 0, 0.1) 0 0 10px 1px',
-    marginBottom: '60px',
+    marginBottom: '80px',
   }
   return <>
     <div className='margin card-demo' >

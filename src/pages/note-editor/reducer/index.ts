@@ -60,31 +60,32 @@ const slice = createSlice({
   extraReducers(builder) {
     builder.addCase(action.loadCategoryList.fulfilled, loadCategoryListState);
     builder.addCase(action.loadPhoto.fulfilled, loadPhotoListState);
-    builder.addCase(action.saveNote.fulfilled, saveNoteState);
+    builder.addCase(action.saveNote.fulfilled, (state, { payload }) => {
+      const { payload: data, success } = payload;
+      if (success) {
+        state.pageState = { loading: false }
+        state.edit = data;
+        state.note.id = data;
+      }
+    });
     builder.addCase(action.loadNote.fulfilled, loadNoteState);
     builder.addCase(action.update.fulfilled, updateNoteState);
   },
 });
 
 const updateNoteState = (state: State, action: PayloadAction<ApiResult<Note>>) => {
-  const { success, payload } = action.payload;
-  if (success) {
-    state.pageState = {}
-    state.edit = payload?.id;
+  // const { success, payload } = action.payload;
+  // if (success) {
+  state.pageState = {
+    loading: false
   }
+  // state.edit = payload?.id;
+  // }
 }
 
 const loadNoteState = (state: State, action: PayloadAction<ApiResult<Note>>) => {
   const { success, payload } = action.payload;
   state.note = payload!;
-}
-
-const saveNoteState = (state: State, action: PayloadAction<ApiResult<Note>>) => {
-  const { success, payload } = action.payload;
-  if (success) {
-    state.pageState = {}
-    state.edit = payload?.id;
-  }
 }
 
 const loadPhotoListState = (state: State, action: PayloadAction<ApiResult<any>>) => {

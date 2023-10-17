@@ -24,6 +24,7 @@ const slice = createSlice({
     builder.addCase(deleteCat.fulfilled, (state, action) => {
       const { success, payload } = action.payload;
       if (success) {
+        delete state.select;
         state.list = payload!;
       }
     });

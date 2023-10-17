@@ -3,6 +3,7 @@ import { Note } from "../../../model/note";
 import axios from "axios";
 import { server } from "../../../config";
 import { Category } from "../../../model/category";
+import { log } from "console";
 
 const api = axios.create({ baseURL: server });
 
@@ -40,6 +41,7 @@ export const removeNote = async (id: string): Promise<ApiResult<any>> => {
     const token = sessionStorage.getItem('token');
     const namespace = sessionStorage.getItem("namespace");
     const url = `${server}/note/${namespace}`
+
     const { data } = await api.delete(
         url,
         {
@@ -47,6 +49,7 @@ export const removeNote = async (id: string): Promise<ApiResult<any>> => {
             data: { id: id },
         }
     );
+
     return {
         success: data.success,
         payload: data.payload

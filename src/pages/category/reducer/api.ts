@@ -16,7 +16,6 @@ export const loadCategoryList = async () => {
 }
 
 export const loadCategory = async (id: string) => {
-    await new Promise(res => setTimeout(res, 1000));
     const namespace = sessionStorage.getItem('namespace');
     const url = `${server}/category/${namespace}/${id}`
     const { data } = await api.get<ApiResult<Category>>(url);
@@ -28,9 +27,10 @@ export const loadCategory = async (id: string) => {
 }
 
 export const deleteCategory = async (id: string) => {
+    const namespace = sessionStorage.getItem('namespace');
     const token = sessionStorage.getItem("token");
     await api.delete(
-        "/note/category",
+        `${server}/category/${namespace}`,
         {
             headers: { "Authorization": `Bearer ${token}` },
             data: { id: id },

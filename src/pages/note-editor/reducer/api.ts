@@ -20,8 +20,6 @@ export const loadCategory = async () => {
 export const loadNote = async (id: string) => {
     const namespace = sessionStorage.getItem('namespace');
     const url = `${server}/note/${namespace}/${id}`
-    console.log(url);
-    
     const { data } = await api.get<ApiResult<Note>>(url);
     return data;
 }
@@ -34,11 +32,10 @@ export const saveNote = async (note: Note) => {
         url,
         note,
         { headers: { "Authorization": `Bearer ${token}` } }
-    )
-
+    );
     return {
         success: data.success,
-        payload: data.payload,
+        payload: data.payload?.id,
     }
 }
 
@@ -55,6 +52,8 @@ export const loadPhotoList = async () => {
 export const updateNote = async (note: Note): Promise<ApiResult<Note>> => {
     const token = sessionStorage.getItem("file-token");
     const namespace = sessionStorage.getItem('namespace');
+    console.log(note.id, note);
+
     const url = `${server}/note/${namespace}/${note.id}`
     const { data } = await api.post<ApiResult<Note>>(
         url,
